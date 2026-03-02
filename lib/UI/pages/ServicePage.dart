@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vehicle_repair_service/Bloc/LocationBloc/LocationBloc.dart';
 import 'package:vehicle_repair_service/Bloc/ShopBloc/ShopBloc.dart';
 import 'package:vehicle_repair_service/Routes/route.dart';
@@ -19,18 +19,18 @@ class ServicePage extends StatefulWidget {
 class _ServicePageState extends State<ServicePage> with CustomHelperMixin {
   final ScrollController _scrollController = ScrollController();
   int page = 1;
-  int calculateDistanceKm(LatLng dest) {
-    final state = context.read<LocationBloc>().state;
-    final double distanceInMeters =
-    state.status == LocationStatus.completed
-        ? Geolocator.distanceBetween(
-      state.model?.lat ?? 0.0,
-      state.model?.long ?? 0.0,
-      dest.latitude,
-      dest.longitude,
-    ): 0.0;
-    return (distanceInMeters / 1000).floor();
-  }
+  // int calculateDistanceKm(LatLng dest) {
+  //   final state = context.read<LocationBloc>().state;
+  //   final double distanceInMeters =
+  //   state.status == LocationStatus.completed
+  //       ? Geolocator.distanceBetween(
+  //     state.model?.lat ?? 0.0,
+  //     state.model?.long ?? 0.0,
+  //     dest.latitude,
+  //     dest.longitude,
+  //   ): 0.0;
+  //   return (distanceInMeters / 1000).floor();
+  // }
 
 
   @override
@@ -91,7 +91,7 @@ class _ServicePageState extends State<ServicePage> with CustomHelperMixin {
                           'phone':item.phone,
                           'city':item.city,
                           'shopTime':item.shopTime,
-                          'destination':LatLng(item.lat??0.0,item.long??0.0)
+                          //'destination':LatLng(item.lat??0.0,item.long??0.0)
                         });
                       },
                       child: Card(
@@ -147,7 +147,7 @@ class _ServicePageState extends State<ServicePage> with CustomHelperMixin {
                                   ),
                                 ),
                                 subtitle: TranslateText('${item.city}'),
-                                trailing: Text('${calculateDistanceKm(LatLng(item.lat??0.0,item.long??0.0))} Km',style: TextStyle(fontSize: 16,fontWeight: .bold)),
+                                //trailing: Text('${calculateDistanceKm(LatLng(item.lat??0.0,item.long??0.0))} Km',style: TextStyle(fontSize: 16,fontWeight: .bold)),
                               ),
                             ),
                           ],

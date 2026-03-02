@@ -35,42 +35,43 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_bloc: ^9.1.1
-  equatable: ^2.0.7
+  equatable: ^2.0.8
   http: ^1.6.0
   either_dart: ^1.0.0
   google_fonts: ^8.0.2
   circle_nav_bar: ^2.2.0
   heroicons_flutter: ^0.4.0
-  url_launcher: ^6.3.2
   image_picker: ^1.2.1
   flutter_dotenv: ^6.0.0
   cached_network_image: ^3.4.1
   time_slot: ^1.0.2
   crypto: ^3.0.7
   change_app_package_name: ^1.5.0
-  firebase_core: ^4.3.0
-  firebase_messaging: ^16.1.0
-  onesignal_flutter: ^5.3.5
-  google_mlkit_translation: ^0.13.1
+  onesignal_flutter: ^5.4.1
+  #google_mlkit_translation: ^0.13.1
   icons_launcher: ^3.0.3
   simple_ripple_animation: ^0.1.0
   geolocator: ^14.0.2
-  geocoding: ^4.0.0
-  google_maps_flutter: ^2.14.0
-  flutter_tts: ^4.2.5
   timelines_plus: ^1.0.8
   flutter_timeline_plus: ^1.0.3
-  pinput: ^6.0.1
-  sentry_flutter: ^9.10.0
-  firebase_auth: ^6.1.4
+  pinput: ^6.0.2
+  sentry_flutter: ^9.14.0
   google_sign_in: ^7.2.0
   flutter_secure_storage: ^10.0.0
   shared_preferences: ^2.5.4
-  google_mlkit_object_detection: ^0.15.1
+  #google_mlkit_object_detection: ^0.15.1
   #phonepe_payment_sdk: ^3.0.2
   open_filex: ^4.7.0
   socket_io_client: ^3.1.4
-  connectivity_plus: ^7.0.0
+  #connectivity_plus: ^7.0.0
+  flutter_tts: ^4.2.5
+  url_launcher: ^6.3.2
+  geocoding: ^4.0.0
+  google_maps_flutter: ^2.14.2
+  firebase_core: ^4.4.0
+  firebase_auth: ^6.1.4
+  firebase_messaging: ^16.1.1
+  tha_player: ^0.5.2
   #connectivity_plus: ^7.0.0
   #razorpay_flutter: ^1.4.1
   #paytm_allinonesdk: ^1.2.8
@@ -112,6 +113,7 @@ flutter:
     - assets/icons/
     - assets/style/
     - .env
+    - shorebird.yaml
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

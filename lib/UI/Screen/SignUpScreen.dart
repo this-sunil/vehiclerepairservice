@@ -133,16 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> with CustomHelperMixin,Tick
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PhoneAuthBloc,PhoneAuthState>(
-        listener: (context,state){
-      switch(state.status){
-        case PhoneAuthStatus.send:
-          log("object=>${state.msg}");
-          break;
-        default:
-          break;
-      }
-    },child: Scaffold(
+    return  Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body: Form(
@@ -274,10 +265,10 @@ class _SignUpScreenState extends State<SignUpScreen> with CustomHelperMixin,Tick
                   }, listener: (context,state){
                     switch(state.status){
                       case AuthStatus.register:
-                         Storage.instance.setUId('${state.result?.result?.id}');
-                         Storage.instance.setToken('${state.result?.token}');
-                         context.pushAndRemoveUntil(AppRoute.dashboard);
-                         break;
+                        Storage.instance.setUId('${state.result?.result?.id}');
+                        Storage.instance.setToken('${state.result?.token}');
+                        context.pushAndRemoveUntil(AppRoute.dashboard);
+                        break;
                       default:
                         break;
                     }
@@ -314,6 +305,6 @@ class _SignUpScreenState extends State<SignUpScreen> with CustomHelperMixin,Tick
           ],
         ),
       ),
-    ));
+    );
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
 import 'package:vehicle_repair_service/Bloc/BookBloc/BookBloc.dart';
 import 'package:vehicle_repair_service/Widget/TranslateText.dart';
 import 'package:intl/intl.dart';
@@ -31,7 +30,7 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
    TextEditingController plateNumberController = TextEditingController();
    TextEditingController vehicleTypeController=TextEditingController();
    TextEditingController serviceController=TextEditingController();
-   late final ObjectDetector objectDetector;
+   //late final ObjectDetector objectDetector;
 
    // Slot Date & Time
   DateTime? selectedDate;
@@ -51,24 +50,24 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
        return null;
      }
 
-     final inputImage = InputImage.fromFilePath(picker.path);
+     //final inputImage = InputImage.fromFilePath(picker.path);
 
 
-     log("message=>${objectDetector.id}");
-     final List<DetectedObject> objects = await objectDetector.processImage(inputImage);
+     //log("message=>${objectDetector.id}");
+     //final List<DetectedObject> objects = await objectDetector.processImage(inputImage);
      vehicleNameController.clear();
 
-     if (objects.isNotEmpty) {
-       final labels = objects.first.labels;
-       if (labels.isNotEmpty) {
-         final detectedName = labels.first.text;
-         log("message $detectedName");
-         vehicleNameController.text = detectedName.toString();
-       }
-     }
-     else{
-       log("Object Empty !!!");
-     }
+     // if (objects.isNotEmpty) {
+     //   final labels = objects.first.labels;
+     //   if (labels.isNotEmpty) {
+     //     final detectedName = labels.first.text;
+     //     log("message $detectedName");
+     //     vehicleNameController.text = detectedName.toString();
+     //   }
+     // }
+     // else{
+     //   log("Object Empty !!!");
+     // }
        setState(() {
          file = XFile(picker.path);
        });
@@ -135,13 +134,13 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
     vehicleTypeController.text=widget.type;
     serviceController.text=widget.serviceName;
     super.initState();
-    objectDetector = ObjectDetector(
-      options: ObjectDetectorOptions(
-        mode: DetectionMode.single,
-        classifyObjects: true,
-        multipleObjects: false,
-      ),
-    );
+    // objectDetector = ObjectDetector(
+    //   options: ObjectDetectorOptions(
+    //     mode: DetectionMode.single,
+    //     classifyObjects: true,
+    //     multipleObjects: false,
+    //   ),
+    // );
   }
   @override
   void dispose() {
@@ -150,7 +149,7 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
     plateNumberController.dispose();
     vehicleTypeController.dispose();
     serviceController.dispose();
-    objectDetector.close();
+    //objectDetector.close();
     super.dispose();
   }
 

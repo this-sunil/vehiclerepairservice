@@ -44,24 +44,31 @@ Future<void> main() async {
 
   FirebaseService.instance.init();
   FlutterError.onError = (details) {
-    log("message $details");
+    log("message ${details.stack.toString()}");
     FlutterError.dumpErrorToConsole(details);
   };
-
-
-  await SentryFlutter.init(
-    (options) {
-      options.dsn =
-          'https://8ee49dd2103f3157b6d1c14ac028bb7a@o4508844157763584.ingest.de.sentry.io/4510814872338512';
-    },
-
-    appRunner: () => runApp(
+  runApp(
       SensitiveContent(
         sensitivity: ContentSensitivity.autoSensitive,
         child: const MyApp(),
-      ),
-    ),
-  ).then((v) {
-    log("Sentry Connected Successfully !!!");
-  });
+      ));
+
+  // await SentryFlutter.init(
+  //   (options) {
+  //     options.dsn =
+  //         'https://8ee49dd2103f3157b6d1c14ac028bb7a@o4508844157763584.ingest.de.sentry.io/4510814872338512';
+  //   },
+  //
+  //   appRunner: () => runApp(
+  //     SensitiveContent(
+  //       sensitivity: ContentSensitivity.autoSensitive,
+  //       child: const MyApp(),
+  //     ),
+  //   ),
+  // ).then((v) {
+  //   log("Sentry Connected Successfully !!!");
+  // });
+
 }
+
+

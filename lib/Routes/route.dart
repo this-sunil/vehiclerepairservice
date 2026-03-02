@@ -115,15 +115,15 @@ class AppRoute {
           pageBuilder: (context, animation, secondaryAnimation) =>
               SignUpScreen(),
         );
-      case verifyOtp:
-        final args = setting.arguments as Map<String, dynamic>;
-        final name = args['name'];
-        final phone = args['phone'];
-        final pass = args['pass'];
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              VerifyOtpScreen(name: name, phone: phone, pass: pass),
-        );
+      // case verifyOtp:
+      //   final args = setting.arguments as Map<String, dynamic>;
+      //   final name = args['name'];
+      //   final phone = args['phone'];
+      //   final pass = args['pass'];
+      //   return PageRouteBuilder(
+      //     pageBuilder: (context, animation, secondaryAnimation) =>
+      //         VerifyOtpScreen(name: name, phone: phone, pass: pass),
+      //   );
       case historyViews:
         final args = setting.arguments as Map<String, dynamic>;
         final int bookId = args['bookId'];
