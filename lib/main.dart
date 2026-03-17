@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:vehicle_repair_service/Services/FirebaseService.dart';
+import '../core/Services/FirebaseService.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:vehicle_repair_service/UI/MyApp.dart';
+import '../layer/MyApp.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
@@ -47,27 +47,23 @@ Future<void> main() async {
     log("message ${details.stack.toString()}");
     FlutterError.dumpErrorToConsole(details);
   };
-  runApp(
+
+
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://8ee49dd2103f3157b6d1c14ac028bb7a@o4508844157763584.ingest.de.sentry.io/4510814872338512';
+    },
+
+    appRunner: () => runApp(
       SensitiveContent(
         sensitivity: ContentSensitivity.autoSensitive,
         child: const MyApp(),
-      ));
-
-  // await SentryFlutter.init(
-  //   (options) {
-  //     options.dsn =
-  //         'https://8ee49dd2103f3157b6d1c14ac028bb7a@o4508844157763584.ingest.de.sentry.io/4510814872338512';
-  //   },
-  //
-  //   appRunner: () => runApp(
-  //     SensitiveContent(
-  //       sensitivity: ContentSensitivity.autoSensitive,
-  //       child: const MyApp(),
-  //     ),
-  //   ),
-  // ).then((v) {
-  //   log("Sentry Connected Successfully !!!");
-  // });
+      ),
+    ),
+  ).then((v) {
+    log("Sentry Connected Successfully !!!");
+  });
 
 }
 
