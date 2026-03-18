@@ -8,7 +8,7 @@ void main() async {
   await dotenv.load(fileName: ".env");
 
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(home: MyApp()));
+    await tester.pumpWidget(MyApp());
 
     expect(find.text('0'), findsOneWidget);
     expect(find.text('1'), findsNothing);
