@@ -34,15 +34,19 @@ android {
     }
 
     buildTypes {
-        release {
-            // Signing configuration
-            signingConfig signingConfigs.getByName("release")
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        getByName("release") {
+            // Correct Kotlin DSL syntax for signingConfig
+            signingConfig = signingConfigs.getByName("release")
 
+            isMinifyEnabled = true
+            isShrinkResources = true
+
+            // Correct Kotlin DSL syntax for ProGuard files
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
-
     }
 }
 
