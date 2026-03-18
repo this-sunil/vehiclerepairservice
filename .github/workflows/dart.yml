@@ -5,9 +5,13 @@ on:
     branches: [ "main" ]
 
 jobs:
-  # --- Android Build ---
   build-android:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
     steps:
       - uses: actions/checkout@v5
 
@@ -23,16 +27,18 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      # --- Setup optional Android Keystore ---
-      - name: Setup Keystore
-        if: secrets.ANDROID_KEYSTORE_BASE64 != ''
+      - name: Setup Keystore (if exists)
         run: |
-          mkdir -p android/app
-          echo ${{ secrets.ANDROID_KEYSTORE_BASE64 }} | base64 --decode > android/app/keystore.jks
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
-          echo "storeFile=keystore.jks" >> android/key.properties
+          if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
+            mkdir -p android/app
+            echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/keystore.jks
+            echo "storePassword=$KEYSTORE_PASSWORD" > android/key.properties
+            echo "keyAlias=$KEY_ALIAS" >> android/key.properties
+            echo "keyPassword=$KEY_PASSWORD" >> android/key.properties
+            echo "storeFile=keystore.jks" >> android/key.properties
+          else
+            echo "⚠️ Keystore not provided. APK will be unsigned."
+          fi
 
       - name: Build APK
         run: flutter build apk --release --build-number=${{ github.run_number }}
@@ -43,9 +49,12 @@ jobs:
           name: android-release
           path: build/app/outputs/flutter-apk/app-release.apk
 
-  # --- iOS Build ---
   build-ios:
     runs-on: macos-latest
+    env:
+      IOS_P12_BASE64: ${{ secrets.IOS_P12_BASE64 }}
+      IOS_PROVISION_BASE64: ${{ secrets.IOS_PROVISION_BASE64 }}
+      IOS_P12_PASSWORD: ${{ secrets.IOS_P12_PASSWORD }}
     steps:
       - uses: actions/checkout@v5
 
@@ -65,20 +74,22 @@ jobs:
           pod install --repo-update
           cd ..
 
-      # --- Setup optional iOS signing ---
-      - name: Setup iOS Signing
-        if: secrets.IOS_P12_BASE64 != ''
+      - name: Setup iOS Signing (if exists)
         run: |
-          mkdir -p ios/certs
-          echo "${{ secrets.IOS_P12_BASE64 }}" | base64 --decode > ios/certs/cert.p12
-          echo "${{ secrets.IOS_PROVISION_BASE64 }}" | base64 --decode > ios/certs/profile.mobileprovision
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp ios/certs/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
-          security import ios/certs/cert.p12 -k ~/Library/Keychains/login.keychain -P "${{ secrets.IOS_P12_PASSWORD }}" -T /usr/bin/codesign
+          if [ -n "$IOS_P12_BASE64" ]; then
+            mkdir -p ios/certs
+            echo "$IOS_P12_BASE64" | base64 --decode > ios/certs/cert.p12
+            echo "$IOS_PROVISION_BASE64" | base64 --decode > ios/certs/profile.mobileprovision
+            mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+            cp ios/certs/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+            security import ios/certs/cert.p12 -k ~/Library/Keychains/login.keychain -P "$IOS_P12_PASSWORD" -T /usr/bin/codesign
+          else
+            echo "⚠️ iOS signing not provided. IPA will be unsigned."
+          fi
 
       - name: Build iOS
         run: |
-          if [ -n "${{ secrets.IOS_P12_BASE64 }}" ]; then
+          if [ -n "$IOS_P12_BASE64" ]; then
             flutter build ios --release --build-number=${{ github.run_number }}
           else
             flutter build ios --release --no-codesign --build-number=${{ github.run_number }}
