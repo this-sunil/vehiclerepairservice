@@ -15,20 +15,20 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          # 'cache: true' kabhi kabhi Linux runners par path conflict deta hai
+          # Caching ko false rakhein agar 'already watching' error aa raha hai
           cache: false 
 
       - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      - name: Get Dependencies
-        run: flutter pub get
-
-      - name: Build APK
-        # Ismein humne 'clean' command ko build ke saath merge kiya hai
+      - name: Clean & Get Dependencies
         run: |
           flutter clean
-          flutter build apk --release --build-number=${{ github.run_number }}
+          flutter pub get
+
+      - name: Build APK
+        # Ismein --no-pub flag use karein taaki build dobara pub get na chalaye
+        run: flutter build apk --release --no-pub --build-number=${{ github.run_number }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
@@ -51,7 +51,7 @@ jobs:
       - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      - name: Install Dependencies
+      - name: Clean & Get Dependencies
         run: |
           flutter clean
           flutter pub get
@@ -63,8 +63,8 @@ jobs:
           rm -rf Podfile.lock
           pod install --repo-update
 
-      - name: Build iOS
-        run: flutter build ios --release --no-codesign --build-number=${{ github.run_number }}
+      - name: Build iOS (No Codesign)
+        run: flutter build ios --release --no-codesign --no-pub --build-number=${{ github.run_number }}
 
       - name: Package IPA
         run: |
