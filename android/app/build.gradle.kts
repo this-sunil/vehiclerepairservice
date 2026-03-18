@@ -34,9 +34,9 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             // Correct Kotlin DSL syntax for signingConfig
-            signingConfig = signingConfigs.getByName("release")
+            signingConfigs.getByName("release")
 
             isMinifyEnabled = true
             isShrinkResources = true
