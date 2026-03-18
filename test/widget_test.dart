@@ -8,14 +8,21 @@ void main() async {
   await dotenv.load(fileName: ".env");
 
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
+    // Wrap in MaterialApp for context
+    await tester.pumpWidget(const MaterialApp(home: MyApp()));
 
+    // Wait for all async widgets to finish
+    await tester.pumpAndSettle();
+
+    // Verify initial counter
     expect(find.text('0'), findsOneWidget);
     expect(find.text('1'), findsNothing);
 
+    // Tap '+' icon
     await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
+    // Verify incremented counter
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
