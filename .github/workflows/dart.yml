@@ -13,9 +13,9 @@ jobs:
       DOTENV_CONTENT: ${{ secrets.ENV_FILE }}
 
     steps:
-      # 📥 Checkout repo (updated Node 24 compatible version)
+      # 📥 Checkout repo using v5 (Node 24)
       - name: Checkout code
-        uses: actions/checkout@v4.11.0
+        uses: actions/checkout@v5
 
       # 🧰 Setup Flutter
       - name: Setup Flutter
@@ -23,9 +23,9 @@ jobs:
         with:
           channel: stable
 
-      # 📦 Cache dependencies (updated Node 24 compatible version)
+      # 📦 Cache dependencies using v5 (Node 24)
       - name: Cache Flutter dependencies
-        uses: actions/cache@v4.4.0
+        uses: actions/cache@v5
         with:
           path: |
             ~/.pub-cache
@@ -36,7 +36,8 @@ jobs:
 
       # 🔑 Create .env file from GitHub Secrets
       - name: Create .env file
-        run: echo "$DOTENV_CONTENT" > .env
+        run: |
+          echo "$DOTENV_CONTENT" > .env
 
       # 📦 Install dependencies
       - name: Install dependencies
