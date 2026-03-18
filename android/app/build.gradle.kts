@@ -10,14 +10,10 @@ plugins {
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
-val keystoreProperties = Properties()
-val keystorePropertiesFile = rootProject.file("key.properties")
-
-if (keystorePropertiesFile.exists()) {
-    // Using inputStream() directly can sometimes cause issues in certain Gradle versions
-    // Creating a stream explicitly is more robust
-    keystorePropertiesFile.inputStream().use { stream ->
-        keystoreProperties.load(stream)
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) {
+        load(FileInputStream(keystorePropertiesFile))
     }
 }
 
@@ -45,20 +41,20 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
+
     signingConfigs {
         create("release") {
-        storeFile = file(keystoreProperties.getProperty("storeFile") ?: "")
-        storePassword = keystoreProperties.getProperty("storePassword")
-        keyAlias = keystoreProperties.getProperty("keyAlias")
-        keyPassword = keystoreProperties.getProperty("keyPassword")
-       }
+            storeFile = keystoreProperties["storeFile"]?.let { file(it.toString()) }
+            storePassword = keystoreProperties["storePassword"]?.toString()
+            keyAlias = keystoreProperties["keyAlias"]?.toString()
+            keyPassword = keystoreProperties["keyPassword"]?.toString()
+        }
     }
 
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
-            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
