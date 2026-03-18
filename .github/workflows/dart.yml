@@ -7,68 +7,65 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  # --- JOB 1: Android Build (Runs on Linux) ---
+  build-android:
     runs-on: ubuntu-latest
-    env:
-      DOTENV_CONTENT: ${{ secrets.ENV_FILE }}
-
     steps:
-      # 📥 Checkout repo using v5 (Node 24)
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
-      # 🧰 Setup Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          cache: true # Built-in caching for flutter-action
 
-      # 📦 Cache dependencies using v5 (Node 24)
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v5
-        with:
-          path: |
-            ~/.pub-cache
-            .dart_tool
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-flutter-
-
-      # 🔑 Create .env file from GitHub Secrets
       - name: Create .env file
-        run: |
-          echo "$DOTENV_CONTENT" > .env
+        run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      # 📦 Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # 🎨 Check formatting
       - name: Verify formatting
-        run: dart format .
+        run: dart format --set-exit-if-changed .
 
-      # 🧪 Run tests
       - name: Run tests
         run: flutter test
 
-      # 🏗 Build APK (Debug)
-      - name: Build APK
+      - name: Build APK (Debug)
         run: flutter build apk --debug
-        
-       # 🏗 Build iOS app (IPA)
-      - name: Build iOS IPA
-        run: flutter build ios --debug
 
-      # 📤 Upload IPA artifact
-      - name: Upload IPA
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release-ipa
-          path: build/ios/ipa/*.ipa
-
-      # 📤 Upload APK artifact
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
+
+  # --- JOB 2: iOS Build (Runs on macOS) ---
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Create .env file
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Note: build ios --debug requires --no-codesign unless you have certificates set up
+      - name: Build iOS
+        run: flutter build ios --debug --no-codesign
+
+      - name: Upload Runner App
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-debug-app
+          path: build/ios/iphoneos/Runner.app
