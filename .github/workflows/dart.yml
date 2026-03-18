@@ -15,7 +15,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          cache: true # Turning cache back on for speed; usually 'already watching' is a local issue
+          cache: false
 
       - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
