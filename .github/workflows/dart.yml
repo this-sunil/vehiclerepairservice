@@ -3,65 +3,53 @@ name: Flutter CI/CD
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
-  # --- JOB 1: Android Build ---
   build-android:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
-
-      - name: Create .env file
+      - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build APK (Release)
-        run: flutter build apk --release
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - run: flutter pub get
+      - run: flutter build apk --release
+      - uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
-          if-no-files-found: error # This will force a failure if path is wrong
 
-  # --- JOB 2: iOS Build ---
   build-ios:
     runs-on: macos-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
-
-      - name: Create .env file
+      - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
+      - run: flutter pub get
 
-      - name: Install dependencies
-        run: flutter pub get
+      # Step 1: Build the .app (This works without certificates)
+      - name: Build iOS App Bundle
+        run: flutter build ios --release --no-codesign
 
-      # Using 'build ipa' generates the actual file instead of a folder
-      - name: Build iOS IPA
-        run: flutter build ipa --release --no-codesign
-
+      # Step 2: Manually create the .ipa structure (The "Secret Sauce")
+      - name: Create IPA File
+        run: |
+          mkdir -p build/ios/iphoneos/Payload
+          cp -r build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload
+          cd build/ios/iphoneos
+          zip -r app-release.ipa Payload
+          
+      # Step 3: Upload the actual .ipa file
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
           name: app-release-ipa
-          path: build/ios/ipa/*.ipa
+          path: build/ios/iphoneos/app-release.ipa
           if-no-files-found: error
