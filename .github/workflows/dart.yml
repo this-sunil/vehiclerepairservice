@@ -1,38 +1,4 @@
-name: Flutter CI/CD
-
-on:
-  push:
-    branches: [ "main" ]
-
-jobs:
-  build-android:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      # Cache Flutter SDK & Pub packages
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
-
-      - name: Get dependencies
-        run: flutter pub get
-
-      - name: Create .env
-        run: echo "${{ secrets.ENV_FILE }}" > .env
-
-      # Using --build-number ensures unique versions for every run
-      - name: Build APK
-        run: flutter build apk --release --build-number=${{ github.run_number }}
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-release
-          path: build/app/outputs/flutter-apk/app-release.apk
-
-  build-ios:
+build-ios:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,28 +8,33 @@ jobs:
           channel: stable
           cache: true
 
+      # IMPORTANT: Must get dependencies before Pods
+      - name: Get dependencies
+        run: flutter pub get
+
       - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
+      # Ensure CocoaPods is using the correct Ruby environment
       - name: Install Pods
         run: |
           cd ios
           pod install --repo-update
-          cd ..
+        # Note: No need to 'cd ..' manually if you use 'working-directory' 
+        # but this works too.
 
-      # Building with --no-codesign is fine for artifacts, 
-      # but requires manual zipping as you did.
       - name: Build iOS
         run: flutter build ios --release --no-codesign --build-number=${{ github.run_number }}
 
-      - name: Package IPA (Ad-hoc manual)
+      # Improved Packaging Logic
+      - name: Package IPA
         run: |
           mkdir -p Payload
           mv build/ios/iphoneos/Runner.app Payload
-          zip -r app-release.ipa Payload
+          zip -r ios-release.ipa Payload
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
           name: ios-release
-          path: app-release.ipa
+          path: ios-release.ipa
