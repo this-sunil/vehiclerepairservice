@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      # Example: inject .env secrets from GitHub Secrets
+      DOTENV_CONTENT: ${{ secrets.ENV_FILE }}
 
     steps:
       # 📥 Checkout repo
@@ -31,6 +35,12 @@ jobs:
           key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-flutter-
+
+      # 🔑 Create .env file from GitHub Secrets
+      - name: Create .env file
+        run: |
+          echo "$DOTENV_CONTENT" > .env
+        shell: bash
 
       # 📦 Install dependencies
       - name: Install dependencies
