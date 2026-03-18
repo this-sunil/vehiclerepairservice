@@ -9,26 +9,22 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          # Caching ko false rakhein agar 'already watching' error aa raha hai
-          cache: false 
+          cache: true # Turning cache back on for speed; usually 'already watching' is a local issue
 
       - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      - name: Clean & Get Dependencies
-        run: |
-          flutter clean
-          flutter pub get
+      - name: Install Dependencies
+        run: flutter pub get
 
       - name: Build APK
-        # Ismein --no-pub flag use karein taaki build dobara pub get na chalaye
-        run: flutter build apk --release --no-pub --build-number=${{ github.run_number }}
+        run: flutter build apk --release --build-number=${{ github.run_number }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
@@ -40,38 +36,35 @@ jobs:
   build-ios:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          cache: false
+          cache: true
 
       - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      - name: Clean & Get Dependencies
+      - name: Install Dependencies
         run: |
-          flutter clean
           flutter pub get
-
-      - name: Install Pods
-        working-directory: ios
-        run: |
-          rm -rf Pods
-          rm -rf Podfile.lock
+          cd ios
           pod install --repo-update
+          cd ..
 
-      - name: Build iOS (No Codesign)
-        run: flutter build ios --release --no-codesign --no-pub --build-number=${{ github.run_number }}
+      - name: Build iOS (Frameworks)
+        # We use --no-codesign here, but we build the 'ios' target properly
+        run: flutter build ios --release --no-codesign --build-number=${{ github.run_number }}
 
-      - name: Package IPA
+      - name: Create Archive & IPA (Unsigned)
         run: |
           mkdir -p Payload
-          cp -R build/ios/iphoneos/Runner.app Payload/
+          # Ensure the path to Runner.app is correct
+          cp -r build/ios/iphoneos/Runner.app Payload/
           zip -r ios-release.ipa Payload
-          
+
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
