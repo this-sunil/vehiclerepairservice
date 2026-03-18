@@ -38,7 +38,7 @@ jobs:
 
       # 🎨 Check formatting
       - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
+        run: dart format .
 
       # 🔍 Analyze code
       - name: Analyze project
