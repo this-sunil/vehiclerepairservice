@@ -47,21 +47,16 @@ android {
     }
     signingConfigs {
         create("release") {
-            keyAlias = keystoreProperties.getProperty("keyAlias")
-            keyPassword = keystoreProperties.getProperty("keyPassword")
-            storePassword = keystoreProperties.getProperty("storePassword")
-
-            val stFile = keystoreProperties.getProperty("storeFile")
-            if (stFile != null) {
-                storeFile = file(stFile)
-            }
-        }
+        storeFile = file(keystoreProperties.getProperty("storeFile") ?: "")
+        storePassword = keystoreProperties.getProperty("storePassword")
+        keyAlias = keystoreProperties.getProperty("keyAlias")
+        keyPassword = keystoreProperties.getProperty("keyPassword")
+       }
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             signingConfig = signingConfigs.getByName("release")
-
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -70,6 +65,7 @@ android {
             )
         }
     }
+
 }
 
 flutter {
