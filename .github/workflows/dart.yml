@@ -9,14 +9,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
+
       - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
-      - run: flutter pub get
-      - run: flutter build apk --release
+
+      - name: Flutter Pub Get
+        run: flutter pub get
+
+      # ✅ 🔥 FIX: Clean Gradle + watchers issue
+      - name: Clean Gradle
+        run: |
+          flutter clean
+          cd android
+          ./gradlew clean
+          cd ..
+          rm -rf ~/.gradle/caches
+          rm -rf ~/.gradle/daemon
+
+      # ✅ Build APK
+      - name: Build APK
+        run: flutter build apk --release
+
       - uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
@@ -26,27 +44,34 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
+
       - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
+
       - run: flutter pub get
 
-      # Step 1: Build the .app (This works without certificates)
+      # ✅ Clean (important for macOS too)
+      - name: Clean Build
+        run: flutter clean
+
+      # Step 1: Build app
       - name: Build iOS App Bundle
         run: flutter build ios --release --no-codesign
 
-      # Step 2: Manually create the .ipa structure (The "Secret Sauce")
+      # Step 2: Create IPA
       - name: Create IPA File
         run: |
           mkdir -p build/ios/iphoneos/Payload
           cp -r build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload
           cd build/ios/iphoneos
           zip -r app-release.ipa Payload
-          
-      # Step 3: Upload the actual .ipa file
+
+      # Step 3: Upload IPA
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
