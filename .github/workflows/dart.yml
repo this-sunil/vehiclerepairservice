@@ -7,6 +7,7 @@ on:
 jobs:
   build-android:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
       KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -21,13 +22,19 @@ jobs:
           channel: stable
           cache: true
 
+      - name: Cache Pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+
       - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Setup Keystore (if exists)
+      - name: Setup Keystore
         run: |
           if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
             mkdir -p android/app
@@ -51,6 +58,7 @@ jobs:
 
   build-ios:
     runs-on: macos-latest
+    timeout-minutes: 45
     env:
       IOS_P12_BASE64: ${{ secrets.IOS_P12_BASE64 }}
       IOS_PROVISION_BASE64: ${{ secrets.IOS_PROVISION_BASE64 }}
@@ -64,6 +72,12 @@ jobs:
           channel: stable
           cache: true
 
+      - name: Cache Pods
+        uses: actions/cache@v4
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+
       - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
@@ -74,35 +88,40 @@ jobs:
           pod install --repo-update
           cd ..
 
-      - name: Setup iOS Signing (if exists)
+      - name: Setup iOS Signing
         run: |
           if [ -n "$IOS_P12_BASE64" ]; then
-            mkdir -p ios/certs
-            echo "$IOS_P12_BASE64" | base64 --decode > ios/certs/cert.p12
-            echo "$IOS_PROVISION_BASE64" | base64 --decode > ios/certs/profile.mobileprovision
+            # Create a temporary keychain to avoid UI prompts
+            KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+            KEYCHAIN_PASSWORD=$(openssl rand -base64 24)
+
+            security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+            security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+            security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+            # Import certificate
+            echo "$IOS_P12_BASE64" | base64 --decode > $RUNNER_TEMP/cert.p12
+            security import $RUNNER_TEMP/cert.p12 -k "$KEYCHAIN_PATH" -P "$IOS_P12_PASSWORD" -T /usr/bin/codesign
+            security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+            # Install provisioning profile
             mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-            cp ios/certs/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
-            security import ios/certs/cert.p12 -k ~/Library/Keychains/login.keychain -P "$IOS_P12_PASSWORD" -T /usr/bin/codesign
+            echo "$IOS_PROVISION_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
           else
-            echo "⚠️ iOS signing not provided. IPA will be unsigned."
+            echo "⚠️ iOS signing not provided."
           fi
 
-      - name: Build iOS
+      - name: Build IPA
         run: |
           if [ -n "$IOS_P12_BASE64" ]; then
-            flutter build ios --release --build-number=${{ github.run_number }}
+            # Requires an ExportOptions.plist in your ios/ folder for full automation
+            flutter build ipa --release --build-number=${{ github.run_number }} --export-method=app-store
           else
             flutter build ios --release --no-codesign --build-number=${{ github.run_number }}
           fi
-
-      - name: Create IPA
-        run: |
-          mkdir -p Payload
-          cp -r build/ios/iphoneos/Runner.app Payload/
-          zip -r ios-release.ipa Payload
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
           name: ios-release
-          path: ios-release.ipa
+          path: build/ios/ipa/*.ipa
