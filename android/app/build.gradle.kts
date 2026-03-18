@@ -44,10 +44,14 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = keystoreProperties["storeFile"]?.let { file(it.toString()) }
-            storePassword = keystoreProperties["storePassword"]?.toString()
-            keyAlias = keystoreProperties["keyAlias"]?.toString()
-            keyPassword = keystoreProperties["keyPassword"]?.toString()
+            if (keystorePropertiesFile.exists()) {
+                storeFile = keystoreProperties["storeFile"]?.let { file(it.toString()) }
+                storePassword = keystoreProperties["storePassword"]?.toString()
+                keyAlias = keystoreProperties["keyAlias"]?.toString()
+                keyPassword = keystoreProperties["keyPassword"]?.toString()
+            } else {
+                println("⚠️ Keystore not found! Release build will be unsigned.")
+            }
         }
     }
 
