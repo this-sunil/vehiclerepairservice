@@ -1,38 +1,75 @@
-build-ios:
-    runs-on: macos-latest
+name: Flutter CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # --- Android Build Job ---
+  build-android:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
 
-      # IMPORTANT: Must get dependencies before Pods
-      - name: Get dependencies
+      - name: Get Dependencies
         run: flutter pub get
 
       - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      # Ensure CocoaPods is using the correct Ruby environment
-      - name: Install Pods
-        run: |
-          cd ios
-          pod install --repo-update
-        # Note: No need to 'cd ..' manually if you use 'working-directory' 
-        # but this works too.
+      - name: Build APK
+        run: flutter build apk --release --build-number=${{ github.run_number }}
 
-      - name: Build iOS
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+  # --- iOS Build Job (Fixed Version) ---
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Flutter Clean & Pub Get
+        run: |
+          flutter clean
+          flutter pub get
+
+      - name: Create .env
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: Install Pods
+        working-directory: ios
+        run: |
+          rm -rf Pods
+          rm -rf Podfile.lock
+          pod install --repo-update
+
+      - name: Build iOS (No Codesign)
         run: flutter build ios --release --no-codesign --build-number=${{ github.run_number }}
 
-      # Improved Packaging Logic
       - name: Package IPA
         run: |
           mkdir -p Payload
-          mv build/ios/iphoneos/Runner.app Payload
+          cp -R build/ios/iphoneos/Runner.app Payload/
           zip -r ios-release.ipa Payload
-
+          
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
