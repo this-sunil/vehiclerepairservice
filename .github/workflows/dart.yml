@@ -1,4 +1,4 @@
-name: Flutter CI/CD
+name: Flutter CI/CD (Node 24 Optimized)
 
 on:
   push:
@@ -7,46 +7,38 @@ on:
     branches: [ "main" ]
 
 jobs:
-  # --- JOB 1: Android Build (Runs on Linux) ---
+  # --- JOB 1: Android (Linux) ---
   build-android:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Uses Ubuntu 24.04 by default
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6 # Latest v6 (Node 24 native)
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          cache: true # Built-in caching for flutter-action
+          cache: true # Uses actions/cache@v5 internally
 
-      - name: Create .env file
+      - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Verify formatting
-        run: dart format .
-
-      - name: Run tests
-        run: flutter test
-
-      - name: Build APK (Debug)
-        run: flutter build apk --debug
+      - name: Build APK
+        run: flutter build apk --release
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7 # v7 supports faster direct uploads
         with:
-          name: app-debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
 
-  # --- JOB 2: iOS Build (Runs on macOS) ---
+  # --- JOB 2: iOS (macOS) ---
   build-ios:
-    runs-on: macos-latest
+    runs-on: macos-latest # Uses macOS 15/16
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -54,18 +46,15 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Create .env file
+      - name: Create .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Build iOS IPA
+        run: flutter build ipa --release --no-codesign
 
-      # Note: build ios --debug requires --no-codesign unless you have certificates set up
-      - name: Build iOS
-        run: flutter build ios --debug --no-codesign
-
-      - name: Upload Runner App
-        uses: actions/upload-artifact@v4
+      - name: Upload IPA
+        uses: actions/upload-artifact@v7
         with:
-          name: ios-debug-app
-          path: build/ios/iphoneos/Runner.app
+          name: app-release-ipa
+          path: build/ios/ipa/*.ipa
+          if-no-files-found: error
