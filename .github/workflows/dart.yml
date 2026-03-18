@@ -49,7 +49,7 @@ jobs:
 
       # 🔍 Analyze code
       - name: Analyze project
-        run: flutter analyze
+        run: flutter analyze --fatal-infos --fatal-warnings
 
       # 🧪 Run tests
       - name: Run tests
@@ -58,6 +58,17 @@ jobs:
       # 🏗 Build APK (Debug)
       - name: Build APK
         run: flutter build apk --debug
+        
+       # 🏗 Build iOS app (IPA)
+      - name: Build iOS IPA
+        run: flutter build ios --debug
+
+      # 📤 Upload IPA artifact
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-ipa
+          path: build/ios/ipa/*.ipa
 
       # 📤 Upload APK artifact
       - name: Upload APK
