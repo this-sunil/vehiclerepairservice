@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "383036743837",
+    "project_id": "vehiclerepairservice-64661",
+    "storage_bucket": "vehiclerepairservice-64661.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383036743837:android:d4a4ba7ec0c20ce7d97474",
+        "android_client_info": {
+          "package_name": "com.brand.vehiclerepairservice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhntmcpOx695Lcgyzk6WEY5ISjSRMaT5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
