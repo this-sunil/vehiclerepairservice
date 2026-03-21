@@ -17,6 +17,7 @@ class SearchShopRepo extends BaseSearchShopRepo{
     // TODO: implement searchByCity
     try{
       final resp=await post(Uri.parse(url),headers: header,body: body);
+      log("Response=>${resp.body}");
       final result=shopModelFromJson(resp.body);
       switch(resp.statusCode){
         case 200:

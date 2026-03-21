@@ -73,7 +73,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       url: '${dotenv.env['BASE_URL']}${dotenv.env['FETCH_SLOT_HISTORY']}',
       header: {
         'Authorization': 'Bearer $token',
-        'accept': 'application/json',
+        'Accept': 'application/json',
       },
       body: {
         'uid': uid,

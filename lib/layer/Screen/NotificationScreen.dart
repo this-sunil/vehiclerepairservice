@@ -100,7 +100,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                 crossAxisAlignment: .start,
                                 mainAxisAlignment: .start,
                                 children: [
-                                  Text('${item.subtitle}',style: TextStyle(fontSize: 12),textAlign: .justify,overflow: .ellipsis,),
+                                  Text('${item.description}',style: TextStyle(fontSize: 12),textAlign: .justify,overflow: .ellipsis,),
                                   Text(
                                     DateFormat(
                                       "${item.createdAt}",

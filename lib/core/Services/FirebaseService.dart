@@ -42,7 +42,7 @@ class FirebaseService {
   @pragma('vm:entry-point')
   Future<void> handleRemoteMsg(RemoteMessage message) async {
     if (message.notification != null) {
-
+      
     }
   }
 
@@ -60,10 +60,11 @@ class FirebaseService {
         accessToken: authorization?.accessToken,
         idToken: googleAuth.idToken
       );
-      user = await auth.signInWithCredential(credential);
+
       if(user==null){
         log("message=>No User Found");
       }
+      user = await auth.signInWithCredential(credential);
     }
     on FirebaseAuthException catch(e){
       log("message=>${e.message}");

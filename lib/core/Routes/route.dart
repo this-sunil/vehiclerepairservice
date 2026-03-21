@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:vehicle_repair_service/layer/Screen/ScanQRCode.dart';
 import '../../layer/Menu/AboutScreen.dart';
 import '../../layer/Menu/EmergencyScreen.dart';
 import '../../layer/Menu/HistoryView.dart';
@@ -12,7 +13,7 @@ import '../../layer/Screen/ChatAdmin.dart';
 import '../../layer/Screen/DashboardScreen.dart';
 import '../../layer/Screen/ForgotPassScreen.dart';
 import '../../layer/Screen/NotificationScreen.dart';
-import '../../layer/Screen/SettingScreen.dart';
+import '../../layer/pages/SettingScreen.dart';
 import '../../layer/Screen/SignInScreen.dart';
 import '../../layer/Screen/SignUpScreen.dart';
 import '../../layer/Screen/TrackerScreen.dart';
@@ -24,10 +25,10 @@ import '../../layer/feature/GeneratePdfScreen.dart';
 import '../../layer/feature/ServicePage.dart';
 import '../../layer/Menu/SubscriptionScreen.dart';
 
-
 class AppRoute {
   AppRoute._();
   AppRoute get instance => AppRoute._();
+
   static const String appName = 'Vehicle Repair Service';
   static const String initialRoute = '/';
   static const String dashboard = '/dashboard';
@@ -54,10 +55,7 @@ class AppRoute {
   static const String generatePdf = "/generatePdf";
   static const String chatAdmin = "/chatAdmin";
   static const String player='/player';
-
-
-
-
+  static const String scanQrCode='/scanQrCode';
   static RouteTransitionsBuilder transitionsBuilder =
       (context, Animation<double> animation, secondaryAnimation, child) {
         return FadeTransition(opacity: animation, child: child);
@@ -216,6 +214,11 @@ class AppRoute {
           transitionsBuilder: transitionsBuilder,
           pageBuilder: (context, animation, secondaryAnimation) =>
               SettingScreen(flag: true),
+        );
+      case scanQrCode:
+        return PageRouteBuilder(
+            transitionsBuilder: transitionsBuilder,
+            pageBuilder: (context,animation,secondaryAnimation)=>ScanQRCode()
         );
       case vehicleCategory:
         final args = setting.arguments as Map<String, dynamic>;

@@ -27,6 +27,7 @@ class ShopBloc extends Bloc<ShopEvent,ShopState>{
     Map<String,String> header={
       "Authorization":"Bearer $token"
     };
+
     final result=await repo.searchByCity(url: '${dotenv.env["BASE_URL"]}${dotenv.env['SEARCH_BY_CITY']}', body: body,header: header);
     return result.fold((l)=>emit(state.copyWith(status: l.status,msg: l.msg,hasMore: false)), (r){
       final updateList=currentList..addAll(r.result);

@@ -186,11 +186,13 @@ class AuthRepository implements BaseAuthRepository {
       req.headers.addAll(header);
       log("Header File =>$header");
       req.fields.addAll(body);
-      req.files.add(await MultipartFile.fromPath(
+      if(body['photo']!=null){
+        req.files.add(await MultipartFile.fromPath(
           'photo',
           body['photo'].toString(),
           contentType: MediaType("image", "jpeg/png"),
         ));
+      }
       final response = await req.send();
       final resp = await Response.fromStream(response);
       final result = authModelFromJson(resp.body);

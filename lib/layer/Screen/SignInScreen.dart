@@ -1,6 +1,7 @@
 
 
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
+import 'package:vehicle_repair_service/layer/Widget/LoadingButtonIndicator.dart';
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../core/Routes/route.dart';
 import '../../layer/Widget/CustomHelper.dart';
@@ -261,7 +262,7 @@ class _SignInScreenState extends State<SignInScreen>
                         builder: (context, state) {
                           switch (state.status) {
                             case AuthStatus.loading:
-                              return LoadingIndicator();
+                              return LoadingButtonIndicator();
                             default:
                               return Padding(
                                 padding: .symmetric(

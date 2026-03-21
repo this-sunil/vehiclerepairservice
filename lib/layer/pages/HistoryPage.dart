@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:vehicle_repair_service/layer/Widget/NoDataFoundScreen.dart';
+
 import '../../core/Bloc/BookBloc/BookBloc.dart';
 import '../../core/Routes/route.dart';
 import '../../layer/Widget/CustomHelper.dart';
@@ -60,9 +62,12 @@ class _HistoryPageState extends State<HistoryPage> with CustomHelperMixin {
         builder: (context, state) {
           switch (state.status) {
             case BookStatus.loading:
-              return Center(child: CircularProgressIndicator());
+              return LoadingIndicator();
             case BookStatus.error:
-              return Center(child: TranslateText(state.msg.toString()));
+              return NoDataFoundScreen(message: "${state.msg}",onRetry: (){
+                context.read<BookBloc>().add(FetchSlotHistoryEvent(page: page));
+
+              },buttonText: "Retry");
             case BookStatus.completed:
               final items = state.model ?? [];
               return ListView.builder(

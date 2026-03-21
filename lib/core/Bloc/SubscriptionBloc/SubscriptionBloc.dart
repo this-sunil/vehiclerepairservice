@@ -13,15 +13,13 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent,SubscriptionState>{
   }
   Future<void> _fetchSubscription(FetchSubscriptionEvent event,Emitter<SubscriptionState> emit) async{
       emit(state.copyWith(status: SubscriptionStatus.loading));
-      String? uid=await Storage.instance.getUID();
       String? token=await Storage.instance.getToken();
-      Map<String,dynamic> body={
-        "uid":uid,
-      };
+
       Map<String,String> header={
-        "Authorization":"Bearer $token"
+        "Authorization":"Bearer $token",
+        "Accept":"application/json"
       };
-      final result=await repo.fetchSubscription(url: '${dotenv.env['BASE_URL']}${dotenv.env['FETCH_PLAN']}',body: body,header: header);
+      final result=await repo.fetchSubscription(url: '${dotenv.env['BASE_URL']}${dotenv.env['FETCH_PLAN']}',header: header);
       return result.fold((l)=>emit(state.copyWith(status: l.status,msg: l.msg)), (r)=>emit(state.copyWith(status: r.status,msg: r.msg,model: r.result)));
   }
 }

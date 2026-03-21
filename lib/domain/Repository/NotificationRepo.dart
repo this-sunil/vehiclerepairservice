@@ -26,10 +26,11 @@ class NotificationRepository extends BaseNotificationRepo {
     try {
       final resp = await post(Uri.parse(url), headers: header, body: body);
       log("Notification Response=> ${resp.body}");
+
       final result = notificationModelFromJson(resp.body);
       switch (resp.statusCode) {
         case 200:
-          return result.result == null
+          return result.result!.isEmpty
               ? Left(Failure(status: NotificationStatus.error, msg: result.msg))
               : Right(Success(
                     status: NotificationStatus.completed,

@@ -19,7 +19,7 @@ class SubscriptionRepo extends BaseSubscriptionRepo{
     try{
       final resp=await post(Uri.parse(url),body: body,headers: header);
       final result=subscriptionModelFromJson(resp.body);
-      log("\n Response Plan =>${resp.body}");
+      log("\n Response Plan =>${result.status}");
       switch(resp.statusCode){
         case 200:
           if(result.status==true) {
@@ -28,6 +28,9 @@ class SubscriptionRepo extends BaseSubscriptionRepo{
           else{
             return Left(Failure(status: SubscriptionStatus.error,msg: result.msg));
           }
+        case 400 || 404:
+          return Left(Failure(status: SubscriptionStatus.error,msg: result.msg));
+
         default:
           return Left(Failure(status: SubscriptionStatus.error,msg: 'Internal Server Error'));
       }
@@ -50,7 +53,7 @@ class SubscriptionRepo extends BaseSubscriptionRepo{
     }
     catch(e,stk){
       log("message=>${stk.toString()}");
-      return Left(Failure(status: SubscriptionStatus.error,msg: "Internal Server Error"));
+      return Left(Failure(status: SubscriptionStatus.error,msg: "Internal Server Error !!!"));
     }
   }
 

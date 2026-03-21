@@ -8,6 +8,7 @@ import '../../layer/Widget/CustomHelper.dart';
 import 'package:flutter/material.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
 import '../../layer/Widget/TranslateText.dart';
+import '../Widget/NoDataFoundScreen.dart';
 
 class ServicePage extends StatefulWidget {
   const ServicePage({super.key});
@@ -32,7 +33,7 @@ class _ServicePageState extends State<ServicePage> with CustomHelperMixin {
     return (distanceInMeters / 1000).floor();
   }
 
-
+   String? city;
   @override
   void initState() {
     // TODO: implement initState
@@ -74,6 +75,8 @@ class _ServicePageState extends State<ServicePage> with CustomHelperMixin {
       body: BlocBuilder<ShopBloc, ShopState>(
         builder: (context, state) {
           switch (state.status) {
+            case ShopStatus.loading:
+              return LoadingIndicator();
             case ShopStatus.completed:
               final serviceItem = state.model ?? [];
               return ListView.builder(
@@ -160,6 +163,16 @@ class _ServicePageState extends State<ServicePage> with CustomHelperMixin {
                   );
                 },
               );
+
+            case ShopStatus.error:
+              return NoDataFoundScreen(message: state.msg.toString(),buttonText: 'Retry',onRetry: (){
+                context.read<ShopBloc>().add(
+                  SearchNearByCityEvent(
+                    page: page,
+                    city: city.toString(),
+                  ),
+                );
+              });
             default:
               return SizedBox.shrink();
           }

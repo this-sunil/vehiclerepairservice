@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../layer/Widget/CustomInputText.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import '../../layer/Widget/LoadingIndicator.dart';
 import '../../layer/Widget/TranslateText.dart';
 import '../../core/Routes/route.dart';
 import '../Widget/CustomHelper.dart';
+import '../Widget/LoadingButtonIndicator.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -86,6 +88,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
   @override
   void initState() {
     // TODO: implement initState
+
     context.read<AuthBloc>().add(FetchProfileEvent());
     name = TextEditingController();
     phone = TextEditingController();
@@ -111,11 +114,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
               name.text = state.result?.result?.name ?? '';
               phone.text = state.result?.result?.phone ?? '';
               image = '${state.result?.result?.photo}';
-              Future.delayed(Duration(seconds: 1), () {
-                NetworkImage('${state.result?.result?.photo}');
-                setState(() {});
-              });
-              log("Image=>$image");
+              log("Show Image =>$image");
             default:
               break;
           }
@@ -132,35 +131,31 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(4),
-                  child: CircleAvatar(
-                    maxRadius: 80,
-                    backgroundImage: file != null
-                        ? FileImage(File(file!.path))
-                        :(image != null &&
-                        image!.isNotEmpty &&
-                        (image!.endsWith('.jpg') ||
-                            image!.endsWith('.png') ||
-                            image!.endsWith('.jpeg') ||
-                            image!.endsWith('.webp')))
-                        ? NetworkImage(
-                            '${dotenv.env['BASE_URL']}/upload/$image',
-                          )
-                        : AssetImage(splashIcon),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Card(
-                        shape: const CircleBorder(),
-                        color: Colors.white,
-                        child: IconButton(
-                          onPressed: () => popup(context),
-                          icon: const Icon(
-                            HeroiconsOutline.pencil,
-                            color: Colors.black,
+                  child: BlocBuilder<AuthBloc,AuthState>(builder: (context,state){
+                    return CircleAvatar(
+                      maxRadius: 80,
+                      backgroundImage: file != null
+                          ? FileImage(File(file!.path))
+                          :state.status==AuthStatus.fetchProfile?NetworkImage(
+                        '${dotenv.env['STORE_URL']}/upload/${state.result?.result?.photo}',
+                      )
+                          : AssetImage(splashIcon),
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: Card(
+                          shape: const CircleBorder(),
+                          color: Colors.white,
+                          child: IconButton(
+                            onPressed: () => popup(context),
+                            icon: const Icon(
+                              HeroiconsOutline.pencil,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  }),
                 ),
               ),
             ),
@@ -195,16 +190,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
               listener: (context, state) {
                 switch (state.status) {
                   case AuthStatus.error:
-                    log("Error =>${state.result!.msg.toString()}");
+                    log("Error =>${state.msg.toString()}");
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.result!.msg.toString())),
+                      SnackBar(content: Text(state.msg.toString())),
                     );
                     break;
                   case AuthStatus.update:
                     log("Update Profile");
 
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.result!.msg.toString())),
+                      SnackBar(content: Text(state.msg.toString())),
                     );
                     context.pop();
                     break;
@@ -214,8 +209,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
               },
               builder: (context, state) {
                 switch (state.status) {
-                  case AuthStatus.loading:
-                    return LoadingIndicator();
+                  case AuthStatus.updateLoading:
+                    return LoadingButtonIndicator();
                   default:
                     return Container(
                       width: context.width,
@@ -230,7 +225,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
                         ),
                         onPressed: () {
                           context.read<AuthBloc>().add(
-                            UpdateProfileEvent(
+                            file==null?UpdateProfileEvent(
+                              name: name.text,
+                              phone: phone.text,
+                            ):UpdateProfileEvent(
                               file: File(file!.path.toString()),
                               name: name.text,
                               phone: phone.text,

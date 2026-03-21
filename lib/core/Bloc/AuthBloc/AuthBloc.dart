@@ -23,6 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _loginApi(LoginEvent event, Emitter<AuthState> emit) async {
     emit(state.copyWith(status: AuthStatus.loading));
+
     final result = await repository.login(
       url: '${dotenv.env['BASE_URL']}${dotenv.env["LOGIN"]}',
       header: {"Content-Type": "application/json"},
@@ -62,7 +63,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     FetchProfileEvent event,
     Emitter<AuthState> emit,
   ) async {
+
     emit(state.copyWith(status: AuthStatus.loading));
+
     String? id = await Storage.instance.getUID();
     String? token = await Storage.instance.getToken();
     Map<String, dynamic> body = {"id": id};
@@ -80,7 +83,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     UpdateProfileEvent event,
     Emitter<AuthState> emit
   ) async {
-    emit(state.copyWith(status: AuthStatus.loading));
+    emit(state.copyWith(status: AuthStatus.updateLoading));
+    Future.delayed(Duration(seconds: 5));
     String? id = await Storage.instance.getUID();
     String? token = await Storage.instance.getToken();
     Map<String, String> body = event.file == null
@@ -99,10 +103,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       url: '${dotenv.env['BASE_URL']}${dotenv.env['UPDATE_PROFILE']}',
       body: body,
       header: {
+        'Authorization':'Bearer $token',
         'Content-Type': 'multipart/form-data',
-        'Accept': 'application/json',
-        'Authorization':'Bearer $token'
-      },
+        'Accept': 'application/json'
+      }
     );
     return result.fold(
       (l) => emit(state.copyWith(status: l.status, msg: l.msg)),

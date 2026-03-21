@@ -18,7 +18,7 @@ class _RotateAnimationState extends State<RotateAnimation>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 8),
+      duration: const Duration(seconds: 3),
     )..repeat(reverse: true);
     _animation=Tween<double>(begin: 0,end: 2*pi).animate(_controller);
   }

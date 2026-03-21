@@ -1,4 +1,5 @@
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
+import 'package:vehicle_repair_service/layer/Widget/LoadingButtonIndicator.dart';
 import '../../layer/Widget/CustomHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -241,7 +242,7 @@ class _SignUpScreenState extends State<SignUpScreen> with CustomHelperMixin,Tick
                   BlocConsumer<AuthBloc,AuthState>(builder: (context,state){
                     switch(state.status){
                       case AuthStatus.loading:
-                        return LoadingIndicator();
+                        return LoadingButtonIndicator();
                       default:
                         return Padding(padding: .symmetric(horizontal:10,vertical:5),child: SizedBox(
                           width: context.width,

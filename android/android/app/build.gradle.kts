@@ -11,10 +11,10 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 val keystorePropertiesFile = rootProject.file("keystore.properties")
-val keystoreProperties = Properties().apply {
-    if (keystorePropertiesFile.exists()) {
-        load(FileInputStream(keystorePropertiesFile))
-    }
+val keystoreProperties = Properties()
+
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 android {
@@ -56,9 +56,12 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("release") {
+            // Attach the signing config defined above
             signingConfig = signingConfigs.getByName("release")
+
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

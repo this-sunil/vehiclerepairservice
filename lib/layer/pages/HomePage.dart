@@ -1,3 +1,5 @@
+import 'package:vehicle_repair_service/layer/Widget/NoDataFoundScreen.dart';
+
 import '../../core/Bloc/CategoryBloc/CategoryBloc.dart';
 import '../../core/Bloc/ServiceBloc/ServiceBloc.dart';
 import '../../core/Routes/route.dart';
@@ -64,146 +66,153 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        context.push(AppRoute.scanQrCode);
+      },child: Icon(Icons.qr_code)),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: .all(4),
-                child: Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(borderRadius: .circular(10)),
-                  child: CustomInputText(
-                    controller: searchController,
-                    primaryColor: Colors.white,
+        child: Column(
+          children: [
+            Padding(
+              padding: .all(4),
+              child: Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(borderRadius: .circular(10)),
+                child: CustomInputText(
+                  controller: searchController,
+                  primaryColor: Colors.white,
 
-                    onChanged: (v){
-                      context.read<ServiceBloc>().add(SearchEvent(searchText: v.toString().toLowerCase(), page: page));
-                    },
-                    prefixIcon: Icon(HeroiconsOutline.magnifyingGlass,color: Colors.black),
-                    hintText: 'Search Service',
-                    inputFormatter: [],
-                  ),
+                  onChanged: (v){
+                    context.read<ServiceBloc>().add(SearchEvent(searchText: v.toString().toLowerCase(), page: page));
+                  },
+                  prefixIcon: Icon(HeroiconsOutline.magnifyingGlass,color: Colors.black),
+                  hintText: 'Search Service',
+                  inputFormatter: [],
                 ),
               ),
+            ),
 
+            BlocBuilder<ServiceBloc, ServiceState>(
+              builder: (context, state) {
+                switch (state.status) {
+                  case ServiceStatus.completed:
+                    return Padding(
+                      padding: .all(8),
+                      child: Row(
+                        mainAxisAlignment: .spaceBetween,
+                        children: [
+                          TranslateText(
+                            'Vehicle Services',
+                            style: TextStyle(
 
-              BlocBuilder<ServiceBloc, ServiceState>(
-                builder: (context, state) {
-                  switch (state.status) {
-                    case ServiceStatus.completed:
-                      return Padding(
-                        padding: .all(8),
-                        child: Row(
-                          mainAxisAlignment: .spaceBetween,
-                          children: [
-                            TranslateText(
-                              'Vehicle Services',
-                              style: TextStyle(
-
-                                fontSize: 16,
-                                fontWeight: .w600,
-                              ),
+                              fontSize: 16,
+                              fontWeight: .w600,
                             ),
-                            TextButton(
-                              onPressed: () {
-                                  context.push(AppRoute.servicePage);
-                              },
-                              child: TranslateText('See All',style: TextStyle()),
-                            ),
-                          ],
-                        ),
-                      );
-                    default:
-                      return SizedBox();
-                  }
-                },
-              ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                                context.push(AppRoute.servicePage);
+                            },
+                            child: TranslateText('See All',style: TextStyle()),
+                          ),
+                        ],
+                      ),
+                    );
+                  default:
+                    return SizedBox();
+                }
+              },
+            ),
 
-              BlocBuilder<ServiceBloc, ServiceState>(
-                builder: (context, state) {
-                  switch (state.status) {
-                    case ServiceStatus.completed:
-                      final productItem = state.result ?? [];
-                      return AnimatedBuilder(
-                        animation: _animation,
-                        builder: (context, child) {
-                          return GridView.builder(
-                            controller: scrollController,
-                            padding: .zero,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                            ),
-                            itemCount: productItem.length,
-                            scrollDirection: .vertical,
-                            itemBuilder: (context, index) {
-                              final items = productItem[index];
+            BlocBuilder<ServiceBloc, ServiceState>(
+              builder: (context, state) {
+                switch (state.status) {
+                  case ServiceStatus.loading:
+                    return SizedBox(
+                      height: context.height*.6,
+                      child: LoadingIndicator(),
+                    );
+                  case ServiceStatus.completed:
+                    final productItem = state.result ?? [];
+                    return AnimatedBuilder(
+                      animation: _animation,
+                      builder: (context, child) {
+                        return GridView.builder(
+                          controller: scrollController,
+                          padding: .zero,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                          ),
+                          itemCount: productItem.length,
+                          scrollDirection: .vertical,
+                          itemBuilder: (context, index) {
+                            final items = productItem[index];
 
-                              if(index<productItem.length){
-                                return GestureDetector(
-                                  onTap: () {
+                            if(index<productItem.length){
+                              return GestureDetector(
+                                onTap: () {
 
-                                    context.push(
-                                        AppRoute.vehicleCategory,
-                                        arguments: {
-                                          "serviceId": items.id.toString(),
-                                          "serviceName":items.title.toString(),
-                                        }
-                                    );
+                                  context.push(
+                                      AppRoute.vehicleCategory,
+                                      arguments: {
+                                        "serviceId": items.id.toString(),
+                                        "serviceName":items.title.toString(),
+                                      }
+                                  );
 
-                                  },
-                                  child: AnimatedSlide(
-                                    duration: Duration(seconds: index),
-                                    offset: Offset(
-                                      _animation.value.dx,
-                                      _animation.value.dy,
-                                    ),
-                                    child: Card(
-                                      child: Column(
-                                        mainAxisAlignment: .spaceAround,
-                                        crossAxisAlignment: .center,
-                                        children: [
-                                          CircleAvatar(
-                                            maxRadius: 60,
-                                            backgroundColor: Colors.amber,
-                                            backgroundImage: NetworkImage(
-                                              '${dotenv.env['BASE_URL']}/upload/${items.photo.toString()}',
+                                },
+                                child: AnimatedSlide(
+                                  duration: Duration(seconds: index),
+                                  offset: Offset(
+                                    _animation.value.dx,
+                                    _animation.value.dy,
+                                  ),
+                                  child: Card(
+                                    child: Column(
+                                      mainAxisAlignment: .spaceAround,
+                                      crossAxisAlignment: .center,
+                                      children: [
+                                        CircleAvatar(
+                                          maxRadius: 60,
+                                          backgroundColor: Colors.amber,
+                                          backgroundImage: NetworkImage(
+                                            '${dotenv.env['BASE_URL']}/upload/${items.photo.toString()}',
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: .all(8),
+                                          child: TranslateText(
+                                            items.title.toString(),
+                                            textAlign: .center,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: .w900,
                                             ),
                                           ),
-                                          Padding(
-                                            padding: .all(8),
-                                            child: TranslateText(
-                                              items.title.toString(),
-                                              textAlign: .center,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: .w900,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                );
-                              }
-                              return Padding(padding: EdgeInsetsGeometry.all(12),child: LoadingIndicator());
-                            },
-                          );
-                        },
-                      );
-                    case ServiceStatus.error:
-                      return Padding(padding: EdgeInsetsGeometry.all(10),child: Center(child: TranslateText('${state.msg}')));
-                    default:
-                      return SizedBox();
-                  }
-                },
-              )
-            ],
-          ),
+                                ),
+                              );
+                            }
+                            return Padding(padding: EdgeInsetsGeometry.all(12),child: LoadingIndicator());
+                          },
+                        );
+                      },
+                    );
+                  case ServiceStatus.error:
+                    return NoDataFoundScreen(message: '${state.msg}',buttonText: 'Retry',onRetry: (){
+                      context.read<ServiceBloc>().add(FetchServiceEvent(page: page));
+
+                    });
+                  default:
+                    return SizedBox();
+                }
+              },
+            )
+          ],
         ),
       ),
     );

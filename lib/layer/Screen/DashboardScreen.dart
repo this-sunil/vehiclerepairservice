@@ -2,7 +2,7 @@
 import '../../core/Bloc/InternetBloc/InternetBloc.dart';
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
 import '../../core/Routes/route.dart';
-import '../../layer/Screen/SettingScreen.dart';
+import '../pages/SettingScreen.dart';
 import '../../layer/pages/HistoryPage.dart';
 import '../../layer/pages/ServicePage.dart';
 import '../../layer/pages/HomePage.dart';

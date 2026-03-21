@@ -51,14 +51,14 @@ class NotificationModel {
 class Result {
   final int? id;
   final String? title;
-  final String? subtitle;
+  final String? description;
   final String? photo;
   final DateTime? createdAt;
 
   Result({
     this.id,
     this.title,
-    this.subtitle,
+    this.description,
     this.photo,
     this.createdAt,
   });
@@ -66,7 +66,7 @@ class Result {
   factory Result.fromJson(Map<String, dynamic> json) => Result(
     id: json["id"],
     title: json["title"],
-    subtitle: json["subtitle"],
+    description: json["description"],
     photo: json["photo"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
   );
@@ -74,7 +74,7 @@ class Result {
   Map<String, dynamic> toJson() => {
     "id": id,
     "title": title,
-    "subtitle": subtitle,
+    "description": description,
     "photo": photo,
     "created_at": createdAt?.toIso8601String(),
   };

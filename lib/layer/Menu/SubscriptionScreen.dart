@@ -1,4 +1,7 @@
 import 'dart:collection';
+import 'package:vehicle_repair_service/layer/Widget/CustomHelper.dart';
+import 'package:vehicle_repair_service/layer/Widget/NoDataFoundScreen.dart';
+
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../core/Bloc/SubscriptionBloc/SubscriptionBloc.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +140,14 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           },child:BlocBuilder<SubscriptionBloc,SubscriptionState>(builder: (context,state){
             switch(state.status){
               case SubscriptionStatus.loading:
-                return LoadingIndicator();
+                return SizedBox(
+                  height: context.height*.6,
+                  child: LoadingIndicator(),
+                );
+              case SubscriptionStatus.error:
+                return NoDataFoundScreen(message: state.msg.toString(),buttonText: "Retry",onRetry: (){
+                  context.read<SubscriptionBloc>().add(FetchSubscriptionEvent());
+                });
               case SubscriptionStatus.completed:
                 final model=state.model?.result??[];
                 return ListView.builder(
@@ -148,7 +158,6 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     return GestureDetector(
                       onTap: () {
                         selectCard(item.pid.toString());
-
                         startTransaction(item.planTitle.toString(),item.planType.toString(),item.planPrice.toString(),phone.toString());
                       },
                       child: Card(

@@ -38,7 +38,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initializeDateFormatting('en', '');
-  await dotenv.load(fileName: ".env").then((v) => log("message=>Initialize"));
+  await dotenv.load().then((v) => log("message=>Initialize"));
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((v) => {log("Firebase Connected Successfully !!!")});
