@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vehicle_repair_service/layer/Widget/TranslateText.dart';
 
 class InfoScreen extends StatelessWidget {
   final String title;
@@ -14,7 +15,7 @@ class InfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: TranslateText(title,style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
