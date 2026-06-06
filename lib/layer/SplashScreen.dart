@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:math' as math;
 import '../core/Routes/route.dart';
@@ -27,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen>
       context.pushAndRemoveUntil(AppRoute.dashboard);
     }
   }
+
 
   @override
   void initState() {
@@ -64,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void dispose() {
     // TODO: implement dispose
-    _controller.removeListener((){});
+    _controller.removeListener(() {});
     _controller.dispose();
     _opacityController.dispose();
     super.dispose();

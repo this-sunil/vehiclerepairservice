@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -200,41 +200,41 @@ class _ChatAdminScreenState extends State<ChatAdminScreen> {
                 child: TextFormField(
                   controller: sender,
                   decoration: InputDecoration(
-                    prefixIcon: IconButton(
-                      onPressed: () async {
-                        return showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext subcontext) {
-                            return EmojiPicker(
-                              onEmojiSelected: (category, Emoji emoji) {
-                                context.pop();
-                              },
-                              onBackspacePressed: () {
-                                context.pop();
-                                // Do something when the user taps the backspace button (optional)
-                                // Set it to null to hide the Backspace-Button
-                              },
-                              textEditingController: sender, // pass here the same [TextEditingController] that is connected to your input field, usually a [TextFormField]
-                              config: Config(
-                                height: 256,
-                                checkPlatformCompatibility: true,
-
-                                viewOrderConfig: const ViewOrderConfig(
-                                  top: EmojiPickerItem.categoryBar,
-                                  middle: EmojiPickerItem.emojiView,
-                                  bottom: EmojiPickerItem.searchBar,
-                                ),
-                                skinToneConfig: const SkinToneConfig(),
-                                categoryViewConfig: const CategoryViewConfig(),
-                                bottomActionBarConfig: const BottomActionBarConfig(),
-                                searchViewConfig: const SearchViewConfig(),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      icon: Icon(Icons.emoji_emotions),
-                    ),
+                    // prefixIcon: IconButton(
+                    //   onPressed: () async {
+                    //     return showModalBottomSheet(
+                    //       context: context,
+                    //       builder: (BuildContext subcontext) {
+                    //         return EmojiPicker(
+                    //           onEmojiSelected: (category, Emoji emoji) {
+                    //             context.pop();
+                    //           },
+                    //           onBackspacePressed: () {
+                    //             context.pop();
+                    //             // Do something when the user taps the backspace button (optional)
+                    //             // Set it to null to hide the Backspace-Button
+                    //           },
+                    //           textEditingController: sender, // pass here the same [TextEditingController] that is connected to your input field, usually a [TextFormField]
+                    //           config: Config(
+                    //             height: 256,
+                    //             checkPlatformCompatibility: true,
+                    //
+                    //             viewOrderConfig: const ViewOrderConfig(
+                    //               top: EmojiPickerItem.categoryBar,
+                    //               middle: EmojiPickerItem.emojiView,
+                    //               bottom: EmojiPickerItem.searchBar,
+                    //             ),
+                    //             skinToneConfig: const SkinToneConfig(),
+                    //             categoryViewConfig: const CategoryViewConfig(),
+                    //             bottomActionBarConfig: const BottomActionBarConfig(),
+                    //             searchViewConfig: const SearchViewConfig(),
+                    //           ),
+                    //         );
+                    //       },
+                    //     );
+                    //   },
+                    //   icon: Icon(Icons.emoji_emotions),
+                    // ),
                     hintText: "Enter the message",
                     suffixIcon: IconButton(
                       onPressed: () {

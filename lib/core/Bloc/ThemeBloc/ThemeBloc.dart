@@ -14,7 +14,7 @@ class ThemeBloc extends Bloc<ThemeEvent,ThemeState>{
 
   Future<void> _loadTheme(LoadThemeEvent event,Emitter<ThemeState> emit) async{
     final storage = FlutterSecureStorage();
-    final isDark=await storage.read(key:'theme');
+   final isDark=await storage.read(key:'theme');
     final darkMode= bool.tryParse(isDark.toString(),caseSensitive: false);
     emit(
       state.copyWith(

@@ -25,7 +25,7 @@ class ServiceRepository implements BaseServiceRepo{
         case 404:
           return Left(Failure(status: ServiceStatus.error,msg: result.msg));
         default:
-          return Left(Failure(status: ServiceStatus.error,msg: "No Response !!!"));
+          return Left(Failure(status: ServiceStatus.error,msg: result.msg));
       }
     }
     catch(e){
@@ -47,7 +47,7 @@ class ServiceRepository implements BaseServiceRepo{
         case 404:
           return Left(Failure(status: ServiceStatus.error,msg: result.msg));
         default:
-          return Left(Failure(status: ServiceStatus.error,msg: "No Response !!!"));
+          return Left(Failure(status: ServiceStatus.error,msg: result.msg));
       }
     }
     catch(e){

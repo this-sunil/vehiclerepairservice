@@ -1,3 +1,4 @@
+import 'package:heroicons/heroicons.dart';
 import 'package:vehicle_repair_service/layer/Widget/NoDataFoundScreen.dart';
 
 import '../../core/Bloc/CategoryBloc/CategoryBloc.dart';
@@ -8,7 +9,6 @@ import '../../layer/Widget/CustomInputText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:heroicons_flutter/heroicons_flutter.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
 import '../../layer/Widget/TranslateText.dart';
 import '../../data/Model/ServiceModel.dart';
@@ -21,19 +21,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with TickerProviderStateMixin, CustomHelperMixin {
-
   late AnimationController _controller;
   late Animation<Offset> _animation;
-  String hintText='Search Service';
+  String hintText = 'Search Service';
 
   late int page;
   late ScrollController scrollController;
-  TextEditingController searchController=TextEditingController();
-  List<Result> filteredList=[];
+  TextEditingController searchController = TextEditingController();
+  List<Result> filteredList = [];
   @override
   void initState() {
     // TODO: implement initState
-    page=1;
+    page = 1;
     context.read<ServiceBloc>().add(FetchServiceEvent(page: page));
     context.read<CategoryBloc>().add(FetchCatEvent());
     _controller = AnimationController(
@@ -44,10 +43,12 @@ class _HomePageState extends State<HomePage>
       CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
     );
     _controller.forward();
-    scrollController=ScrollController();
-    scrollController.addListener((){
-      final state=context.read<ServiceBloc>().state;
-      if(scrollController.position.pixels==scrollController.position.maxScrollExtent && state.hasMore==true){
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      final state = context.read<ServiceBloc>().state;
+      if (scrollController.position.pixels ==
+              scrollController.position.maxScrollExtent &&
+          state.hasMore == true) {
         page++;
         context.read<ServiceBloc>().add(FetchServiceEvent(page: page));
       }
@@ -66,9 +67,6 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        context.push(AppRoute.scanQrCode);
-      },child: Icon(Icons.qr_code)),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -81,10 +79,18 @@ class _HomePageState extends State<HomePage>
                   controller: searchController,
                   primaryColor: Colors.white,
 
-                  onChanged: (v){
-                    context.read<ServiceBloc>().add(SearchEvent(searchText: v.toString().toLowerCase(), page: page));
+                  onChanged: (v) {
+                    context.read<ServiceBloc>().add(
+                      SearchEvent(
+                        searchText: v.toString().toLowerCase(),
+                        page: page,
+                      ),
+                    );
                   },
-                  prefixIcon: Icon(HeroiconsOutline.magnifyingGlass,color: Colors.black),
+                  prefixIcon: HeroIcon(
+                    HeroIcons.magnifyingGlass,
+                    color: Colors.black,
+                  ),
                   hintText: 'Search Service',
                   inputFormatter: [],
                 ),
@@ -102,17 +108,13 @@ class _HomePageState extends State<HomePage>
                         children: [
                           TranslateText(
                             'Vehicle Services',
-                            style: TextStyle(
-
-                              fontSize: 16,
-                              fontWeight: .w600,
-                            ),
+                            style: TextStyle(fontSize: 16, fontWeight: .w600),
                           ),
                           TextButton(
                             onPressed: () {
-                                context.push(AppRoute.servicePage);
+                              context.push(AppRoute.servicePage);
                             },
-                            child: TranslateText('See All',style: TextStyle()),
+                            child: TranslateText('See All', style: TextStyle()),
                           ),
                         ],
                       ),
@@ -128,7 +130,7 @@ class _HomePageState extends State<HomePage>
                 switch (state.status) {
                   case ServiceStatus.loading:
                     return SizedBox(
-                      height: context.height*.6,
+                      height: context.height * .6,
                       child: LoadingIndicator(),
                     );
                   case ServiceStatus.completed:
@@ -141,26 +143,25 @@ class _HomePageState extends State<HomePage>
                           padding: .zero,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                          ),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                              ),
                           itemCount: productItem.length,
                           scrollDirection: .vertical,
                           itemBuilder: (context, index) {
                             final items = productItem[index];
 
-                            if(index<productItem.length){
+                            if (index < productItem.length) {
                               return GestureDetector(
                                 onTap: () {
-
                                   context.push(
-                                      AppRoute.vehicleCategory,
-                                      arguments: {
-                                        "serviceId": items.id.toString(),
-                                        "serviceName":items.title.toString(),
-                                      }
+                                    AppRoute.vehicleCategory,
+                                    arguments: {
+                                      "serviceId": items.id.toString(),
+                                      "serviceName": items.title.toString(),
+                                    },
                                   );
-
                                 },
                                 child: AnimatedSlide(
                                   duration: Duration(seconds: index),
@@ -197,25 +198,32 @@ class _HomePageState extends State<HomePage>
                                 ),
                               );
                             }
-                            return Padding(padding: EdgeInsetsGeometry.all(12),child: LoadingIndicator());
+                            return Padding(
+                              padding: EdgeInsetsGeometry.all(12),
+                              child: LoadingIndicator(),
+                            );
                           },
                         );
                       },
                     );
                   case ServiceStatus.error:
-                    return NoDataFoundScreen(message: '${state.msg}',buttonText: 'Retry',onRetry: (){
-                      context.read<ServiceBloc>().add(FetchServiceEvent(page: page));
-
-                    });
+                    return NoDataFoundScreen(
+                      message: '${state.msg}',
+                      buttonText: 'Retry',
+                      onRetry: () {
+                        context.read<ServiceBloc>().add(
+                          FetchServiceEvent(page: page),
+                        );
+                      },
+                    );
                   default:
                     return SizedBox();
                 }
               },
-            )
+            ),
           ],
         ),
       ),
     );
   }
-
 }

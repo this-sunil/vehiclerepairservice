@@ -9,11 +9,11 @@ class BookAppointEvent extends BookEvent{
   final String slotDate;
   final String slotTime;
   final String serviceName;
-  BookAppointEvent({required this.vehicleName,required this.registerNo,required this.photo,required this.vehicleType,required this.slotDate,required this.slotTime, required this.serviceName});
+  BookAppointEvent({required this.vehicleName,required this.registerNo,required this.vehicleType,required this.slotDate,required this.slotTime, required this.serviceName, required this.photo});
 
   @override
   // TODO: implement props
-  List<Object?> get props => [vehicleName,registerNo,photo,vehicleType,slotDate,slotTime,serviceName];
+  List<Object?> get props => [vehicleName,registerNo,vehicleType,slotDate,slotTime,serviceName,photo];
 
 }
 class FetchSlotHistoryEvent extends BookEvent{

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:geolocator/geolocator.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
 import '../../core/Bloc/ShopBloc/ShopBloc.dart';
 import '../../core/Routes/route.dart';
@@ -20,31 +20,31 @@ class ServicePage extends StatefulWidget {
 class _ServicePageState extends State<ServicePage> with CustomHelperMixin {
   final ScrollController _scrollController = ScrollController();
   int page = 1;
-  int calculateDistanceKm(LatLng dest) {
-    final state = context.read<LocationBloc>().state;
-    final double distanceInMeters =
-    state.status == LocationStatus.completed
-        ? Geolocator.distanceBetween(
-      state.model?.lat ?? 0.0,
-      state.model?.long ?? 0.0,
-      dest.latitude,
-      dest.longitude,
-    ): 0.0;
-    return (distanceInMeters / 1000).floor();
-  }
+  // int calculateDistanceKm(LatLng dest) {
+  //   final state = context.read<LocationBloc>().state;
+  //   final double distanceInMeters =
+  //   state.status == LocationStatus.completed
+  //       ? Geolocator.distanceBetween(
+  //     state.model?.lat ?? 0.0,
+  //     state.model?.long ?? 0.0,
+  //     dest.latitude,
+  //     dest.longitude,
+  //   ): 0.0;
+  //   return (distanceInMeters / 1000).floor();
+  // }
 
    String? city;
   @override
   void initState() {
     // TODO: implement initState
-    final state = context.read<LocationBloc>().state;
-    String city="${state.model?.currentAddress?[0].locality}";
-    context.read<ShopBloc>().add(
-      SearchNearByCityEvent(
-        page: page,
-        city: city.toString(),
-      ),
-    );
+    // final state = context.read<LocationBloc>().state;
+    // String city="${state.model?.currentAddress?[0].locality}";
+    // context.read<ShopBloc>().add(
+    //   SearchNearByCityEvent(
+    //     page: page,
+    //     city: city.toString(),
+    //   ),
+    // );
 
     _scrollController.addListener(() {
       final states = context.read<ShopBloc>().state;
@@ -93,7 +93,7 @@ class _ServicePageState extends State<ServicePage> with CustomHelperMixin {
                           'phone':item.phone,
                           'city':item.city,
                           'shopTime':item.shopTime,
-                          'destination':LatLng(item.lat??0.0,item.long??0.0)
+                          'destination':0.0//LatLng(item.lat??0.0,item.long??0.0)
                         });
                       },
                       child: Card(

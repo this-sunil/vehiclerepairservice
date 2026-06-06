@@ -1,4 +1,6 @@
 
+import 'package:heroicons/heroicons.dart';
+
 import '../../core/Bloc/InternetBloc/InternetBloc.dart';
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
 import '../../core/Routes/route.dart';
@@ -12,7 +14,6 @@ import '../../layer/Widget/TranslateText.dart';
 import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:heroicons_flutter/heroicons_flutter.dart';
 
 import '../../layer/Widget/RotateAnimation.dart';
 
@@ -30,9 +31,9 @@ class _DashboardScreenState extends State<DashboardScreen>
   List<Widget> pages = [];
   HomePage homePage = HomePage();
   HistoryPage historyPage = HistoryPage();
-
   ServicePage servicePage = ServicePage();
   SettingScreen settingScreen = SettingScreen(flag: false);
+
   @override
   void initState() {
     // TODO: implement initState
@@ -111,20 +112,18 @@ class _DashboardScreenState extends State<DashboardScreen>
                     onPressed: () {
                       context.push(AppRoute.notification);
                     },
-                    icon: Icon(HeroiconsOutline.bell),
+                    icon: HeroIcon(HeroIcons.bell),
                   ),
                   IconButton(
                     onPressed: () {
                       context.push(AppRoute.settings);
                     },
-                    icon: Icon(HeroiconsOutline.cog6Tooth),
+                    icon: HeroIcon(HeroIcons.cog6Tooth),
                   ),
                 ],
               ),
               body: currentPage,
-             /* floatingActionButton: FloatingActionButton(onPressed: (){
-                context.push(AppRoute.generatePdf);
-              },child: Icon(Icons.file_download)),*/
+
               bottomNavigationBar: CircleNavBar(
                 height: 90,
                 gradient: LinearGradient(
@@ -142,18 +141,18 @@ class _DashboardScreenState extends State<DashboardScreen>
                 tabCurve: Curves.fastOutSlowIn,
                 activeIndex: currentIndex,
                 activeIcons: [
-                  Icon(HeroiconsSolid.home, color: Colors.white),
-                  Icon(HeroiconsOutline.square3Stack3d, color: Colors.white),
-                  Icon(HeroiconsOutline.archiveBox, color: Colors.white),
+                  HeroIcon(HeroIcons.home, color: Colors.white),
+                  HeroIcon(HeroIcons.square3Stack3d, color: Colors.white),
+                  HeroIcon(HeroIcons.archiveBox, color: Colors.white),
                   Icon(Icons.menu, color: Colors.white),
                 ],
                 inactiveIcons: [
-                  Icon(HeroiconsSolid.home, color: Colors.grey.shade300),
-                  Icon(
-                    HeroiconsSolid.square3Stack3d,
+                  HeroIcon(HeroIcons.home, color: Colors.grey.shade300),
+                  HeroIcon(
+                    HeroIcons.square3Stack3d,
                     color: Colors.grey.shade300,
                   ),
-                  Icon(HeroiconsSolid.archiveBox, color: Colors.grey.shade300),
+                  HeroIcon(HeroIcons.archiveBox, color: Colors.grey.shade300),
                   Icon(Icons.menu, color: Colors.grey.shade300),
                 ],
                 color: Colors.deepOrangeAccent,

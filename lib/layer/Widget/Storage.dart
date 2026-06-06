@@ -33,7 +33,7 @@ class Storage {
   }
 
   Future<void> resetToken() async{
-    secureStorage.deleteAll();
+   secureStorage.deleteAll();
   }
 
 }

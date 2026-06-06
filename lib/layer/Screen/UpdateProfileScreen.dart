@@ -1,14 +1,17 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:heroicons/heroicons.dart';
+import 'package:image_picker/image_picker.dart';
+
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../layer/Widget/CustomInputText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:heroicons_flutter/heroicons_flutter.dart';
-import 'package:image_picker/image_picker.dart';
+
+//import 'package:image_picker/image_picker.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
 import '../../layer/Widget/TranslateText.dart';
 import '../../core/Routes/route.dart';
@@ -67,7 +70,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
                   context.pop();
                   pickImage(ImageSource.camera);
                 },
-                leading: Icon(HeroiconsOutline.camera),
+                leading: HeroIcon(HeroIcons.camera),
                 title: Text("Camera"),
               ),
               ListTile(
@@ -75,7 +78,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
                   context.pop();
                   pickImage(ImageSource.gallery);
                 },
-                leading: Icon(HeroiconsOutline.photo),
+                leading: HeroIcon(HeroIcons.photo),
                 title: Text("Gallery"),
               ),
             ],
@@ -147,8 +150,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
                           color: Colors.white,
                           child: IconButton(
                             onPressed: () => popup(context),
-                            icon: const Icon(
-                              HeroiconsOutline.pencil,
+                            icon: const HeroIcon(
+                              HeroIcons.pencil,
                               color: Colors.black,
                             ),
                           ),

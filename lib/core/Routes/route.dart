@@ -1,7 +1,4 @@
-import 'dart:developer';
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:vehicle_repair_service/layer/Screen/ScanQRCode.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../layer/Menu/AboutScreen.dart';
 import '../../layer/Menu/EmergencyScreen.dart';
 import '../../layer/Menu/HistoryView.dart';
@@ -16,12 +13,12 @@ import '../../layer/Screen/NotificationScreen.dart';
 import '../../layer/pages/SettingScreen.dart';
 import '../../layer/Screen/SignInScreen.dart';
 import '../../layer/Screen/SignUpScreen.dart';
-import '../../layer/Screen/TrackerScreen.dart';
+
 import '../../layer/Screen/UpdateProfileScreen.dart';
 import '../../layer/category/VehicleCategory.dart';
 import '../../layer/category/BookingScreen.dart';
 import 'package:flutter/material.dart';
-import '../../layer/feature/GeneratePdfScreen.dart';
+
 import '../../layer/feature/ServicePage.dart';
 import '../../layer/Menu/SubscriptionScreen.dart';
 
@@ -55,7 +52,7 @@ class AppRoute {
   static const String generatePdf = "/generatePdf";
   static const String chatAdmin = "/chatAdmin";
   static const String player='/player';
-  static const String scanQrCode='/scanQrCode';
+
   static RouteTransitionsBuilder transitionsBuilder =
       (context, Animation<double> animation, secondaryAnimation, child) {
         return FadeTransition(opacity: animation, child: child);
@@ -118,25 +115,25 @@ class AppRoute {
             serviceName: serviceName,
           ),
         );
-      case trackerScreen:
-        final args = setting.arguments as Map<String, dynamic>;
-        final String title = args['title'];
-        final String phone = args['phone'];
-        final String city = args['city'];
-        final String shopTime = args['shopTime'];
-        final LatLng destination = args['destination'];
-        log("message=>$destination");
-        return PageRouteBuilder(
-          transitionsBuilder: transitionsBuilder,
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              TrackerScreen(
-                title: title,
-                phone: phone,
-                city: city,
-                shopTime: shopTime,
-                destination: destination,
-              ),
-        );
+      // case trackerScreen:
+      //   final args = setting.arguments as Map<String, dynamic>;
+      //   final String title = args['title'];
+      //   final String phone = args['phone'];
+      //   final String city = args['city'];
+      //   final String shopTime = args['shopTime'];
+      //   final LatLng destination = args['destination'];
+      //   log("message=>$destination");
+      //   return PageRouteBuilder(
+      //     transitionsBuilder: transitionsBuilder,
+      //     pageBuilder: (context, animation, secondaryAnimation) =>
+      //         TrackerScreen(
+      //           title: title,
+      //           phone: phone,
+      //           city: city,
+      //           shopTime: shopTime,
+      //           destination: destination,
+      //         ),
+      //   );
       case overView:
         return PageRouteBuilder(
           transitionsBuilder: transitionsBuilder,
@@ -161,11 +158,11 @@ class AppRoute {
           pageBuilder: (context, animation, secondaryAnimation) =>
               EmergencyScreen(),
         );
-      case generatePdf:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              GeneratePdfScreen(),
-        );
+      // case generatePdf:
+      //   return PageRouteBuilder(
+      //     pageBuilder: (context, animation, secondaryAnimation) =>
+      //         GeneratePdfScreen(),
+      //   );
       case forgotPass:
         return PageRouteBuilder(
           transitionsBuilder: transitionsBuilder,
@@ -215,11 +212,7 @@ class AppRoute {
           pageBuilder: (context, animation, secondaryAnimation) =>
               SettingScreen(flag: true),
         );
-      case scanQrCode:
-        return PageRouteBuilder(
-            transitionsBuilder: transitionsBuilder,
-            pageBuilder: (context,animation,secondaryAnimation)=>ScanQRCode()
-        );
+
       case vehicleCategory:
         final args = setting.arguments as Map<String, dynamic>;
         final String serviceId = args['serviceId'];
@@ -247,7 +240,7 @@ class AppRoute {
         return PageRouteBuilder(
           transitionsBuilder: transitionsBuilder,
           pageBuilder: (context, animation, secondaryAnimation) =>
-              UpdateProfileScreen(),
+              UpdateProfileScreen()
         );
       default:
         return PageRouteBuilder(

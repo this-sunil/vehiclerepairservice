@@ -1,16 +1,13 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../Widget/TranslateText.dart';
-
 
 class EmergencyScreen extends StatelessWidget {
   const EmergencyScreen({super.key});
 
   Future<void> _callNumber(String number) async {
-    log("message");
+    log("message=> $number");
     final Uri launchUri = Uri(scheme: 'tel', path: number);
     if(await canLaunchUrl(launchUri)){
       await launchUrl(launchUri,mode: LaunchMode.inAppWebView);

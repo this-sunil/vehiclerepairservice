@@ -5,9 +5,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class FirebaseService {
-  FirebaseService._();
-  static FirebaseService get instance => FirebaseService._();
+class FirebaseSetup {
+  FirebaseSetup._();
+  static FirebaseSetup get instance => FirebaseSetup._();
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   GoogleSignIn signIn = GoogleSignIn.instance;
@@ -42,7 +42,7 @@ class FirebaseService {
   @pragma('vm:entry-point')
   Future<void> handleRemoteMsg(RemoteMessage message) async {
     if (message.notification != null) {
-      
+
     }
   }
 

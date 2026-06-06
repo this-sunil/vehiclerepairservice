@@ -1,3 +1,5 @@
+import 'package:heroicons/heroicons.dart';
+
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../core/Bloc/ThemeBloc/ThemeBloc.dart';
 import '../Widget/CustomHelper.dart';
@@ -5,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 //import 'package:google_mlkit_translation/google_mlkit_translation.dart';
-import 'package:heroicons_flutter/heroicons_flutter.dart';
+
 import '../../core/Bloc/SettingBloc/SettingBloc.dart';
 import '../../core/Routes/route.dart';
 import '../Widget/TranslateText.dart';
@@ -100,7 +102,7 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: widget.flag == true
-          ? AppBar(title: TranslateText("Setting"))
+          ? AppBar(title: TranslateText("Setting",style: TextStyle(color: Colors.white)))
           : null,
       body: SingleChildScrollView(
         child: Column(
@@ -155,7 +157,7 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
                 onTap: () {
                   context.push(AppRoute.updateProfile);
                 },
-                leading: Icon(HeroiconsOutline.pencilSquare),
+                leading: HeroIcon(HeroIcons.pencilSquare),
                 title: TranslateText(
                   "Update Profile",
                   style: TextStyle(fontSize: 16, fontWeight: .bold),
@@ -220,7 +222,7 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
                     onTap: () async {
                       context.push(AppRoute.privacy);
                     },
-                    leading: Icon(HeroiconsOutline.shieldCheck),
+                    leading: HeroIcon(HeroIcons.shieldCheck),
                     title: TranslateText(
                       "Privacy Policy",
                       style: TextStyle(fontSize: 16, fontWeight: .bold),
@@ -235,7 +237,7 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
                 onTap: () {
                   context.push(AppRoute.terms);
                 },
-                leading: Icon(HeroiconsOutline.documentCheck),
+                leading: HeroIcon(HeroIcons.documentCheck),
                 title: TranslateText(
                   "Terms & Condition",
                   style: TextStyle(fontSize: 16, fontWeight: .bold),
@@ -248,7 +250,7 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
                 onTap: () {
                   context.push(AppRoute.emergency);
                 },
-                leading: Icon(HeroiconsOutline.shieldExclamation),
+                leading: HeroIcon(HeroIcons.shieldExclamation),
                 title: TranslateText(
                   "Emergency Contact",
                   style: TextStyle(fontSize: 16, fontWeight: .bold),
@@ -261,7 +263,7 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
                 onTap: () {
                   context.push(AppRoute.about);
                 },
-                leading: Icon(HeroiconsOutline.informationCircle),
+                leading: HeroIcon(HeroIcons.informationCircle),
                 title: TranslateText(
                   "About Us",
                   style: TextStyle(fontSize: 16, fontWeight: .bold),
@@ -274,7 +276,7 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
                 onTap: () {
                   logout(context);
                 },
-                leading: Icon(HeroiconsOutline.arrowRightStartOnRectangle),
+                leading: HeroIcon(HeroIcons.arrowRightStartOnRectangle),
                 title: TranslateText(
                   "Log Out",
                   style: TextStyle(fontSize: 16, fontWeight: .bold),

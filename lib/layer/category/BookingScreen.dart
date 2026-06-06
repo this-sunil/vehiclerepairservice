@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:heroicons/heroicons.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../core/Bloc/BookBloc/BookBloc.dart';
 import '../../core/Routes/route.dart';
 import '../../layer/Widget/TranslateText.dart';
@@ -9,13 +11,8 @@ import '../../data/Model/ServiceModel.dart';
 import '../../layer/Widget/CustomHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:heroicons_flutter/heroicons_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:time_slot/model/time_slot_Interval.dart';
 import 'package:time_slot/time_slot_from_interval.dart';
-
-
-
 
 class BookingScreen extends StatefulWidget {
   final String serviceId;
@@ -28,6 +25,7 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
+
    final GlobalKey<ScaffoldMessengerState> scaffoldKey=GlobalKey<ScaffoldMessengerState>();
    TextEditingController vehicleNameController = TextEditingController();
    TextEditingController plateNumberController = TextEditingController();
@@ -43,7 +41,7 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
   List<Result> selectedServices = [];
 
    XFile? file;
-  ImagePicker imagePicker=ImagePicker();
+   ImagePicker imagePicker=ImagePicker();
    Future<XFile?> pickImage(ImageSource source) async {
      final ImagePicker imagePicker = ImagePicker();
      final picker = await imagePicker.pickImage(source: source);
@@ -110,17 +108,17 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
                ListTile(
                  onTap: () {
                    context.pop();
-                   pickImage(ImageSource.camera);
+                   //pickImage(ImageSource.camera);
                  },
-                 leading: Icon(HeroiconsOutline.camera),
+                 leading: HeroIcon(HeroIcons.camera),
                  title: Text("Camera"),
                ),
                ListTile(
                  onTap: () {
                    context.pop();
-                   pickImage(ImageSource.gallery);
+                   //pickImage(ImageSource.gallery);
                  },
-                 leading: Icon(HeroiconsOutline.photo),
+                 leading: HeroIcon(HeroIcons.photo),
                  title: Text("Gallery"),
                ),
              ],
@@ -130,6 +128,7 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
      );
    }
    List<DateTime> selectTime = [];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -186,16 +185,16 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
                     child: CircleAvatar(
                       maxRadius: 80,
                       backgroundImage: file != null
-                          ? FileImage(File(file!.path))
-                          : AssetImage(splashIcon),
+                      ? FileImage(File(file!.path)):
+                          AssetImage(splashIcon),
                       child: Align(
                         alignment: Alignment.bottomRight,
                         child: Card(
                           shape: const CircleBorder(),
                           child: IconButton(
                             onPressed: () => popup(context),
-                            icon: const Icon(
-                              HeroiconsOutline.pencil,
+                            icon: const HeroIcon(
+                              HeroIcons.pencil,
 
                             ),
                           ),
@@ -301,14 +300,15 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
                           //startTransaction(100);
 
                           if(formKey.currentState!.validate()){
-                            if(file==null){
-                              scaffoldKey.currentState?.showSnackBar(SnackBar(content: TranslateText("Please Upload Vehicle Photo")));
-                            }
-                            else if(selectTime.isNotEmpty){
+                            // if(file==null){
+                            //   scaffoldKey.currentState?.showSnackBar(SnackBar(content: TranslateText("Please Upload Vehicle Photo")));
+                            // }
+                            // else
+                              if(selectTime.isNotEmpty){
 
                               context.read<BookBloc>().add(BookAppointEvent(
                                   vehicleName: vehicleNameController.text,
-                                  photo:XFile(file!.path),
+                                  photo: XFile(file!.path),
                                   registerNo: plateNumberController.text,
                                   serviceName: serviceController.text,
                                   slotDate: DateFormat('dd/MM/yyyy').format(selectedDate??DateTime.now()),

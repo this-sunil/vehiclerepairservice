@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons_flutter/heroicons_flutter.dart';
-
+import 'package:heroicons/heroicons.dart';
 import '../../core/Routes/route.dart';
 import 'Storage.dart';
 import 'TranslateText.dart';
@@ -60,8 +59,8 @@ mixin CustomHelperMixin{
                 child: CircleAvatar(
                   maxRadius: 50,
                   backgroundColor: Colors.pinkAccent.shade100,
-                  child: Icon(
-                    HeroiconsOutline.arrowLeftEndOnRectangle,
+                  child: HeroIcon(
+                    HeroIcons.arrowLeftEndOnRectangle,
                     size: 50,
                   ),
                 ),

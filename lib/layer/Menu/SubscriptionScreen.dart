@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
 import '../../layer/Widget/TranslateText.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+//import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({super.key});
@@ -68,9 +68,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
 
 
 
-  final Razorpay _razorPay=Razorpay();
+  // final Razorpay _razorPay=Razorpay();
 
   Future<void> startTransaction(String title,String planType,String planPrice,String phone) async{
+
     Map<String,dynamic> options={
       'key': 'rzp_live_ILgsfZCZoFIKMb',
       'amount': double.parse(planPrice).toInt(),
@@ -80,7 +81,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         'contact': phone.toString(),
       }
     };
-    _razorPay.open(options);
+
+    // _razorPay.open(options);
 
   }
 
@@ -89,17 +91,17 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    showToast("Payment Successfully !!!");
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    showToast("Payment Failure !!!");
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    showToast("Wallet Payment Successfully !!!");
-  }
+  // void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  //   showToast("Payment Successfully !!!");
+  // }
+  //
+  // void _handlePaymentError(PaymentFailureResponse response) {
+  //   showToast("Payment Failure !!!");
+  // }
+  //
+  // void _handleExternalWallet(ExternalWalletResponse response) {
+  //   showToast("Wallet Payment Successfully !!!");
+  // }
 
   @override
   void initState() {
@@ -107,27 +109,25 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     context.read<SubscriptionBloc>().add(FetchSubscriptionEvent());
     super.initState();
     context.read<AuthBloc>().add(FetchProfileEvent());
-    _razorPay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorPay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorPay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    // _razorPay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    // _razorPay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    // _razorPay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    _razorPay.clear();
+    //_razorPay.clear();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: TranslateText("Subscription Plan")),
+      appBar: AppBar(title: TranslateText("Subscription Plan",style: TextStyle(color: Colors.white))),
       body: Column(
         crossAxisAlignment: .start,
         children: [
-
-
 
           BlocListener<AuthBloc,AuthState>(listener: (context,state){
             switch(state.status){
