@@ -7,18 +7,18 @@ on:
     branches: [ "main" ]
 
 jobs:
-  # --- JOB 1: Android Build (Runs on Linux) ---
+  # --- JOB 1: Android Build, Linting, & Testing (Runs on Linux) ---
   build-android:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4 # Uses Node 20+ internally to avoid deprecation warnings
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v4
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
-          cache: true # Built-in caching for flutter-action
+          cache: true # Built-in caching for Flutter SDK and pub packages
 
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
@@ -27,7 +27,7 @@ jobs:
         run: flutter pub get
 
       - name: Verify formatting
-        run: dart format .
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: Run tests
         run: flutter test
@@ -36,7 +36,7 @@ jobs:
         run: flutter build apk --debug
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4 # Uses Node 20+ internally
         with:
           name: app-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
@@ -46,7 +46,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # Cleaned up from v4/v5 mismatch
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -60,7 +60,8 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Note: build ios --debug requires --no-codesign unless you have certificates set up
+      # Formatting and tests are skipped here because they already run in the Android job
+
       - name: Build iOS
         run: flutter build ios --debug --no-codesign
 
