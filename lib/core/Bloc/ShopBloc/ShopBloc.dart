@@ -1,7 +1,9 @@
+
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import '../../../data//Model/ShopModel.dart';
+import '../../../data/Model/ShopModel.dart';
 import '../../../domain/Repository/SearchShopRepository.dart';
 import '../../../layer/Widget/Storage.dart';
 part 'ShopEvent.dart';
@@ -12,6 +14,7 @@ class ShopBloc extends Bloc<ShopEvent,ShopState>{
   ShopBloc(this.repo):super(ShopState.initial()){
     on<SearchNearByCityEvent>(_searchByCity);
   }
+
   Future<void> _searchByCity(SearchNearByCityEvent event,Emitter<ShopState> emit) async{
     final List<Result> currentList = event.page == 1 ? [] : List.from(state.model ?? []);
 

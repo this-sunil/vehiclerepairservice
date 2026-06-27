@@ -10,28 +10,47 @@ String shopModelToJson(ShopModel data) => json.encode(data.toJson());
 
 class ShopModel {
   final bool? status;
-  final int? page;
-  final int? totalPage;
   final String? msg;
+  final int? currentPage;
+  final int? totalPage;
   final List<Result>? result;
   final bool? prevPage;
   final bool? nextPage;
 
   ShopModel({
     this.status,
-    this.page,
-    this.totalPage,
     this.msg,
+    this.currentPage,
+    this.totalPage,
     this.result,
     this.prevPage,
     this.nextPage,
   });
 
+  ShopModel copyWith({
+    bool? status,
+    String? msg,
+    int? currentPage,
+    int? totalPage,
+    List<Result>? result,
+    bool? prevPage,
+    bool? nextPage,
+  }) =>
+      ShopModel(
+        status: status ?? this.status,
+        msg: msg ?? this.msg,
+        currentPage: currentPage ?? this.currentPage,
+        totalPage: totalPage ?? this.totalPage,
+        result: result ?? this.result,
+        prevPage: prevPage ?? this.prevPage,
+        nextPage: nextPage ?? this.nextPage,
+      );
+
   factory ShopModel.fromJson(Map<String, dynamic> json) => ShopModel(
     status: json["status"],
-    page: json["page"],
-    totalPage: json["totalPage"],
     msg: json["msg"],
+    currentPage: json["currentPage"],
+    totalPage: json["totalPage"],
     result: json["result"] == null ? [] : List<Result>.from(json["result"]!.map((x) => Result.fromJson(x))),
     prevPage: json["prevPage"],
     nextPage: json["nextPage"],
@@ -39,9 +58,9 @@ class ShopModel {
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "page": page,
-    "totalPage": totalPage,
     "msg": msg,
+    "currentPage": currentPage,
+    "totalPage": totalPage,
     "result": result == null ? [] : List<dynamic>.from(result!.map((x) => x.toJson())),
     "prevPage": prevPage,
     "nextPage": nextPage,
@@ -50,9 +69,9 @@ class ShopModel {
 
 class Result {
   final int? sid;
-  final String? shopName;
-  final String? shopPhoto;
-  final String? shopTime;
+  final String? shopname;
+  final String? shopphoto;
+  final String? shoptime;
   final String? phone;
   final double? lat;
   final double? long;
@@ -62,9 +81,9 @@ class Result {
 
   Result({
     this.sid,
-    this.shopName,
-    this.shopPhoto,
-    this.shopTime,
+    this.shopname,
+    this.shopphoto,
+    this.shoptime,
     this.phone,
     this.lat,
     this.long,
@@ -73,11 +92,36 @@ class Result {
     this.createdAt,
   });
 
+  Result copyWith({
+    int? sid,
+    String? shopname,
+    String? shopphoto,
+    String? shoptime,
+    String? phone,
+    double? lat,
+    double? long,
+    bool? status,
+    String? city,
+    DateTime? createdAt,
+  }) =>
+      Result(
+        sid: sid ?? this.sid,
+        shopname: shopname ?? this.shopname,
+        shopphoto: shopphoto ?? this.shopphoto,
+        shoptime: shoptime ?? this.shoptime,
+        phone: phone ?? this.phone,
+        lat: lat ?? this.lat,
+        long: long ?? this.long,
+        status: status ?? this.status,
+        city: city ?? this.city,
+        createdAt: createdAt ?? this.createdAt,
+      );
+
   factory Result.fromJson(Map<String, dynamic> json) => Result(
     sid: json["sid"],
-    shopName: json["shop_name"],
-    shopPhoto: json["shop_photo"],
-    shopTime: json["shop_time"],
+    shopname: json["shopname"],
+    shopphoto: json["shopphoto"],
+    shoptime: json["shoptime"],
     phone: json["phone"],
     lat: json["lat"]?.toDouble(),
     long: json["long"]?.toDouble(),
@@ -88,9 +132,9 @@ class Result {
 
   Map<String, dynamic> toJson() => {
     "sid": sid,
-    "shop_name": shopName,
-    "shop_photo": shopPhoto,
-    "shop_time": shopTime,
+    "shopname": shopname,
+    "shopphoto": shopphoto,
+    "shoptime": shoptime,
     "phone": phone,
     "lat": lat,
     "long": long,

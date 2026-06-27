@@ -63,6 +63,8 @@ Future<void> main() async {
   // ).then((v) {
   //   log("Sentry Connected Successfully !!!");
   // });
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
     SensitiveContent(
       sensitivity: ContentSensitivity.autoSensitive,

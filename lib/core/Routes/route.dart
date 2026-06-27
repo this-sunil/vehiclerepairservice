@@ -1,4 +1,8 @@
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:developer';
+
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:vehicle_repair_service/layer/Screen/ScanQrCode.dart';
+
 import '../../layer/Menu/AboutScreen.dart';
 import '../../layer/Menu/EmergencyScreen.dart';
 import '../../layer/Menu/HistoryView.dart';
@@ -10,6 +14,8 @@ import '../../layer/Screen/ChatAdmin.dart';
 import '../../layer/Screen/DashboardScreen.dart';
 import '../../layer/Screen/ForgotPassScreen.dart';
 import '../../layer/Screen/NotificationScreen.dart';
+import '../../layer/Screen/PlayerScreen.dart';
+import '../../layer/Screen/TrackerScreen.dart';
 import '../../layer/pages/SettingScreen.dart';
 import '../../layer/Screen/SignInScreen.dart';
 import '../../layer/Screen/SignUpScreen.dart';
@@ -52,6 +58,7 @@ class AppRoute {
   static const String generatePdf = "/generatePdf";
   static const String chatAdmin = "/chatAdmin";
   static const String player='/player';
+  static const String scanQrCode='/scanQrCode';
 
   static RouteTransitionsBuilder transitionsBuilder =
       (context, Animation<double> animation, secondaryAnimation, child) {
@@ -87,10 +94,10 @@ class AppRoute {
       //     pageBuilder: (context, animation, secondaryAnimation) =>
       //         VerifyOtpScreen(name: name, phone: phone, pass: pass),
       //   );
-      // case player:
-      //   return PageRouteBuilder(
-      //       transitionsBuilder: transitionsBuilder,
-      //       pageBuilder: (context,animation,secondaryAnimation)=>PlayerScreen());
+      case player:
+        return PageRouteBuilder(
+            transitionsBuilder: transitionsBuilder,
+            pageBuilder: (context,animation,secondaryAnimation)=>PlayerScreen());
       case historyViews:
         final args = setting.arguments as Map<String, dynamic>;
         final int bookId = args['bookId'];
@@ -115,25 +122,30 @@ class AppRoute {
             serviceName: serviceName,
           ),
         );
-      // case trackerScreen:
-      //   final args = setting.arguments as Map<String, dynamic>;
-      //   final String title = args['title'];
-      //   final String phone = args['phone'];
-      //   final String city = args['city'];
-      //   final String shopTime = args['shopTime'];
-      //   final LatLng destination = args['destination'];
-      //   log("message=>$destination");
-      //   return PageRouteBuilder(
-      //     transitionsBuilder: transitionsBuilder,
-      //     pageBuilder: (context, animation, secondaryAnimation) =>
-      //         TrackerScreen(
-      //           title: title,
-      //           phone: phone,
-      //           city: city,
-      //           shopTime: shopTime,
-      //           destination: destination,
-      //         ),
-      //   );
+      case trackerScreen:
+        final args = setting.arguments as Map<String, dynamic>;
+        final String title = args['title'];
+        final String phone = args['phone'];
+        final String city = args['city'];
+        final String shopTime = args['shopTime'];
+        final LatLng destination = args['destination'];
+        log("message=>$destination");
+        return PageRouteBuilder(
+          transitionsBuilder: transitionsBuilder,
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              TrackerScreen(
+                title: title,
+                phone: phone,
+                city: city,
+                shopTime: shopTime,
+                destination: destination,
+              ),
+        );
+
+      case scanQrCode:
+        return PageRouteBuilder(
+            transitionsBuilder: transitionsBuilder,
+            pageBuilder: (context,animation,secondaryAnimation)=>ScanQrCode());
       case overView:
         return PageRouteBuilder(
           transitionsBuilder: transitionsBuilder,

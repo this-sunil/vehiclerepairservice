@@ -1,3 +1,6 @@
+
+import 'package:vehicle_repair_service/layer/Widget/NoInternetScreen.dart';
+
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../core/Bloc/BookBloc/BookBloc.dart';
 import '../../core/Bloc/CategoryBloc/CategoryBloc.dart';
@@ -33,6 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context)=>InternetBloc()..add(FetchInternetEvent())),
         BlocProvider(create: (context)=>ThemeBloc()..add(LoadThemeEvent())),
         BlocProvider(create: (context) => AuthBloc(AuthRepository())),
         BlocProvider(create: (context) => CategoryBloc(CategoryRepository())),
@@ -41,13 +45,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context)=>ForgotPassBloc()),
         BlocProvider(create: (context)=>InternetBloc()),
         BlocProvider(create: (context)=>BookBloc(BookRepository())),
-
         //BlocProvider(create: (context)=>PhoneAuthBloc(PhoneAuthRepo())),
-
        BlocProvider(create: (context)=>LocationBloc(LocationRepository())..add(FetchLocationEvent())),
         BlocProvider(create: (context)=>ShopBloc(SearchShopRepo())),
 
-        //BlocProvider(create: (context)=>LocationRouteBloc(LocationRouteRepo())),
+        BlocProvider(create: (context)=>LocationRouteBloc(LocationRouteRepo())),
 
         BlocProvider(create: (context)=>SubscriptionBloc(SubscriptionRepo())),
         BlocProvider(create: (context)=>NotificationBloc(NotificationRepository()))
@@ -59,9 +61,24 @@ class MyApp extends StatelessWidget {
           initialRoute: AppRoute.initialRoute,
           theme: state.themeData,
           onGenerateRoute: AppRoute.generateRoute,
-          home: SplashScreen()
+          home: BlocBuilder<InternetBloc,InternetState>(
+              builder: (context,state){
+            switch(state.status){
+              case InternetStatus.error:
+                return NoInternetScreen();
+              default:
+                return SplashScreen();
+            }
+          }),
         );
       }),
     );
   }
 }
+
+
+
+
+
+
+

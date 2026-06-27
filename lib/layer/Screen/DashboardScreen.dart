@@ -1,6 +1,4 @@
-
 import 'package:heroicons/heroicons.dart';
-
 import '../../core/Bloc/InternetBloc/InternetBloc.dart';
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
 import '../../core/Routes/route.dart';
@@ -14,7 +12,6 @@ import '../../layer/Widget/TranslateText.dart';
 import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../layer/Widget/RotateAnimation.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -33,7 +30,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   HistoryPage historyPage = HistoryPage();
   ServicePage servicePage = ServicePage();
   SettingScreen settingScreen = SettingScreen(flag: false);
-
   @override
   void initState() {
     // TODO: implement initState
@@ -157,9 +153,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ],
                 color: Colors.deepOrangeAccent,
               ),
-              // floatingActionButton: FloatingActionButton.extended(onPressed: (){
-              //   context.push(AppRoute.player);
-              // },label: Text("Work Preview")),
+              floatingActionButton: FloatingActionButton.extended(onPressed: (){
+                context.push(AppRoute.player);
+
+              },label: Icon(Icons.qr_code)),
             );
         }
       },
