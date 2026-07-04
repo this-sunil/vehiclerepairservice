@@ -1,10 +1,15 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:isolate';
+import 'package:dio/dio.dart';
+
+import '../../core/Services/DioService.dart';
 import '../../data/Model/CategoryModel.dart';
 import '../../data/Model/Failure.dart';
 import '../../data/Model/Success.dart';
 import 'package:either_dart/either.dart';
-import 'package:http/http.dart';
+
 import '../../core/Bloc/CategoryBloc/CategoryBloc.dart';
 
 abstract class BaseCatRepo {
@@ -16,9 +21,9 @@ class CategoryRepository implements BaseCatRepo{
   Future<Either<Failure, Success>> fetchCat({required String url, Map<String, String>? header}) async{
     // TODO: implement fetchCat
     try{
-      final resp=await post(Uri.parse(url),headers: header);
-      final result = categoryModelFromJson(resp.body);
-      log("message=>${resp.body}");
+      final resp=await DioService.post(url,options: Options(headers: header));
+      final result = await Isolate.run(()=>CategoryModel.fromJson(resp.data));
+      log("message=>${resp.data}");
       switch(resp.statusCode){
         case 200:
           return Right(Success(status: CatStatus.completed,msg: result.msg,result: result.result));

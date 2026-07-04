@@ -1,9 +1,12 @@
+import 'dart:convert';
+import 'dart:isolate';
+import 'package:dio/dio.dart';
 import '../../core/Bloc/SettingBloc/SettingBloc.dart';
+import '../../core/Services/DioService.dart';
 import '../../data/Model/Failure.dart';
 import '../../data/Model/SettingModel.dart';
 import '../../data/Model/Success.dart';
 import 'package:either_dart/either.dart';
-import 'package:http/http.dart';
 
 abstract class BaseSettingRepo {
   Future<Either<Failure, Success>> fetchSetting({
@@ -22,8 +25,10 @@ class SettingRepository implements BaseSettingRepo {
   }) async {
     // TODO: implement fetch Setting
     try {
-      final resp = await post(Uri.parse(url),body: body,headers: header);
-      final result =  settingModelFromJson(resp.body);
+      final resp = await DioService.post(url,data: jsonEncode(body),options: Options(
+        headers: header
+      ));
+      final result =  await Isolate.run(()=>SettingModel.fromJson(resp.data));
       switch (resp.statusCode) {
         case 200:
           return Right(Success(status: SettingStatus.completed, msg: result.msg, result: result));

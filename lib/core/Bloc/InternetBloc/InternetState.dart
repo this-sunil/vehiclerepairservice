@@ -1,5 +1,6 @@
 part of 'InternetBloc.dart';
 enum InternetStatus{initial,loading,completed,error}
+
 class InternetState extends Equatable{
   final InternetStatus? status;
   final String? msg;

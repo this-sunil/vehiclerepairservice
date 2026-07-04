@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context)=>InternetBloc()),
         BlocProvider(create: (context)=>BookBloc(BookRepository())),
         //BlocProvider(create: (context)=>PhoneAuthBloc(PhoneAuthRepo())),
-       BlocProvider(create: (context)=>LocationBloc(LocationRepository())..add(FetchLocationEvent())),
+        BlocProvider(create: (context)=>LocationBloc(LocationRepository())..add(FetchLocationEvent())),
         BlocProvider(create: (context)=>ShopBloc(SearchShopRepo())),
 
         BlocProvider(create: (context)=>LocationRouteBloc(LocationRouteRepo())),

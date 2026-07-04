@@ -1,7 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:isolate';
+import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
-import 'package:http/http.dart';
+
+import 'package:vehicle_repair_service/core/Services/DioService.dart';
 import '../../core/Bloc/NotificationBloc/NotificationBloc.dart';
 import '../../data/Model/Failure.dart';
 import '../../data/Model/NotificationModel.dart';
@@ -24,10 +27,12 @@ class NotificationRepository extends BaseNotificationRepo {
   }) async {
     // TODO: implement fetchNotification
     try {
-      final resp = await post(Uri.parse(url), headers: header, body: body);
-      log("Notification Response=> ${resp.body}");
+      final resp = await DioService.post(url, options: Options(
+        headers: header
+      ), data: body);
+      log("Notification Response=> ${resp.data}");
 
-      final result = notificationModelFromJson(resp.body);
+      final result = await Isolate.run(()=>NotificationModel.fromJson(resp.data));
       switch (resp.statusCode) {
         case 200:
           return result.result!.isEmpty

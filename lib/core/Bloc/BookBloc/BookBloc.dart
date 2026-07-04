@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -24,22 +25,23 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     emit(state.copyWith(status: BookStatus.loading));
     String? uid = await Storage.instance.getUID();
     String? token = await Storage.instance.getToken();
-    Map<String, String> body = {
+    String fileName=event.photo.path.split("/").join();
+    FormData body = FormData.fromMap({
       'uid': uid.toString(),
       'vehicle_name': event.vehicleName,
-      'photo': event.photo.path,
+      'photo': await MultipartFile.fromFile(event.photo.path,filename: fileName),
       'vehicle_type': event.vehicleType,
       'registerNo': event.registerNo,
       'service_name': event.serviceName,
       'slot_date': event.slotDate,
       'slot_time': event.slotTime,
-    };
+    });
     Map<String, String> header = {
       "Content-Type": "multipart/form-data",
       "accept": "application/json",
       "Authorization": "Bearer $token",
     };
-    log("Register=>${body['registerNo']}");
+
     final result = await repository.bookAppointment(
       url: '${dotenv.env['BASE_URL']}${dotenv.env['BOOK_APPOINTMENT']}',
       header: header,

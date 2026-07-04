@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:isolate';
+import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
-import 'package:http/http.dart';
 import '../../core/Bloc/SubscriptionBloc/SubscriptionBloc.dart';
+import '../../core/Services/DioService.dart';
 import '../../data/Model/Failure.dart';
 import '../../data/Model/SubscriptionModel.dart';
 import '../../data/Model/Success.dart';
@@ -17,8 +20,10 @@ class SubscriptionRepo extends BaseSubscriptionRepo{
   Future<Either<Failure, Success>> fetchSubscription({required String url, Map<String, dynamic>? body, Map<String, String>? header}) async{
     // TODO: implement fetchSubscription
     try{
-      final resp=await post(Uri.parse(url),body: body,headers: header);
-      final result=subscriptionModelFromJson(resp.body);
+      final resp=await DioService.post(url,data: jsonEncode(body),options: Options(
+        headers: header
+      ));
+      final result=await Isolate.run(()=>SubscriptionModel.fromJson(resp.data));
       log("\n Response Plan =>${result.status}");
       switch(resp.statusCode){
         case 200:

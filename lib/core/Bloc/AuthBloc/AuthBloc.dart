@@ -1,10 +1,10 @@
 import 'dart:io';
 
-
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
+import '../../Services/DioService.dart';
 import '../../../data/Model/AuthModel.dart';
 import '../../../domain/Repository/AuthRepository.dart';
 import '../../../layer/Widget/Storage.dart';
@@ -87,21 +87,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Future.delayed(Duration(seconds: 5));
     String? id = await Storage.instance.getUID();
     String? token = await Storage.instance.getToken();
-    Map<String, String> body = event.file == null
-        ? {
-            'id': id.toString(),
-            'name': '${event.name}',
-            'phone': '${event.phone}',
-          }
-        : {
-            'id': id.toString(),
-            'name': '${event.name}',
-            'phone': '${event.phone}',
-            'photo': '${event.file?.path}',
-          };
+
+    Map<String, dynamic> body = {
+      'id': id.toString(),
+      'name': event.name.toString(),
+      'phone': event.phone.toString(),
+    };
+
+    if (event.file != null) {
+      String fileName = event.file!.path.split('/').last;
+      body['photo'] = await MultipartFile.fromFile(
+        event.file?.path??'',
+        filename: fileName,
+      );
+    }
     final result = await repository.updateProfile(
       url: '${dotenv.env['BASE_URL']}${dotenv.env['UPDATE_PROFILE']}',
-      body: body,
+      body:  FormData.fromMap(body),
       header: {
         'Authorization':'Bearer $token',
         'Content-Type': 'multipart/form-data',

@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:isolate';
 
+import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
-import 'package:http/http.dart';
+
 import '../../core/Bloc/ShopBloc/ShopBloc.dart';
+import '../../core/Services/DioService.dart';
 import '../../data/Model/Failure.dart';
 import '../../data/Model/ShopModel.dart';
 import '../../data/Model/Success.dart';
@@ -16,9 +20,9 @@ class SearchShopRepo extends BaseSearchShopRepo{
   Future<Either<Failure, Success>> searchByCity({required String url, Map<String, String>? header, required Map<String, dynamic> body}) async{
     // TODO: implement searchByCity
     try{
-      final resp=await post(Uri.parse(url),headers: header,body: body);
-      log("Response=>${resp.body}");
-      final result=shopModelFromJson(resp.body);
+      final resp=await DioService.post(url,options: Options(headers: header),data: jsonEncode(body));
+      log("Response=>${resp.data}");
+      final result=await Isolate.run(()=>ShopModel.fromJson(resp.data));
       switch(resp.statusCode){
         case 200:
           return Right(Success(status: ShopStatus.completed,msg: result.msg,result: result.result));

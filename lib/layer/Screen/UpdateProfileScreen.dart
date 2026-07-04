@@ -11,8 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-//import 'package:image_picker/image_picker.dart';
-import '../../layer/Widget/LoadingIndicator.dart';
+
 import '../../layer/Widget/TranslateText.dart';
 import '../../core/Routes/route.dart';
 import '../Widget/CustomHelper.dart';
