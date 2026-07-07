@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:vehicle_repair_service/core/Services/DioService.dart';
 import '../layer/MyApp.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -43,6 +44,7 @@ Future<void> main() async {
   ).then((v) => {log("Firebase Connected Successfully !!!")});
 
   FirebaseSetup.instance.init();
+
   FlutterError.onError = (details) {
     log("message ${details.stack.toString()}");
     FlutterError.dumpErrorToConsole(details);
@@ -63,6 +65,8 @@ Future<void> main() async {
   // ).then((v) {
   //   log("Sentry Connected Successfully !!!");
   // });
+
+  DioService.init();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(

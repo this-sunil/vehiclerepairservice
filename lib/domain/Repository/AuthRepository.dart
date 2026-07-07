@@ -50,7 +50,7 @@ class AuthRepository implements BaseAuthRepository {
     try {
       final resp = await DioService.post(
         url,
-        data: jsonEncode(body),
+        data: body,
         options: Options(headers: header)
       );
       final result = await Isolate.run(()=>AuthModel.fromJson(resp.data));
@@ -96,7 +96,7 @@ class AuthRepository implements BaseAuthRepository {
     try {
       final resp = await DioService.post(
         url,
-        data: jsonEncode(body),
+        data: body,
         options: Options(headers: header),
       );
       log("Response=>${resp.data}");
@@ -127,7 +127,7 @@ class AuthRepository implements BaseAuthRepository {
       log('Socket Exception=>${e.message}');
       return Left(Failure(status: AuthStatus.error, msg: 'Format Exception'));
     } catch (e,stk) {
-      log("Internal Server Error =>${stk.toString()}");
+      log("Internal Server Error =>${e.toString()}");
       return Left(
         Failure(status: AuthStatus.error, msg: "Internal Server Error"),
       );
@@ -147,7 +147,7 @@ class AuthRepository implements BaseAuthRepository {
         data: jsonEncode(body),
         options: Options(headers: header),
       );
-      final result = await Isolate.run(()=>authModelFromJson(resp.data));
+      final result = await Isolate.run(()=>AuthModel.fromJson(resp.data));
       log("Response=>${resp.data}");
       switch (resp.statusCode) {
         case 200:
@@ -188,8 +188,8 @@ class AuthRepository implements BaseAuthRepository {
     try {
       final resp =await DioService.post(url,options: Options(
         headers: header
-      ),data: jsonEncode(body));
-      final result = authModelFromJson(resp.data);
+      ),data: body);
+      final result = AuthModel.fromJson(resp.data);
       log("Update Response Profile=>${resp.data}");
       switch (resp.statusCode) {
         case 200:

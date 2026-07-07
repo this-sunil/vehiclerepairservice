@@ -21,17 +21,17 @@ class CategoryRepository implements BaseCatRepo{
   Future<Either<Failure, Success>> fetchCat({required String url, Map<String, String>? header}) async{
     // TODO: implement fetchCat
     try{
-      final resp=await DioService.post(url,options: Options(headers: header));
+      final resp=await DioService.get(url,options: Options(headers: header));
+      log("Category message=>${resp.data}");
       final result = await Isolate.run(()=>CategoryModel.fromJson(resp.data));
-      log("message=>${resp.data}");
+
       switch(resp.statusCode){
         case 200:
           return Right(Success(status: CatStatus.completed,msg: result.msg,result: result.result));
         case 400:
-        case 404:
-        return Left(Failure(status: CatStatus.error,msg:result.msg));
+          return Left(Failure(status: CatStatus.error,msg:result.msg));
         default:
-          return Left(Failure(status: CatStatus.error,msg:"No Response"));
+          return Left(Failure(status: CatStatus.error,msg:result.msg));
       }
     }
     on FormatException catch(e){
@@ -47,7 +47,7 @@ class CategoryRepository implements BaseCatRepo{
       return Left(Failure(status: CatStatus.error,msg: e.message));
     }
     catch(e,stk) {
-      log("Internal Server Error=>${stk.toString()}");
+      log("Internal Server Error=>${e.toString()}");
       return Left(Failure(status: CatStatus.error,msg: 'Internal Server Error'));
     }
   }

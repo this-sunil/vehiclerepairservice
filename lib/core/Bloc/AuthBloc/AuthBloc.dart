@@ -26,8 +26,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     final result = await repository.login(
       url: '${dotenv.env['BASE_URL']}${dotenv.env["LOGIN"]}',
-      header: {"Content-Type": "application/json"},
-      body: {"phone": event.phone, "pass": event.pass},
+      header: {"Content-Type": "application/json","Accept":"application/json"},
+      body: {"phone": event.phone, "pass": event.pass}
     );
     return result.fold(
       (l) => emit(state.copyWith(status: l.status, msg: l.msg)),
@@ -50,7 +50,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     final result = await repository.register(
       url: '${dotenv.env['BASE_URL']}${dotenv.env["REGISTER"]}',
-      header: {"Content-Type":"application/json"},
+      header: {"Content-Type":"application/json","Accept":"application/json"},
       body: body,
     );
     return result.fold(

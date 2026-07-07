@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../data/Model/CategoryModel.dart';
 import '../../../domain/Repository/CategoryRepository.dart';
 import '../../../layer/Widget/Storage.dart';
@@ -15,10 +17,12 @@ class CategoryBloc extends Bloc<CategoryEvent,CategoryState>{
 
   Future<void> _fetchCategoryApi(FetchCatEvent event,Emitter<CategoryState> emit) async{
       emit(state.copyWith(status: CatStatus.loading));
+      log("message=>Category Service");
       String? token=await Storage.instance.getToken();
       final result=await repository.fetchCat(url: '${dotenv.env['BASE_URL']}${dotenv.env['FETCH_CAT_API']}',header: {
+        "Authorization":"Bearer $token",
         "Content-Type":"application/json",
-        "Authorization":"Bearer $token"
+        "Accept":"application/json"
       });
       return result.fold((l)=>emit(state.copyWith(status: l.status,msg: l.msg)), (r)=>emit(state.copyWith(status: r.status,msg: r.msg,result: r.result)));
   }

@@ -1,70 +1,100 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:vehicle_repair_service/layer/Widget/Storage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class DioService{
-  static FlutterSecureStorage storage=FlutterSecureStorage();
-  static Dio dio=Dio(BaseOptions(
-    baseUrl: dotenv.env['BASE_URL']??'',
-    connectTimeout: Duration(seconds: 60),
-    receiveTimeout: Duration(seconds: 60),
-    sendTimeout: Duration(seconds: 60),
-    responseType: .json,
-    validateStatus: (status)=>true
-  ));
-  static Dio get _dio=>dio;
-  static Future<void> init() async{
+import '../../layer/Widget/Storage.dart';
+
+class DioService {
+  static final FlutterSecureStorage storage = const FlutterSecureStorage();
+
+  static final Dio _dio = Dio(
+    BaseOptions(
+      baseUrl: dotenv.env['BASE_URL'] ?? '',
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
+      sendTimeout: const Duration(seconds: 60),
+      validateStatus: (status){
+        if(status==400 || status==404){
+          return true;
+        }
+        return false;
+      }
+
+      // Remove validateStatus
+    ),
+  );
+
+
+
+
+  static Future<void> init() async {
     _dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (option, handler) async {
+        onRequest: (options, handler) async {
           final token = await storage.read(key: "token");
           if (token != null) {
-            _dio.options.headers['Authorization'] = 'Bearer $token';
+            _dio.options.headers["Authorization"] = "Bearer $token";
           }
-          handler.next(option);
+
+          _dio.options.headers["Content-Type"] = "application/json";
+          _dio.options.headers['Accept']="application/json";
+
+          handler.next(options);
         },
 
         onError: (error, handler) async {
-          if (error.response?.statusCode == 401) {
-            final newToken = await refreshToken();
+          /// Token expired
+           print("Status Code: ${error.response?.data}");
+              if(error.response?.statusCode==500){
+                final token = await refreshToken();
 
-            if (newToken != null) {
-              final request = error.requestOptions;
+                if (token != null) {
+                  final request = error.requestOptions;
+                  request.headers["Authorization"] = "Bearer $token";
+                  final response = await _dio.fetch(request);
+                  return handler.resolve(response);
+                }
+              }
 
-              request.headers['Authorization'] = 'Bearer $newToken';
 
-              final response = await _dio.fetch(request);
-
-              return handler.resolve(response);
-            }
-          }
 
           handler.next(error);
         },
       ),
     );
+
   }
 
   static Future<String?> refreshToken() async {
-    final refreshToken = await Storage.instance.getUID();
-
-    if (refreshToken == null) return null;
-
     try {
-      final response = await Dio().post(
-        '${dotenv.env['BASE_URL']}/auth/v1/token',
-        data: {"id": refreshToken},
+
+      final refreshId = await Storage.instance.getUID();
+
+      if (refreshId == null) return null;
+
+      final response = await DioService.post(
+        "${dotenv.env["BASE_URL"]}/auth/token",
+        data: {
+          "id": refreshId,
+        },
       );
 
-      final newAccessToken = response.data['token'];
+      if (response.statusCode == 200) {
+        final token = response.data["token"];
 
-      await storage.write(key: 'token', value: newAccessToken);
+        await storage.write(
+          key: "token",
+          value: token,
+        );
 
-      return newAccessToken;
-    } catch (_) {
+        return token;
+      }
+
+      return null;
+    } catch (e) {
+      log("Refresh Token Error : $e");
       return null;
     }
   }
@@ -73,14 +103,12 @@ class DioService{
       String path, {
         Map<String, dynamic>? queryParameters,
         Options? options,
-      }) async {
-
-    return await _dio.get(
+      }) {
+    return _dio.get(
       path,
       queryParameters: queryParameters,
       options: options,
     );
-
   }
 
   static Future<Response> post(
@@ -88,48 +116,13 @@ class DioService{
         dynamic data,
         Map<String, dynamic>? queryParameters,
         Options? options,
-      }) async {
-    log("Login message=>$path");
-
-    return await _dio.post(
+      }) {
+    return _dio.post(
       path,
       data: data,
       queryParameters: queryParameters,
       options: options,
     );
-
-  }
-
-  static Future<Response> patch(
-      String path, {
-        dynamic data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-      }) async {
-
-    return await _dio.patch(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: options,
-    );
-
-  }
-
-  static Future<Response> delete(
-      String path, {
-        dynamic data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-      }) async {
-
-    return await _dio.delete(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: options,
-    );
-
   }
 
   static Future<Response> put(
@@ -137,16 +130,40 @@ class DioService{
         dynamic data,
         Map<String, dynamic>? queryParameters,
         Options? options,
-      }) async {
-
-    return await _dio.put(
+      }) {
+    return _dio.put(
       path,
       data: data,
       queryParameters: queryParameters,
       options: options,
     );
-
   }
 
+  static Future<Response> patch(
+      String path, {
+        dynamic data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+      }) {
+    return _dio.patch(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      options: options,
+    );
+  }
 
+  static Future<Response> delete(
+      String path, {
+        dynamic data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+      }) {
+    return _dio.delete(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      options: options,
+    );
+  }
 }

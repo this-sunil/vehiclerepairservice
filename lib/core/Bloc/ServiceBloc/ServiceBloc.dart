@@ -27,7 +27,7 @@ class ServiceBloc extends Bloc<ServiceEvent,ServiceState>{
 
     String? token=await Storage.instance.getToken();
     final result=await repository.fetchService(url: '${dotenv.env["BASE_URL"]}${dotenv.env["FETCH_SERVICE"]}',header: {
-      "accept":"application/json",
+      "Accept":"application/json",
       "Authorization":"Bearer $token"
     },body:{
       'page':event.page.toString()
@@ -39,6 +39,7 @@ class ServiceBloc extends Bloc<ServiceEvent,ServiceState>{
   }
 
   Future _fetchSearch(SearchEvent event,Emitter<ServiceState> emit) async{
+
     final List<Result> currentList = event.page == 1 ? [] : List.from(state.result ?? []);
 
     if(event.page==1){
@@ -52,7 +53,7 @@ class ServiceBloc extends Bloc<ServiceEvent,ServiceState>{
     String? token=await Storage.instance.getToken();
     final result=await repository.searchService(url: '${dotenv.env["BASE_URL"]}${dotenv.env["SEARCH_SERVICE"]}',
         header: {
-      "accept":"application/json",
+      "Accept":"application/json",
       "Authorization":"Bearer $token"
     },
         body:{
