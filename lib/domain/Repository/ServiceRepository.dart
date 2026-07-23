@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:isolate';
 import 'package:dio/dio.dart';
@@ -35,8 +34,13 @@ class ServiceRepository implements BaseServiceRepo{
           return Left(Failure(status: ServiceStatus.error,msg: result.msg));
       }
     }
-    catch(e,stk){
-
+    on DioException catch (e) {
+      log(e.message.toString());
+      return Left(
+        Failure(status: ServiceStatus.error, msg: "Something Went Wrong!!!"),
+      );
+    }
+    catch(e){
       return Left(Failure(status: ServiceStatus.error,msg: "Internal Server Error"));
     }
   }
@@ -58,6 +62,12 @@ class ServiceRepository implements BaseServiceRepo{
         default:
           return Left(Failure(status: ServiceStatus.error,msg: result.msg));
       }
+    }
+    on DioException catch (e) {
+      log(e.message.toString());
+      return Left(
+        Failure(status: ServiceStatus.error, msg: "Something Went Wrong!!!"),
+      );
     }
     catch(e,stk){
       log("Message=>$stk");

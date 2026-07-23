@@ -68,7 +68,14 @@ class NotificationRepository extends BaseNotificationRepo {
       return Left(
         Failure(status: NotificationStatus.error, msg: 'Format Exception'),
       );
-    } catch (e) {
+    }
+    on DioException catch (e) {
+      log(e.message.toString());
+      return Left(
+        Failure(status: NotificationStatus.error, msg: "Something Went Wrong!!!"),
+      );
+    }
+    catch (e) {
       log("message=>$e");
       return Left(
         Failure(

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
@@ -46,7 +45,13 @@ class CategoryRepository implements BaseCatRepo{
       log("Certificate Exception=>${e.message}");
       return Left(Failure(status: CatStatus.error,msg: e.message));
     }
-    catch(e,stk) {
+    on DioException catch (e) {
+      log(e.message.toString());
+      return Left(
+        Failure(status: CatStatus.error, msg: "Something Went Wrong!!!"),
+      );
+    }
+    catch(e) {
       log("Internal Server Error=>${e.toString()}");
       return Left(Failure(status: CatStatus.error,msg: 'Internal Server Error'));
     }

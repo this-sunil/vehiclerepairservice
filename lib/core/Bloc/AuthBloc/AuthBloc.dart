@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import '../../Services/DioService.dart';
 import '../../../data/Model/AuthModel.dart';
 import '../../../domain/Repository/AuthRepository.dart';
 import '../../../layer/Widget/Storage.dart';

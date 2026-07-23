@@ -49,6 +49,12 @@ class SearchShopRepo extends BaseSearchShopRepo{
       log("Handshake Exception=>$e");
       return Left(Failure(status: ShopStatus.error,msg: 'Handshake Exception'));
     }
+    on DioException catch (e) {
+      log(e.message.toString());
+      return Left(
+        Failure(status: ShopStatus.error, msg: "Something Went Wrong!!!"),
+      );
+    }
     catch(e,stk){
       log("message=>${stk.toString()}");
       return Left(Failure(status: ShopStatus.error,msg: 'Internal Server Error'));

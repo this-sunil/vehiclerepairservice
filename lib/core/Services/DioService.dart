@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '../../layer/Widget/Storage.dart';
 
 class DioService {
   static final FlutterSecureStorage storage = const FlutterSecureStorage();
@@ -15,12 +14,7 @@ class DioService {
       connectTimeout: const Duration(seconds: 60),
       receiveTimeout: const Duration(seconds: 60),
       sendTimeout: const Duration(seconds: 60),
-      validateStatus: (status){
-        if(status==400 || status==404){
-          return true;
-        }
-        return false;
-      }
+      validateStatus: (status)=>true,
 
       // Remove validateStatus
     ),
@@ -31,7 +25,9 @@ class DioService {
 
   static Future<void> init() async {
     _dio.interceptors.add(
+
       InterceptorsWrapper(
+
         onRequest: (options, handler) async {
           final token = await storage.read(key: "token");
           if (token != null) {
@@ -46,7 +42,7 @@ class DioService {
 
         onError: (error, handler) async {
           /// Token expired
-           print("Status Code: ${error.response?.data}");
+           print("Status Code: ${error.response?.statusCode}");
               if(error.response?.statusCode==500){
                 final token = await refreshToken();
 
@@ -68,35 +64,29 @@ class DioService {
   }
 
   static Future<String?> refreshToken() async {
+    final refreshToken = await storage.read(key: 'token');
+
+    if (refreshToken == null) return null;
+
     try {
-
-      final refreshId = await Storage.instance.getUID();
-
-      if (refreshId == null) return null;
-
-      final response = await DioService.post(
-        "${dotenv.env["BASE_URL"]}/auth/token",
-        data: {
-          "id": refreshId,
-        },
+      final response = await Dio().post(
+        '${dotenv.env['BASE_URL']}${dotenv.env['REFRESH_URL']}',
+        data: {"id": refreshToken},
       );
 
-      if (response.statusCode == 200) {
-        final token = response.data["token"];
+      final newAccessToken = response.data['token'];
 
-        await storage.write(
-          key: "token",
-          value: token,
-        );
+      await storage.write(key: 'token', value: newAccessToken);
 
-        return token;
-      }
-
-      return null;
-    } catch (e) {
-      log("Refresh Token Error : $e");
+      return newAccessToken;
+    }
+    on DioException catch(e){
+      log("Dio Exception=>${e.message}");
+    }
+    catch (_) {
       return null;
     }
+    return null;
   }
 
   static Future<Response> get(

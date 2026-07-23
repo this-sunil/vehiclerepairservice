@@ -2,70 +2,92 @@ name: Flutter CI/CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main, develop]
   pull_request:
-    branches: [ "main" ]
+    branches: [main, develop]
 
 jobs:
-  # --- JOB 1: Android Build, Linting, & Testing (Runs on Linux) ---
-  build-android:
+  build_and_test:
+    name: Build & Test
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4 # Uses Node 20+ internally to avoid deprecation warnings
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2.21.0
         with:
-          channel: stable
-          cache: true # Built-in caching for Flutter SDK and pub packages
-
-      - name: Create .env file
-        run: echo "${{ secrets.ENV_FILE }}" > .env
-
-      - name: Install dependencies
-        run: flutter pub get
-
-
-
-      - name: Run tests
-        run: flutter test
-
-      - name: Build APK (Debug)
-        run: flutter build apk --debug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4 # Uses Node 20+ internally
-        with:
-          name: app-debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
-
-  # --- JOB 2: iOS Build (Runs on macOS) ---
-  build-ios:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4 # Cleaned up from v4/v5 mismatch
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
+          flutter-version: '3.44.0'
+          channel: 'stable'
           cache: true
 
-      - name: Create .env file
-        run: echo "${{ secrets.ENV_FILE }}" > .env
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format .
+
+      # - name: Analyze code
+      #  run: flutter analyze
+
+      - name: Run tests
+        run: flutter test --coverage
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/lcov.info
+
+  build_android:
+    name: Build Android APK
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2.21.0
+        with:
+          flutter-version: '3.44.0'
+          channel: 'stable'
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
 
-      # Formatting and tests are skipped here because they already run in the Android job
+      - name: Build APK (release)
+        run: flutter build apk --release
 
-      - name: Build iOS
-        run: flutter build ios --debug --no-codesign
-
-      - name: Upload Runner App
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: ios-debug-app
-          path: build/ios/iphoneos/Runner.app
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+  build_ios:
+    name: Build iOS (no codesign)
+    needs: build_and_test
+    runs-on: macos-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2.21.0
+        with:
+          flutter-version: '3.44.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build iOS (no codesign)
+        run: flutter build ios --release --no-codesign

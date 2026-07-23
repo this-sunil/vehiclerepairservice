@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 import 'dart:isolate';
 import 'package:dio/dio.dart';
 import '../../core/Bloc/SettingBloc/SettingBloc.dart';
@@ -37,7 +40,30 @@ class SettingRepository implements BaseSettingRepo {
         default:
           return Left(Failure(status: SettingStatus.completed, msg: result.msg));
       }
-    } catch (e) {
+    }
+    on FormatException catch(e){
+      log("Format Exception=>${e.message}");
+      return Left(Failure(status: SettingStatus.error,msg: 'Format Exception'));
+    }
+    on SocketException catch(e){
+      log("Socket Exception=>${e.message}");
+      return Left(Failure(status: SettingStatus.error,msg: 'Socket Exception'));
+    }
+    on TimeoutException catch(e){
+      log("TimeOut Exception=>${e.message}");
+      return Left(Failure(status: SettingStatus.error,msg: 'Poor Internet Connection'));
+    }
+    on CertificateException catch(e){
+      log("Certificate Exception=>${e.message}");
+      return Left(Failure(status: SettingStatus.error,msg: 'Bad Certificate Exception'));
+    }
+    on DioException catch (e) {
+      log(e.message.toString());
+      return Left(
+        Failure(status: SettingStatus.error, msg: "Something Went Wrong!!!"),
+      );
+    }
+    catch (e) {
       return Left(Failure(msg: 'Internal Server Error', status: SettingStatus.error));
     }
   }

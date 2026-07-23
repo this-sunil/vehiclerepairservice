@@ -65,7 +65,14 @@ class BookRepository implements BaseBookRepo {
       return Left(
         Failure(status: BookStatus.error, msg: "Certificate Exception"),
       );
-    } catch (e, stk) {
+    }
+    on DioException catch (e) {
+      log(e.message.toString());
+      return Left(
+        Failure(status: BookStatus.error, msg: "Something Went Wrong!!!"),
+      );
+    }
+    catch (e, stk) {
       log("Booking Appoint Error message=>${stk.toString()}");
       return Left(
         Failure(status: BookStatus.error, msg: "Internal Server Error !!!"),
@@ -116,7 +123,15 @@ class BookRepository implements BaseBookRepo {
       return Left(
         Failure(status: BookStatus.error, msg: "Certificate Exception"),
       );
-    } catch (e, stk) {
+    }
+    on DioException catch (e) {
+      log(e.message.toString());
+      return Left(
+        Failure(status: BookStatus.error, msg: "Something Went Wrong!!!"),
+      );
+    }
+
+    catch (e, stk) {
       log("Booking Error message=>${stk.toString()}");
       return Left(
         Failure(status: BookStatus.error, msg: "Internal Server Error !!!"),

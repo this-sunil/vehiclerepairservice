@@ -64,7 +64,7 @@ class AnimatedHeaderState extends State<AnimatedHeader>
                     BoxShadow(
                       color: widget.isDark
                           ? Colors.black54
-                          : Colors.black.withOpacity(0.15),
+                          : Colors.black.withValues(alpha: 0.15),
                       blurRadius: 20,
                       offset: const Offset(0, 8),
                     ),

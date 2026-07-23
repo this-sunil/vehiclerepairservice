@@ -78,7 +78,7 @@ class _AnimatedSectionTileState extends State<AnimatedSectionTile>
               BoxShadow(
                 color: isDark
                     ? Colors.black54
-                    : Colors.black.withOpacity(0.08),
+                    : Colors.black.withValues(alpha: 0.08),
                 blurRadius: 16,
                 offset: const Offset(0, 8),
               ),
@@ -105,7 +105,7 @@ class _AnimatedSectionTileState extends State<AnimatedSectionTile>
               leading: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: brandColor.withOpacity(0.15),
+                  color: brandColor.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(

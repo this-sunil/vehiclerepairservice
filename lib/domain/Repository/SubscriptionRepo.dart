@@ -56,6 +56,12 @@ class SubscriptionRepo extends BaseSubscriptionRepo{
       log("Certificate Exception=>${e.message}");
       return Left(Failure(status: SubscriptionStatus.error,msg: 'Bad Certificate Exception'));
     }
+    on DioException catch (e) {
+      log(e.message.toString());
+      return Left(
+        Failure(status: SubscriptionStatus.error, msg: "Something Went Wrong!!!"),
+      );
+    }
     catch(e,stk){
       log("message=>${stk.toString()}");
       return Left(Failure(status: SubscriptionStatus.error,msg: "Internal Server Error !!!"));

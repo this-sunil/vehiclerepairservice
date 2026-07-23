@@ -7,7 +7,6 @@ import '../Widget/CustomHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 
 import '../../core/Bloc/SettingBloc/SettingBloc.dart';
 import '../../core/Routes/route.dart';

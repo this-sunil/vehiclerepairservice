@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:math' as math;
 
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
