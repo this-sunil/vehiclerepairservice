@@ -73,7 +73,7 @@ dependencies:
   flutter_secure_storage: ^10.3.0
   image_picker: ^1.2.2
   connectivity_plus: ^7.2.0
-  google_maps_flutter: ^2.17.1
+  #google_maps_flutter: ^2.17.1
   flutter_tts: ^4.2.5
   gscankit: ^1.0.3
   tha_player: ^0.5.2
