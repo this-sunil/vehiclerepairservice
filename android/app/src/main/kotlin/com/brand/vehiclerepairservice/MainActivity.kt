@@ -1,4 +1,4 @@
-package com.brand.vehicle-repair-service-repair-service-repair-service
+package com.brand.vehiclerepairservice-repair-service-repair-service-repair-service
 
 import io.flutter.embedding.android.FlutterActivity
 
