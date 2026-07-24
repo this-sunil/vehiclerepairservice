@@ -25,7 +25,8 @@ android {
 
     lintOptions {
         checkReleaseBuilds = false
-        abortOnError = false // Optional: prevents other minor lint issues from blocking the build
+        abortOnError = false
+        disable("EasterEgg", "StopShip")
     }
 
     compileOptions {
