@@ -23,8 +23,8 @@ android {
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
-    lint {
-        disable "EasterEgg", "StopShip"
+    lintOptions {
+        disable("EasterEgg", "StopShip")
     }
 
     compileOptions {
