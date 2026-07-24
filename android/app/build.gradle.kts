@@ -26,7 +26,7 @@ android {
     lint {
         checkReleaseBuilds = false
         abortOnError = false
-        disable += ["EasterEgg", "StopShip"]
+        disable += setOf("EasterEgg", "StopShip")
     }
 
     compileOptions {
