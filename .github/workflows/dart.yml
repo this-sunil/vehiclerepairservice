@@ -28,7 +28,7 @@ jobs:
       - name: Verify formatting
         run: dart format .
 
-      - name: Analyze code
+      - name: Analyze code fix dart issues
         run: dart fix --apply
 
       - name: Run tests
