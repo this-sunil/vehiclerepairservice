@@ -26,10 +26,10 @@ jobs:
         run: flutter pub get
 
       - name: Verify formatting
-        run: dart format .
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze code
-        run: dart fix --apply
+        run: flutter analyze --fatal-warnings --fatal-infos
 
       - name: Run tests
         run: flutter test --coverage
@@ -59,6 +59,19 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
+
+      - name: Create key.properties
+        run: |
+          cat <<EOF > android/key.properties
+          storePassword=${{ secrets.STORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=upload-keystore.jks
+          EOF
 
       - name: Build APK (release)
         run: flutter build apk --release
