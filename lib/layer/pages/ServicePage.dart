@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
 import '../../core/Bloc/ShopBloc/ShopBloc.dart';
 import '../../core/Routes/route.dart';
@@ -20,18 +21,18 @@ class ServicePage extends StatefulWidget {
 class _ServicePageState extends State<ServicePage> with CustomHelperMixin {
   final ScrollController _scrollController = ScrollController();
   int page = 1;
-  // int calculateDistanceKm(LatLng dest) {
-  //   final state = context.read<LocationBloc>().state;
-  //   final double distanceInMeters =
-  //   state.status == LocationStatus.completed
-  //       ? Geolocator.distanceBetween(
-  //     state.model?.lat ?? 0.0,
-  //     state.model?.long ?? 0.0,
-  //     dest.latitude,
-  //     dest.longitude,
-  //   ): 0.0;
-  //   return (distanceInMeters / 1000).floor();
-  // }
+  int calculateDistanceKm(LatLng dest) {
+    final state = context.read<LocationBloc>().state;
+    final double distanceInMeters =
+    state.status == LocationStatus.completed
+        ? Geolocator.distanceBetween(
+      state.model?.lat ?? 0.0,
+      state.model?.long ?? 0.0,
+      dest.latitude,
+      dest.longitude,
+    ): 0.0;
+    return (distanceInMeters / 1000).floor();
+  }
 
    String? city;
   @override
@@ -89,13 +90,13 @@ class _ServicePageState extends State<ServicePage> with CustomHelperMixin {
                   if (index < serviceItem.length) {
                     return GestureDetector(
                       onTap: (){
-                        // context.push(AppRoute.trackerScreen,arguments: {
-                        //   'title':item.shopname,
-                        //   'phone':item.phone,
-                        //   'city':item.city,
-                        //   'shopTime':item.shoptime,
-                        //   'destination':LatLng(item.lat??0.0,item.long??0.0)
-                        // });
+                        context.push(AppRoute.trackerScreen,arguments: {
+                          'title':item.shopname,
+                          'phone':item.phone,
+                          'city':item.city,
+                          'shopTime':item.shoptime,
+                          'destination':LatLng(item.lat??0.0,item.long??0.0)
+                        });
                       },
                       child: Card(
                         child: Column(
@@ -150,7 +151,7 @@ class _ServicePageState extends State<ServicePage> with CustomHelperMixin {
                                   ),
                                 ),
                                 subtitle: TranslateText('${item.city}'),
-                                //trailing: Text('${calculateDistanceKm(LatLng(item.lat??0.0,item.long??0.0))} Km',style: TextStyle(fontSize: 16,fontWeight: .bold)),
+                                trailing: Text('${calculateDistanceKm(LatLng(item.lat??0.0,item.long??0.0))} Km',style: TextStyle(fontSize: 16,fontWeight: .bold)),
                               ),
                             ),
                           ],

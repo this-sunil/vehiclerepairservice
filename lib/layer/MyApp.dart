@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context)=>LocationBloc(LocationRepository())..add(FetchLocationEvent())),
         BlocProvider(create: (context)=>ShopBloc(SearchShopRepo())),
 
-        //BlocProvider(create: (context)=>LocationRouteBloc(LocationRouteRepo())),
+        BlocProvider(create: (context)=>LocationRouteBloc(LocationRouteRepo())),
 
         BlocProvider(create: (context)=>SubscriptionBloc(SubscriptionRepo())),
         BlocProvider(create: (context)=>NotificationBloc(NotificationRepository()))
