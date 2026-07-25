@@ -64,6 +64,13 @@ jobs:
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
 
+      - name: Verify Keystore Integrity
+        run: |
+          keytool -list -v \
+            -keystore android/app/upload-keystore.jks \
+            -storepass "${{ secrets.STORE_PASSWORD }}" \
+            -alias "${{ secrets.KEY_ALIAS }}"
+
       - name: Create key.properties
         run: |
           cat <<EOF > android/key.properties
