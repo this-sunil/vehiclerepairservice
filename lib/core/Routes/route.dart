@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-//import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vehicle_repair_service/layer/Screen/ScanQrCode.dart';
 
 import '../../layer/Menu/AboutScreen.dart';
@@ -122,25 +122,25 @@ class AppRoute {
             serviceName: serviceName,
           ),
         );
-      // case trackerScreen:
-      //   final args = setting.arguments as Map<String, dynamic>;
-      //   final String title = args['title'];
-      //   final String phone = args['phone'];
-      //   final String city = args['city'];
-      //   final String shopTime = args['shopTime'];
-      //   final LatLng destination = args['destination'];
-      //   log("message=>$destination");
-      //   return PageRouteBuilder(
-      //     transitionsBuilder: transitionsBuilder,
-      //     pageBuilder: (context, animation, secondaryAnimation) =>
-      //         TrackerScreen(
-      //           title: title,
-      //           phone: phone,
-      //           city: city,
-      //           shopTime: shopTime,
-      //           destination: destination,
-      //         ),
-      //   );
+      case trackerScreen:
+        final args = setting.arguments as Map<String, dynamic>;
+        final String title = args['title'];
+        final String phone = args['phone'];
+        final String city = args['city'];
+        final String shopTime = args['shopTime'];
+        final LatLng destination = args['destination'];
+        log("message=>$destination");
+        return PageRouteBuilder(
+          transitionsBuilder: transitionsBuilder,
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              TrackerScreen(
+                title: title,
+                phone: phone,
+                city: city,
+                shopTime: shopTime,
+                destination: destination,
+              ),
+        );
 
       case scanQrCode:
         return PageRouteBuilder(
