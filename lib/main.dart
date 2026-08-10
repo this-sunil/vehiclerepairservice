@@ -2,12 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sentry/sentry.dart';
 import 'package:vehicle_repair_service/core/Services/DioService.dart';
 import '../layer/MyApp.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
-
 import 'core/Services/FirebaseService.dart';
 import 'firebase_options.dart';
 
@@ -37,12 +37,20 @@ class MyHttpOverrides extends HttpOverrides {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+
   await initializeDateFormatting('en', '');
   await dotenv.load(fileName: ".env").then((v) => log("message=>Initialize"));
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((v) => {log("Firebase Connected Successfully !!!")});
-
+  await Sentry.init(
+        (options) {
+      options.dsn =
+      'https://8ee49dd2103f3157b6d1c14ac028bb7a@o4508844157763584.ingest.de.sentry.io/4510814872338512';
+    },
+  ).then((v) {
+    log("Sentry Connected Successfully !!!");
+  });
   FirebaseSetup.instance.init();
 
   FlutterError.onError = (details) {
@@ -50,31 +58,19 @@ Future<void> main() async {
     FlutterError.dumpErrorToConsole(details);
   };
 
-  // await SentryFlutter.init(
-  //   (options) {
-  //     options.dsn =
-  //         'https://8ee49dd2103f3157b6d1c14ac028bb7a@o4508844157763584.ingest.de.sentry.io/4510814872338512';
-  //   },
-  //
-  //   appRunner: () => runApp(
-  //     SensitiveContent(
-  //       sensitivity: ContentSensitivity.autoSensitive,
-  //       child: const MyApp(),
-  //     ),
-  //   ),
-  // ).then((v) {
-  //   log("Sentry Connected Successfully !!!");
-  // });
+
 
   DioService.init();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(
     SensitiveContent(
       sensitivity: ContentSensitivity.autoSensitive,
       child: const MyApp(),
     ),
   );
+
 }
 
 

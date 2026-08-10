@@ -1,0 +1,39 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Builds the iOS app for release (IPA file)"
+  lane :build_ipa_release do |options|
+    UI.message("Starting Flutter clean...")
+    sh "flutter clean"
+
+    UI.message("Building Flutter iOS release...")
+    sh "cd .."
+    sh "flutter build ios --release --no-codesign"
+
+
+    UI.message("Building iOS IPA file...")
+    build_ios_app(
+      scheme: "Runner",
+      configuration: "Release",
+      silent: true,
+      clean: true,
+      output_directory: "build/fastlane/ipa",
+      output_name: "Runner.ipa",
+      export_method: "app-store"
+    )
+
+    UI.success("iOS IPA built successfully and located at: build/fastlane/ipa/Runner.ipa 🎉")
+  end
+
+  desc "Deploys the built iOS app to TestFlight"
+  lane :deploy_to_testflight do |options|
+    build_ipa_release
+    upload_to_testflight
+    UI.success("Successfully deployed to TestFlight! Your app is now being processed by App Store Connect. 🚀")
+  end
+
+  desc "Complete CI/CD lane: Builds IPA and deploys to TestFlight"
+  lane :ci_cd_ios do
+    deploy_to_testflight
+  end
+end

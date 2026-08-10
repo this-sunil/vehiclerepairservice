@@ -14,6 +14,7 @@ abstract class BaseLocationRepository {
 }
 
 class LocationRepository extends BaseLocationRepository {
+  Geocoding geocoding=Geocoding();
   @override
   Future<Either<Failure, Success>> fetchLocation() async {
     // TODO: implement fetchLocation
@@ -58,7 +59,7 @@ class LocationRepository extends BaseLocationRepository {
       final position = await Geolocator.getCurrentPosition(
         locationSettings: locationSettings,
       );
-      final placeMark = await placemarkFromCoordinates(
+      final placeMark = await geocoding.placemarkFromCoordinates(
         position.latitude,
         position.longitude,
       );

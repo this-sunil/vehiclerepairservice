@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:math' as math;
+import 'package:shorebird_code_push/shorebird_code_push.dart';
+
 import '../core/Routes/route.dart';
 import '../layer/Widget/CustomHelper.dart';
 import '../layer/Widget/Storage.dart';
@@ -28,7 +30,9 @@ class _SplashScreenState extends State<SplashScreen>
       context.pushAndRemoveUntil(AppRoute.dashboard);
     }
   }
-
+  final ShorebirdUpdater _updater=ShorebirdUpdater();
+  Patch? _currentPatch;
+  bool _updateAvailable = false;
 
   @override
   void initState() {
@@ -60,6 +64,13 @@ class _SplashScreenState extends State<SplashScreen>
           break;
       }
     });
+    _updater.readCurrentPatch().then((patch) {
+      setState(() => _currentPatch = patch);
+    });
+
+    _updater.checkForUpdate().then((status) {
+      setState(() => _updateAvailable = status == UpdateStatus.outdated);
+    });
     super.initState();
   }
 
@@ -69,6 +80,7 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.removeListener(() {});
     _controller.dispose();
     _opacityController.dispose();
+
     super.dispose();
   }
 

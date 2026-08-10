@@ -9,11 +9,12 @@ abstract class BaseLocationRouteRepo{
   Future<Either<Failure,Success>> fetchRouteInfo({required double lat,required double long});
 }
 class LocationRouteRepo implements BaseLocationRouteRepo{
+  Geocoding geocoding=Geocoding();
   @override
   Future<Either<Failure, Success>> fetchRouteInfo({required double lat,required double long}) async{
     // TODO: implement fetchRouteInfo
     try{
-      final placeMark=await placemarkFromCoordinates(lat, long);
+      final placeMark=await geocoding.placemarkFromCoordinates(lat, long);
       if(placeMark.isEmpty){
         return Left(Failure(status: LocationRouteStatus.error,msg: "Address not found !!!"));
       }
