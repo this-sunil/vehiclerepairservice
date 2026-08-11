@@ -1,12 +1,22 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 
 import 'package:vehicle_repair_service/domain/Repository/AuthRepository.dart';
+class MockApi extends Mock implements AuthRepository{
+
+}
 
 void main() {
   late AuthRepository authRepository;
   late String baseUrl;
+
+  final mockApi=MockApi();
+
+
 
   setUpAll(() async {
     await dotenv.load(fileName: '.env');
@@ -22,6 +32,8 @@ void main() {
     authRepository = AuthRepository();
   });
 
+
+  
   group('AuthRepository Login', () {
     test('login API should show result', () async {
       final result = await authRepository.login(
@@ -43,7 +55,7 @@ void main() {
         print('Message: ${result.left.msg}');
       }
 
-      expect(result, isNotNull);
+      expect(result.isRight, true);
     });
   });
 
@@ -72,7 +84,7 @@ void main() {
         print('Message: ${result.left.msg}');
       }
 
-      expect(result, isNotNull);
+      expect(result.isRight, true);
     });
   });
 
@@ -100,7 +112,7 @@ void main() {
         print('Message: ${result.left.msg}');
       }
 
-      expect(result, isNotNull);
+      expect(result.isRight, true);
     });
   });
 
@@ -131,7 +143,7 @@ void main() {
         print('Message: ${result.left.msg}');
       }
 
-      expect(result, isNotNull);
+      expect(result.isRight, true);
     });
   });
 }

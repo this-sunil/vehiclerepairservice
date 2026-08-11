@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:vehicle_repair_service/domain/Repository/BookRepository.dart';
 
 void main() {
@@ -54,7 +55,7 @@ void main() {
         print('Message: ${result.left.msg}');
       }
 
-      expect(result, isNotNull);
+      expect(result.isRight, true);
     });
 
     test('fetchSlotHistory API should show result', () async {
@@ -81,7 +82,7 @@ void main() {
         print('Message: ${result.left.msg}');
       }
 
-      expect(result, isNotNull);
+      expect(result.isRight, true);
     });
   });
 }

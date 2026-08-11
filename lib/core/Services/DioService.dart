@@ -19,7 +19,7 @@ class DioService {
       // Remove validateStatus
     ),
   );
-
+  static Dio get dio => _dio;
 
 
 
