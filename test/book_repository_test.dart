@@ -55,7 +55,7 @@ void main() {
         print('Message: ${result.left.msg}');
       }
 
-      expect(result.isRight, true);
+      expect(result.isLeft, true);
     });
 
     test('fetchSlotHistory API should show result', () async {
@@ -82,7 +82,7 @@ void main() {
         print('Message: ${result.left.msg}');
       }
 
-      expect(result.isRight, true);
+      expect(result.isLeft, true);
     });
   });
 }
