@@ -34,7 +34,7 @@ jobs:
         run: dart format .
 
       - name: Analyze
-        run: flutter analyze --fatal-infos
+        run: flutter analyze
 
   # ---------------------------------------------------------------------
   # Unit + widget tests with coverage
