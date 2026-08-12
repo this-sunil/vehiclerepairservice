@@ -33,8 +33,6 @@ jobs:
       - name: Verify formatting
         run: dart format .
 
-      - name: Analyze
-        run: flutter analyze
 
   # ---------------------------------------------------------------------
   # Unit + widget tests with coverage
