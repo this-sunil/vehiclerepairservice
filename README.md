@@ -85,132 +85,9 @@ If you mean you want the exact content from your previous message converted into
 # 🧪 AuthRepository API Testing
 
 ## Run Test
+GitHub Markdown Format (`README.md`) me exact GitHub-styled tables ke saath document template:
 
-```bash
-flutter test test/auth_repository_test.dart
-
-📊 Test Results
-#	Repository	Test Case	Status
-1	AuthRepository	Register API	✅ Passed
-2	AuthRepository	Login API	✅ Passed
-3	AuthRepository	Fetch Profile API	✅ Passed
-4	AuthRepository	Update Profile API	✅ Passed
-
-Result: 4/4 tests passed successfully.
-
-🔍 Test Output
-00: AuthRepository Register
-    ✓ register API should show result
-
-01: AuthRepository Login
-    ✓ login API should show result
-
-02: AuthRepository Fetch Profile
-    ✓ fetchProfile API should show result
-
-03: AuthRepository Update Profile
-    ✓ updateProfile API should show result
-
-────────────────────────────────────────────
-
-✓ All tests passed!
-
-🌐 API Documentation
-📝 1. Register API
-Property	Value
-API	Register
-Status	✅ Success
-User ID	27
-Name	Abhinav Jadhav
-Phone	9887675778
-Role	user
-Response
-{
-  "status": true,
-  "msg": "User register Successfully !!!",
-  "result": {
-    "id": 27,
-    "name": "Abhinav Jadhav",
-    "phone": "9887675778",
-    "photo": "",
-    "role": "user",
-    "created_at": "2026-08-31T11:18:43.344Z"
-  }
-}
-
-🔐 2. Login API
-Property	Value
-API	Login
-Status	✅ Success
-User ID	27
-Name	Abhinav Jadhav
-Phone	9887675778
-Role	user
-Response
-{
-  "status": true,
-  "msg": "Login Successfully !!!",
-  "result": {
-    "id": 27,
-    "name": "Abhinav Jadhav",
-    "phone": "9887675778",
-    "photo": "",
-    "role": "user",
-    "created_at": "2026-08-31T11:18:43.344Z"
-  }
-}
-
-👤 3. Fetch Profile API
-Property	Value
-API	Fetch Profile
-Status	✅ Success
-User ID	27
-Name	Abhinav Jadhav
-Phone	9887675778
-Role	user
-Response
-{
-  "status": true,
-  "msg": "Fetch User Successfully",
-  "result": {
-    "id": 27,
-    "name": "Abhinav Jadhav",
-    "phone": "9887675778",
-    "photo": "",
-    "role": "user",
-    "created_at": "2026-08-31T11:18:43.344Z"
-  }
-}
-
-✏️ 4. Update Profile API
-Property	Value
-API	Update Profile
-Status	✅ Success
-User ID	27
-Updated Name	Sunil Shedge
-Updated Phone	9887675759
-Role	user
-Response
-{
-  "status": true,
-  "msg": "Update Profile Successfully !!!",
-  "result": {
-    "id": 27,
-    "name": "Sunil Shedge",
-    "phone": "9887675759",
-    "photo": "",
-    "role": "user",
-    "created_at": "2026-08-31T11:18:43.344Z"
-  }
-}
-
-📋 API Test Matrix
-API	Response Status	Result	Test Status
-Register	true	User registered successfully	✅ Passed
-Login	true	Login successful	✅ Passed
-Fetch Profile	true	Profile fetched successfully	✅ Passed
-Update Profile	true	Profile updated successfully	✅ Passed
-📁 Project Structure
+```markdown
 vehicle_repair_service/
 │
 ├── android/
@@ -230,83 +107,316 @@ vehicle_repair_service/
 ├── pubspec.yaml
 └── README.md
 
+🔐 Authentication
+
+The AuthRepository is responsible for authentication and user profile API operations.
+
+API Overview
+
+| # | API | Description | Status |
+|---|---|---|---|
+| 1 | Register | Create a new user account | ✅ |
+| 2 | Login | Authenticate an existing user | ✅ |
+| 3 | Fetch Profile | Retrieve user profile | ✅ |
+| 4 | Update Profile | Update user profile | ✅ |
+
+🧪 Unit Testing
+
+The AuthRepository has been tested using Flutter's built-in testing framework.
+
+Test File
+test/
+└── auth_repository_test.dart
+
+Run AuthRepository Tests
+flutter test test/auth_repository_test.dart
+
+Run All Tests
+flutter test
+
+📊 Test Results
+
+| # | Repository | Test Case | Status |
+|---|---|---|---|
+| 01 | AuthRepository | Register API | ✅ Passed |
+| 02 | AuthRepository | Login API | ✅ Passed |
+| 03 | AuthRepository | Fetch Profile API | ✅ Passed |
+| 04 | AuthRepository | Update Profile API | ✅ Passed |
+
+Test Summary
+
+| Metric | Result |
+|---|---|
+| Total Tests | 4 |
+| Passed | 4 ✅ |
+| Failed | 0 ❌ |
+| Success Rate | 100% 🎉 |
+
+🔍 Test Output
+00: AuthRepository Register
+    ✓ register API should show result
+
+01: AuthRepository Login
+    ✓ login API should show result
+
+02: AuthRepository Fetch Profile
+    ✓ fetchProfile API should show result
+
+03: AuthRepository Update Profile
+    ✓ updateProfile API should show result
+
+────────────────────────────────────────────
+
+✓ All tests passed!
+
+🌐 API Documentation
+
+1. 📝 Register API
+Response
+```json
+{
+    "status": true,
+    "msg": "User register Successfully !!!",
+    "result": {
+        "id": 27,
+        "name": "Abhinav Jadhav",
+        "phone": "9887675778",
+        "photo": "",
+        "role": "user",
+        "created_at": "2026-08-31T11:18:43.344Z"
+    }
+}
+
+```
+
+Status: ✅ Passed
+
+2. 🔐 Login API
+Response
+
+```json
+{
+    "status": true,
+    "msg": "Login Successfully !!!",
+    "result": {
+        "id": 27,
+        "name": "Abhinav Jadhav",
+        "phone": "9887675778",
+        "photo": "",
+        "role": "user",
+        "created_at": "2026-08-31T11:18:43.344Z"
+    }
+}
+
+```
+
+Status: ✅ Passed
+
+3. 👤 Fetch Profile API
+Response
+
+```json
+{
+    "status": true,
+    "msg": "Fetch User Successfully",
+    "result": {
+        "id": 27,
+        "name": "Abhinav Jadhav",
+        "phone": "9887675778",
+        "photo": "",
+        "role": "user",
+        "created_at": "2026-08-31T11:18:43.344Z"
+    }
+}
+
+```
+
+Status: ✅ Passed
+
+4. ✏️ Update Profile API
+Response
+
+```json
+{
+    "status": true,
+    "msg": "Update Profile Successfully !!!",
+    "result": {
+        "id": 27,
+        "name": "Sunil Shedge",
+        "phone": "9887675759",
+        "photo": "",
+        "role": "user",
+        "created_at": "2026-08-31T11:18:43.344Z"
+    }
+}
+
+```
+
+Status: ✅ Passed
+
+📋 API Test Matrix
+
+| API | Response Status | Result | Test |
+| --- | --- | --- | --- |
+| Register | true | User registered successfully | ✅ Passed |
+| Login | true | Login successful | ✅ Passed |
+| Fetch Profile | true | User profile fetched successfully | ✅ Passed |
+| Update Profile | true | User profile updated successfully | ✅ Passed |
+
 🚀 Getting Started
+
 Prerequisites
-Requirement	Required
-Flutter SDK	✅
-Dart SDK	✅
-Android Studio / VS Code	✅
-Android Emulator / Device	✅
-Backend API	✅
+
+Before running the application, make sure the following are installed:
+
+* Flutter SDK
+* Dart SDK
+* Android Studio or VS Code
+* Android Emulator or Physical Android Device
+
 Installation
-1. Clone Repository
+
+1. Clone the Repository
+
+```bash
 git clone <repository-url>
 
-2. Navigate to Project
+```
+
+2. Navigate to the Project
+
+```bash
 cd vehicle_repair_service
 
+```
+
 3. Install Dependencies
+
+```bash
 flutter pub get
 
-4. Run Application
+```
+
+4. Run the Application
+
+```bash
 flutter run
 
+```
+
 🏗️ Architecture
-Layer	Responsibility
-UI / Screens	User interface
-Repository	API and data handling
-Service	Network communication
-REST API	Backend operations
-JSON Response	API response data
-Application Flow
+
+The project follows a repository-based architecture.
+
+```
+┌─────────────────────┐
+│      Flutter UI     │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│   AuthRepository    │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│       REST API      │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│    Backend Server   │
+└─────────────────────┘
+
+```
+
+AuthRepository Responsibilities
+
+* Handle authentication requests
+* Handle profile requests
+* Communicate with REST APIs
+* Process API responses
+* Keep API logic separate from UI
+
+🔄 Authentication Flow
+
+```
+User
+  │
+  ▼
 Flutter UI
-    ↓
+  │
+  ▼
 AuthRepository
-    ↓
-Service / API
-    ↓
-Backend Server
-    ↓
+  │
+  ▼
+REST API
+  │
+  ▼
+Backend
+  │
+  ▼
 JSON Response
-    ↓
+  │
+  ▼
 Flutter UI
 
-🧪 Testing Commands
-Command	Purpose
-flutter test	Run all tests
-flutter test test/auth_repository_test.dart	Run AuthRepository tests
-flutter analyze	Analyze project
-flutter pub get	Install dependencies
-📈 Project Status
-Module	Status
-User Registration	🟢 Completed
-User Login	🟢 Completed
-Fetch Profile	🟢 Completed
-Update Profile	🟢 Completed
-AuthRepository	🟢 Working
-REST API Integration	🟢 Working
-Unit Testing	🟢 Passed
-Documentation	🟢 Completed
+```
+
+📈 Current Test Status
+
+| Component | Status |
+| --- | --- |
+| Register API | 🟢 Working |
+| Login API | 🟢 Working |
+| Fetch Profile API | 🟢 Working |
+| Update Profile API | 🟢 Working |
+| AuthRepository | 🟢 Working |
+| Unit Tests | 🟢 Passing |
+
 🎯 Final Result
-Category	Result
-APIs Tested	4
-Tests Passed	4 ✅
-Tests Failed	0 ❌
-Success Rate	100%
-Authentication	🟢 Working
-Overall Status	🟢 PASS
+
+AuthRepository API integration is working as expected.
+
+All 4 authentication APIs have been successfully tested.
+
+| Result | Value |
+| --- | --- |
+| Total APIs Tested | 4 |
+| Successful APIs | 4 |
+| Failed APIs | 0 |
+| Success Rate | 100% |
+| Overall Status | 🟢 PASS |
+
 ✅ Conclusion
 
 The AuthRepository API integration has been successfully implemented and tested.
 
-API	Result
-Register	✅ Passed
-Login	✅ Passed
-Fetch Profile	✅ Passed
-Update Profile	✅ Passed
+The following authentication operations are working correctly:
+
+* ✅ Register API
+* ✅ Login API
+* ✅ Fetch Profile API
+* ✅ Update Profile API
+
 🎉 Final Test Result
 
-4 / 4 Tests Passed — 100% Success Rate
+4 / 4 Tests Passed
+
+100% Success Rate
+
+Authentication Integration: 🟢 Working
+
+📌 Project Status
+
+| Module | Status |
+| --- | --- |
+| Authentication | 🟢 Completed |
+| Register | 🟢 Completed |
+| Login | 🟢 Completed |
+| Fetch Profile | 🟢 Completed |
+| Update Profile | 🟢 Completed |
+| Unit Testing | 🟢 Completed |
 
 📄 License
 
@@ -314,10 +424,11 @@ This project is developed for the Vehicle Repair Service application.
 
 ⭐ Support
 
-If you find this project useful, please consider giving the repository a ⭐.
+If you find this project useful, consider giving the repository a ⭐.
 
 Vehicle Repair Service
+Flutter • Dart • REST API • AuthRepository • Unit Testing
 
-Flutter • Dart • REST API • AuthRepository • Unit Testing
-Vehicle Repair Service
-Flutter • Dart • REST API • AuthRepository • Unit Testing
+```
+
+```
