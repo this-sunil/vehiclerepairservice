@@ -11,18 +11,16 @@ A Flutter-based vehicle repair service application for managing vehicle repair a
 
 ## 📖 About The Project
 
-| Item | Details |
-|:---|:---|
-| Project Name | Vehicle Repair Service |
-| Platform | Android / iOS |
-| Framework | Flutter |
-| Language | Dart |
-| Architecture | Repository Pattern |
-| Backend | REST API |
-| Testing | Flutter Test |
-| Current Status | 🟢 Active Development |
+## API Overview
 
----
+| # | API | Description | Status |
+|:---|:---|:---|:---|
+| 1 | Register | Create a new user account | ✅ |
+| 2 | Login | Authenticate an existing user | ✅ |
+| 3 | Fetch Profile | Retrieve user profile | ✅ |
+| 4 | Update Profile | Update user profile | ✅ |
+
+
 
 ## ✨ Features
 
@@ -34,6 +32,32 @@ A Flutter-based vehicle repair service application for managing vehicle repair a
 | ✏️ Update Profile | Update user information | ✅ |
 | 🌐 REST API | Backend API integration | ✅ |
 | 🧪 Unit Testing | Authentication API testing | ✅ |
+
+## 🔐 Authentication APIs
+
+| # | API | Purpose | Status |
+|:---:|:---|:---|:---:|
+| 1 | Register | Create a new user account | ✅ Passed |
+| 2 | Login | Authenticate an existing user | ✅ Passed |
+| 3 | Fetch Profile | Retrieve user profile | ✅ Passed |
+| 4 | Update Profile | Update user profile | ✅ Passed |
+
+
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://www.youtube.com/watch?v=KyMtUvTrKJc">
+        <img src="https://img.youtube.com/vi/KyMtUvTrKJc/0.jpg" width="400" alt="Video 1">
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://www.youtube.com/watch?v=fXcrOBtX2Ac">
+        <img src="https://img.youtube.com/vi/fXcrOBtX2Ac/0.jpg" width="400" alt="Video 2">
+      </a>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -49,32 +73,6 @@ A Flutter-based vehicle repair service application for managing vehicle repair a
 | Flutter Test | Unit Testing |
 
 ---
-
-## 🔐 Authentication APIs
-
-| # | API | Purpose | Status |
-|:---:|:---|:---|:---:|
-| 1 | Register | Create a new user account | ✅ Passed |
-| 2 | Login | Authenticate an existing user | ✅ Passed |
-| 3 | Fetch Profile | Retrieve user profile | ✅ Passed |
-| 4 | Update Profile | Update user profile | ✅ Passed |
-
----
-
-## 🧪 Unit Testing
-
-| Item | Details |
-|:---|:---|
-| Test Framework | Flutter Test |
-| Repository | `AuthRepository` |
-| Test File | `test/auth_repository_test.dart` |
-| Total Tests | 4 |
-| Passed | 4 ✅ |
-| Failed | 0 ❌ |
-| Success Rate | 100% 🎉 |
-
-### Run Tests
-If you mean you want the exact content from your previous message converted into proper README.md Markdown, without changing the information, use this:
 
 # 🧪 AuthRepository API Testing
 
@@ -105,14 +103,6 @@ vehicle_repair_service/
 
 The AuthRepository is responsible for authentication and user profile API operations.
 
-## API Overview
-
-| # | API | Description | Status |
-|:---|:---|:---|:---|
-| 1 | Register | Create a new user account | ✅ |
-| 2 | Login | Authenticate an existing user | ✅ |
-| 3 | Fetch Profile | Retrieve user profile | ✅ |
-| 4 | Update Profile | Update user profile | ✅ |
 
 🧪 Unit Testing
 
@@ -127,6 +117,7 @@ flutter test test/auth_repository_test.dart
 
 ## Run All Tests
 flutter test
+```
 
 ## 📊 Test Results
 
@@ -146,7 +137,7 @@ flutter test
 | Failed | 0 ❌ |
 | Success Rate | 100% 🎉 |
 
-
+```
 🔍 Test Output
 00: AuthRepository Register
     ✓ register API should show result
@@ -423,4 +414,3 @@ If you find this project useful, consider giving the repository a ⭐.
 
 Vehicle Repair Service
 Flutter • Dart • REST API • AuthRepository • Unit Testing
-
