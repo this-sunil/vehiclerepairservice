@@ -125,29 +125,21 @@ test/
 Run AuthRepository Tests
 flutter test test/auth_repository_test.dart
 
-Run All Tests
+## Run All Tests
 flutter test
 
-## 📊Test Results
+#	Repository	Test Case	Status
+01	AuthRepository	Register API	✅ Passed
+02	AuthRepository	Login API	✅ Passed
+03	AuthRepository	Fetch Profile API	✅ Passed
+04	AuthRepository	Update Profile API	✅ Passed
 
-## 📊 Test Results
 
-| # | Repository | Test Case | Status |
-|---:|---|---|:---:|
-| 01 | `AuthRepository` | Register API | ✅ Passed |
-| 02 | `AuthRepository` | Login API | ✅ Passed |
-| 03 | `AuthRepository` | Fetch Profile API | ✅ Passed |
-| 04 | `AuthRepository` | Update Profile API | ✅ Passed |
-
-## 📋 Test Summary
-
-| Metric | Result |
-|---|---:|
-| Total Tests | **4** |
-| Passed | **4** ✅ |
-| Failed | **0** ❌ |
-| Success Rate | **100%** 🎉 |
-
+## Metric	Result
+Total Tests	4
+Passed	4 ✅
+Failed	0 ❌
+Success Rate	100% 🎉
 
 🔍 Test Output
 00: AuthRepository Register
