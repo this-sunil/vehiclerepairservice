@@ -6,6 +6,7 @@ class Storage {
 
   final secureStorage=FlutterSecureStorage();
 
+
   Future<void> setToken(String value) async{
     secureStorage.write(key:"token", value:value);
   }

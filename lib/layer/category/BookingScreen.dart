@@ -25,7 +25,6 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
-
    final GlobalKey<ScaffoldMessengerState> scaffoldKey=GlobalKey<ScaffoldMessengerState>();
    TextEditingController vehicleNameController = TextEditingController();
    TextEditingController plateNumberController = TextEditingController();

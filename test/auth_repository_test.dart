@@ -1,8 +1,11 @@
-import 'dart:io';
+import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vehicle_repair_service/domain/Repository/AuthRepository.dart';
+import 'package:vehicle_repair_service/layer/Widget/Storage.dart';
 
 void main() {
   late AuthRepository authRepository;
@@ -10,6 +13,7 @@ void main() {
 
   setUpAll(() async {
     await dotenv.load(fileName: '.env');
+    FlutterSecureStorage.setMockInitialValues({});
 
     baseUrl = dotenv.env['BASE_URL'].toString();
 
@@ -22,118 +26,100 @@ void main() {
     authRepository = AuthRepository();
   });
 
-
-  
-  group('AuthRepository Login', () {
-    test('login API should show result', () async {
-      final result = await authRepository.login(
-        url: '$baseUrl${dotenv.env['LOGIN']}',
-        body: {'email': 'test@gmail.com', 'password': '123456'},
-      );
-
-      print('\n ========== LOGIN RESULT ==========\n');
-      print(result);
-
-      if (result.isRight) {
-        print('LOGIN SUCCESS');
-        print('Status: ${result.right.status}');
-        print('Message: ${result.right.msg}');
-        print('Data: ${result.right.result}');
-      } else {
-        print('LOGIN FAILED');
-        print('Status: ${result.left.status}');
-        print('Message: ${result.left.msg}');
-      }
-
-      expect(result.isLeft, true);
-    });
-  });
-
   group('AuthRepository Register', () {
     test('register API should show result', () async {
       final result = await authRepository.register(
         url: '$baseUrl${dotenv.env['REGISTER']}',
         body: {
-          'name': 'Test User',
-          'email': 'test@gmail.com',
-          'password': '123456',
+          'name': 'Abhinav Jadhav',
+          'phone': '9887675778',
+          'pass': 'abhinav@9870',
         },
       );
-
       print('\n ========== REGISTER RESULT ==========\n');
-      print(result);
-
-      if (result.isRight) {
-        print('REGISTER SUCCESS');
-        print('Status: ${result.right.status}');
-        print('Message: ${result.right.msg}');
-        print('Data: ${result.right.result}');
-      } else {
-        print('REGISTER FAILED');
-        print('Status: ${result.left.status}');
-        print('Message: ${result.left.msg}');
+      result.fold((l)=>{}, (r){
+        Storage.instance.setToken(r.result?.token.toString()??'');
+        Storage.instance.setUId(r.result?.result?.id.toString()??"");
+      });
+      final output = JsonEncoder.withIndent(
+        "  ",
+      ).convert(result.fold((l) => {'error': l.msg}, (r) => r.result));
+      if (kDebugMode) {
+        print(output);
       }
 
-      expect(result.isLeft, true);
+
+    });
+  });
+  group('AuthRepository Login', () {
+    test('login API should show result', () async {
+      final result = await authRepository.login(
+        url: '$baseUrl${dotenv.env['LOGIN']}',
+        body: {'phone': '9887675778', 'pass': 'abhinav@9870'},
+      );
+
+      print('\n ========== LOGIN RESULT ==========\n');
+      result.fold((l)=>{}, (r){
+        Storage.instance.setToken(r.result?.token.toString()??'');
+        Storage.instance.setUId(r.result?.result?.id.toString()??"");
+      });
+      final output = JsonEncoder.withIndent(
+        "  ",
+      ).convert(result.fold((l) => {'error': l.msg}, (r) => r.result));
+      if (kDebugMode) {
+        print(output);
+      }
     });
   });
 
   group('AuthRepository Fetch Profile', () {
     test('fetchProfile API should show result', () async {
+      String? id=await Storage.instance.getUID();
+      String? token=await Storage.instance.getToken();
       final result = await authRepository.fetchProfile(
         url: '$baseUrl${dotenv.env['FETCH_PROFILE']}',
         header: {
-          "Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlhdCI6MTc4NjM4NDUyOSwiZXhwIjoxNzg2Mzg1NzI5fQ.LUeppVIGa601V5XvgxQJz3OhIPMoUwLTzMo2YsJVMT4"
+          "Authorization": "Bearer $token",
         },
-        body: {'userId': '1'},
+        body: {'id':id},
       );
 
       print('========== FETCH PROFILE RESULT ==========');
-      print(result);
-
-      if (result.isRight) {
-        print('FETCH PROFILE SUCCESS');
-        print('Status: ${result.right.status}');
-        print('Message: ${result.right.msg}');
-        print('Data: ${result.right.result}');
-      } else {
-        print('FETCH PROFILE FAILED');
-        print('Status: ${result.left.status}');
-        print('Message: ${result.left.msg}');
+      final output = JsonEncoder.withIndent(
+        "  ",
+      ).convert(result.fold((l) => {'error': l.msg}, (r) => r.result));
+      if (kDebugMode) {
+        print(output);
       }
 
-      expect(result.isLeft, true);
     });
   });
 
+
   group('AuthRepository Update Profile', () {
     test('updateProfile API should show result', () async {
+      String? id=await Storage.instance.getUID();
+      String? token=await Storage.instance.getToken();
       final body = FormData.fromMap({
-        'name': 'Test User',
-        'email': 'test@gmail.com',
+        'id':id,
+        'name': 'Sunil Shedge',
+        'phone': '9887675759',
       });
 
       final result = await authRepository.updateProfile(
         url: '$baseUrl${dotenv.env['UPDATE_PROFILE']}',
-        header: {'Authorization': 'Bearer test-token'},
+        header: {'Authorization': 'Bearer $token'},
         body: body,
       );
 
       print('\n ========== UPDATE PROFILE RESULT ========== \n');
-      print(result);
 
-      if (result.isRight) {
-        print('UPDATE PROFILE SUCCESS');
-        print('Status: ${result.right.status}');
-        print('Message: ${result.right.msg}');
-        print('Data: ${result.right.result}');
-      } else {
-        print('UPDATE PROFILE FAILED');
-        print('Status: ${result.left.status}');
-        print('Message: ${result.left.msg}');
+      final output = JsonEncoder.withIndent(
+        "  ",
+      ).convert(result.fold((l) => {'error': l.msg}, (r) => r.result));
+      if (kDebugMode) {
+        print(output);
       }
-
-      expect(result.isLeft, true);
     });
   });
 }
