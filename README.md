@@ -424,6 +424,3 @@ If you find this project useful, consider giving the repository a ⭐.
 Vehicle Repair Service
 Flutter • Dart • REST API • AuthRepository • Unit Testing
 
-```
-
-```
