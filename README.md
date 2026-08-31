@@ -360,7 +360,7 @@ Flutter UI
 ## 📈 Current Test Status
 
 | Component | Status |
-|: --- |: --- |
+|:---|:---|
 | Register API | 🟢 Working |
 | Login API | 🟢 Working |
 | Fetch Profile API | 🟢 Working |
@@ -375,7 +375,7 @@ AuthRepository API integration is working as expected.
 All 4 authentication APIs have been successfully tested.
 
 | Result | Value |
-|:--- |:--- |
+|:--- |:---|
 | Total APIs Tested | 4 |
 | Successful APIs | 4 |
 | Failed APIs | 0 |
@@ -401,10 +401,10 @@ The following authentication operations are working correctly:
 
 Authentication Integration: 🟢 Working
 
-📌 Project Status
+## 📌 Project Status
 
 | Module | Status |
-| --- | --- |
+|:--- |:---|
 | Authentication | 🟢 Completed |
 | Register | 🟢 Completed |
 | Login | 🟢 Completed |
