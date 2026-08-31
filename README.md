@@ -143,6 +143,7 @@ flutter test
 ────────────────────────────────────────────
 
 ✓ All tests passed!
+```
 
 🌐 API Documentation
 
