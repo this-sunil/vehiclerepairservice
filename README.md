@@ -1,19 +1,44 @@
-# vehicle_repair_service
+🚗 Vehicle Repair Service
 
-A new Flutter project.
+A Flutter-based vehicle repair service application.
 
-## Unit Testing Auth Repository
-                                                                                                           
-sunilshedge@sunils-MacBook-Pro vehiclerepairservice % flutter test test/auth_repository_test.dart
+🧪 Unit Testing — Auth Repository
 
-##0: AuthRepository Register register API should show result                                                                        
+The authentication repository has been tested using Flutter's built-in testing framework.
 
- ========== REGISTER RESULT ==========
+Run Tests
+flutter test test/auth_repository_test.dart
 
-{ 
+Test Coverage
+
+The following authentication APIs are covered:
+
+✅ Register API
+✅ Login API
+✅ Fetch Profile API
+✅ Update Profile API
+Test Results
+00: AuthRepository Register
+    ✓ register API should show result
+
+01: AuthRepository Login
+    ✓ login API should show result
+
+02: AuthRepository Fetch Profile
+    ✓ fetchProfile API should show result
+
+03: AuthRepository Update Profile
+    ✓ updateProfile API should show result
+
+────────────────────────────────────────────
+
+✓ All tests passed!
+
+API Response Examples
+1. Register
+{
   "status": true,
   "msg": "User register Successfully !!!",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODgxNzUxMjMsImV4cCI6MTc4ODE3NjMyM30.7Cih9FxSPPCfdvtzssZVtCkUh8K8BbOGH2Ob3aVE9l0",
   "result": {
     "id": 27,
     "name": "Abhinav Jadhav",
@@ -24,14 +49,10 @@ sunilshedge@sunils-MacBook-Pro vehiclerepairservice % flutter test test/auth_rep
   }
 }
 
-##1: AuthRepository Login login API should show result                                                                              
-
- ========== LOGIN RESULT ==========
-
+2. Login
 {
   "status": true,
   "msg": "Login Successfully !!!",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODgxNzUxMjQsImV4cCI6MTc4ODE3NjMyNH0.1ZiwyA7V338uVgsSMhpKNCHtdTPHHlAtbe5qljBHROY",
   "result": {
     "id": 27,
     "name": "Abhinav Jadhav",
@@ -42,12 +63,10 @@ sunilshedge@sunils-MacBook-Pro vehiclerepairservice % flutter test test/auth_rep
   }
 }
 
-##2: AuthRepository Fetch Profile fetchProfile API should show result                                                               
-========== FETCH PROFILE RESULT ==========
+3. Fetch Profile
 {
   "status": true,
   "msg": "Fetch User Successfully",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODgxNzUxMjUsImV4cCI6MTc4ODE3NjMyNX0._cSjPoJXIWfTRj4cOaYmRkyzkmWYYrAC6hnYmbumfpY",
   "result": {
     "id": 27,
     "name": "Abhinav Jadhav",
@@ -58,14 +77,10 @@ sunilshedge@sunils-MacBook-Pro vehiclerepairservice % flutter test test/auth_rep
   }
 }
 
-##3: AuthRepository Update Profile updateProfile API should show result                                                             
-
- ========== UPDATE PROFILE RESULT ========== 
-
+4. Update Profile
 {
   "status": true,
   "msg": "Update Profile Successfully !!!",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODgxNzUxMjUsImV4cCI6MTc4ODE3NjMyNX0._cSjPoJXIWfTRj4cOaYmRkyzkmWYYrAC6hnYmbumfpY",
   "result": {
     "id": 27,
     "name": "Sunil Shedge",
@@ -75,4 +90,15 @@ sunilshedge@sunils-MacBook-Pro vehiclerepairservice % flutter test test/auth_rep
     "created_at": "2026-08-31T11:18:43.344Z"
   }
 }
-##4: All tests passed! 
+
+📊 Test Summary
+#	Repository	Test	Status
+1	AuthRepository	Register API	✅ Passed
+2	AuthRepository	Login API	✅ Passed
+3	AuthRepository	Fetch Profile API	✅ Passed
+4	AuthRepository	Update Profile API	✅ Passed
+🎉 Result
+
+4/4 tests passed successfully.
+
+The AuthRepository API integration is working as expected.
