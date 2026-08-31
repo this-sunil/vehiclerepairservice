@@ -11,7 +11,7 @@ sunilshedge@sunils-MacBook-Pro vehiclerepairservice % flutter test test/auth_rep
 
  ========== REGISTER RESULT ==========
 
-{
+{ \n
   "status": true,
   "msg": "User register Successfully !!!",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODgxNzUxMjMsImV4cCI6MTc4ODE3NjMyM30.7Cih9FxSPPCfdvtzssZVtCkUh8K8BbOGH2Ob3aVE9l0",
