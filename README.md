@@ -1,30 +1,57 @@
 🚗 Vehicle Repair Service
-A Flutter-based Vehicle Repair Service Application with authentication and user profile management.
 
+A Flutter-based vehicle repair service application for managing vehicle repair and service operations.
 
+📌 Project Overview
 
+The Vehicle Repair Service application is built using Flutter and follows a repository-based architecture for API integration.
 
+The authentication module provides:
 
-🧪 Auth Repository Testing
-The AuthRepository has been tested using Flutter's built-in testing framework.
+User registration
+User login
+User profile retrieval
+User profile update
+🛠️ Tech Stack
+Technology	Purpose
+Flutter	Mobile Application
+Dart	Programming Language
+REST API	Backend Integration
+Repository Pattern	API & Data Layer
+Flutter Test	Unit Testing
+🔐 Authentication
 
-APIs Covered
-✅ Register API
-✅ Login API
-✅ Fetch Profile API
-✅ Update Profile API
-▶️ Run Tests
+The AuthRepository handles all authentication-related API operations.
+
+Available APIs
+#	API	Description
+1	Register	Create a new user account
+2	Login	Authenticate an existing user
+3	Fetch Profile	Retrieve user profile information
+4	Update Profile	Update user profile information
+🧪 Unit Testing
+
+The authentication repository has been tested using Flutter's built-in testing framework.
+
+Test File
+test/
+└── auth_repository_test.dart
+
+Run Tests
 flutter test test/auth_repository_test.dart
 
 📊 Test Results
-#	Repository	API	Status
-1	AuthRepository	Register API	✅ Passed
-2	AuthRepository	Login API	✅ Passed
-3	AuthRepository	Fetch Profile API	✅ Passed
-4	AuthRepository	Update Profile API	✅ Passed
-
-Result: 4/4 tests passed successfully — 100% 🎉
-
+#	Test Case	API	Status
+01	Register	Register API	✅ Passed
+02	Login	Login API	✅ Passed
+03	Fetch Profile	Fetch Profile API	✅ Passed
+04	Update Profile	Update Profile API	✅ Passed
+Test Summary
+Metric	Result
+Total Tests	4
+Passed	4
+Failed	0
+Success Rate	100%
 🔍 Test Output
 00: AuthRepository Register
     ✓ register API should show result
@@ -42,19 +69,9 @@ Result: 4/4 tests passed successfully — 100% 🎉
 
 ✓ All tests passed!
 
-📈 Test Summary
-Metric	Result
-Repository	AuthRepository
-#	Repository	API	Status
-1	AuthRepository	Register API	✅ Passed
-2	AuthRepository	Login API	✅ Passed
-3	AuthRepository	Fetch Profile API	✅ Passed
-4	AuthRepository	Update Profile API	✅ Passed
-
-🌐 API Documentation
-1. 📝 Register API
-Response:
-
+🌐 API Response Examples
+1. Register API
+Response
 {
     "status": true,
     "msg": "User register Successfully !!!",
@@ -68,11 +85,11 @@ Response:
     }
 }
 
+
 Status: ✅ Passed
 
-2. 🔐 Login API
-Response:
-
+2. Login API
+Response
 {
     "status": true,
     "msg": "Login Successfully !!!",
@@ -86,11 +103,11 @@ Response:
     }
 }
 
+
 Status: ✅ Passed
 
-3. 👤 Fetch Profile API
-Response:
-
+3. Fetch Profile API
+Response
 {
     "status": true,
     "msg": "Fetch User Successfully",
@@ -104,11 +121,11 @@ Response:
     }
 }
 
+
 Status: ✅ Passed
 
-4. ✏️ Update Profile API
-Response:
-
+4. Update Profile API
+Response
 {
     "status": true,
     "msg": "Update Profile Successfully !!!",
@@ -122,32 +139,104 @@ Response:
     }
 }
 
+
 Status: ✅ Passed
 
 📋 API Test Matrix
-#	Repository	API	Status
-1	AuthRepository	Register API	✅ Passed
-2	AuthRepository	Login API	✅ Passed
-3	AuthRepository	Fetch Profile API	✅ Passed
-4	AuthRepository	Update Profile API	✅ Passed
+API	Response Status	Result	Test
+Register	true	User registered successfully	✅ Passed
+Login	true	Login successful	✅ Passed
+Fetch Profile	true	User profile fetched successfully	✅ Passed
+Update Profile	true	User profile updated successfully	✅ Passed
+📁 Project Structure
+vehicle_repair_service/
+│
+├── lib/
+│   ├── models/
+│   ├── repositories/
+│   ├── services/
+│   ├── screens/
+│   └── main.dart
+│
+├── test/
+│   └── auth_repository_test.dart
+│
+├── android/
+├── ios/
+├── pubspec.yaml
+└── README.md
 
+🚀 Getting Started
+Prerequisites
+
+Make sure the following are installed:
+
+Flutter SDK
+Dart SDK
+Android Studio / VS Code
+Android Emulator or Physical Device
+Installation
+
+Clone the repository:
+
+git clone <repository-url>
+
+
+Navigate to the project:
+
+cd vehicle_repair_service
+
+
+Install dependencies:
+
+flutter pub get
+
+
+Run the application:
+
+flutter run
+
+🧪 Testing
+
+Run all Flutter tests:
+
+flutter test
+
+
+Run only AuthRepository tests:
+
+flutter test test/auth_repository_test.dart
+
+📈 Current Test Status
+Component	Status
+Register API	✅
+Login API	✅
+Fetch Profile API	✅
+Update Profile API	✅
+AuthRepository	🟢 Working
+Unit Tests	🟢 Passing
 🎯 Final Result
-📈 Test Summary
-Metric	Result
-Repository	AuthRepository
-Total APIs Tested	4
-Passed	4 ✅
-Failed	0
-Success Rate	100% 🎉
 
+AuthRepository API integration is working as expected.
 
-✅ Conclusion
-The AuthRepository API integration is working as expected.
+All 4 authentication APIs have been successfully tested.
 
-All authentication APIs have been successfully tested:
+4/4 Tests Passed — 100% Success Rate 🎉
 
-✅ Register
-✅ Login
-✅ Fetch Profile
-✅ Update Profile
-Final Status: 🟢 All Tests Passed
+👨‍💻 Development
+
+This project uses a repository-based approach to separate API communication from the application UI and business logic.
+
+The AuthRepository is responsible for handling authentication and profile-related API operations.
+
+📄 License
+
+This project is developed for the Vehicle Repair Service application.
+
+⭐ Status
+
+Project Status: 🟢 Active Development
+
+Authentication Module: 🟢 Completed & Tested
+
+Test Status: 🟢 4/4 Passed
