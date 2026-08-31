@@ -1,57 +1,104 @@
-🚗 Vehicle Repair Service
+Sure. Below is the complete README.md file content. Copy everything inside the code block into your project's README.md.
+
+# 🚗 Vehicle Repair Service
+
 A Flutter-based vehicle repair service application for managing vehicle repair and service operations.
 
-📌 Project Overview
-The Vehicle Repair Service application is built using Flutter and follows a repository-based architecture for API integration.
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![REST API](https://img.shields.io/badge/REST_API-Integrated-blue?style=for-the-badge)
+![Tests](https://img.shields.io/badge/Tests-4%2F4_Passed-brightgreen?style=for-the-badge)
 
-The authentication module provides:
+---
 
-User registration
-User login
-User profile retrieval
-User profile update
-🛠️ Tech Stack
-Technology	Purpose
-Flutter	Mobile Application
-Dart	Programming Language
-REST API	Backend Integration
-Repository Pattern	API & Data Layer
-Flutter Test	Unit Testing
+## 📖 About The Project
+
+**Vehicle Repair Service** is a Flutter application designed to manage vehicle repair and service-related operations.
+
+The application uses a repository-based architecture for API communication and separates API handling from the UI and business logic.
+
+### ✨ Features
+
+- 👤 User Registration
+- 🔐 User Login
+- 📄 Fetch User Profile
+- ✏️ Update User Profile
+- 🌐 REST API Integration
+- 🧪 Unit Testing
+- 📱 Flutter-based Mobile Application
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|:---|:---|
+| **Flutter** | Mobile Application Framework |
+| **Dart** | Programming Language |
+| **REST API** | Backend Communication |
+| **AuthRepository** | Authentication API Layer |
+| **Flutter Test** | Unit Testing |
+
+---
+
+## 📁 Project Structure
+
+```text
+vehicle_repair_service/
+│
+├── android/
+├── ios/
+│
+├── lib/
+│   ├── models/
+│   ├── repositories/
+│   │   └── auth_repository.dart
+│   ├── services/
+│   ├── screens/
+│   └── main.dart
+│
+├── test/
+│   └── auth_repository_test.dart
+│
+├── pubspec.yaml
+└── README.md
 
 🔐 Authentication
-The AuthRepository handles all authentication-related API operations.
 
-Available APIs
-#	API	Description
-1	Register	Create a new user account
-2	Login	Authenticate an existing user
-3	Fetch Profile	Retrieve user profile information
-4	Update Profile	Update user profile information
+The AuthRepository is responsible for authentication and user profile API operations.
 
+API Overview
+#	API	Description	Status
+1	Register	Create a new user account	✅
+2	Login	Authenticate an existing user	✅
+3	Fetch Profile	Retrieve user profile	✅
+4	Update Profile	Update user profile	✅
 🧪 Unit Testing
-The authentication repository has been tested using Flutter's built-in testing framework.
+
+The AuthRepository has been tested using Flutter's built-in testing framework.
 
 Test File
 test/
 └── auth_repository_test.dart
 
-Run Tests
+Run AuthRepository Tests
 flutter test test/auth_repository_test.dart
 
-📊 Test Results
-#	Test Case	API	Status
-01	Register	Register API	✅ Passed
-02	Login	Login API	✅ Passed
-03	Fetch Profile	Fetch Profile API	✅ Passed
-04	Update Profile	Update Profile API	✅ Passed
+Run All Tests
+flutter test
 
+📊 Test Results
+#	Repository	Test Case	Status
+01	AuthRepository	Register API	✅ Passed
+02	AuthRepository	Login API	✅ Passed
+03	AuthRepository	Fetch Profile API	✅ Passed
+04	AuthRepository	Update Profile API	✅ Passed
 Test Summary
 Metric	Result
 Total Tests	4
-Passed	4
-Failed	0
-Success Rate	100%
-
+Passed	4 ✅
+Failed	0 ❌
+Success Rate	100% 🎉
 🔍 Test Output
 00: AuthRepository Register
     ✓ register API should show result
@@ -69,8 +116,8 @@ Success Rate	100%
 
 ✓ All tests passed!
 
-🌐 API Response Examples
-1. Register API
+🌐 API Documentation
+1. 📝 Register API
 Response
 {
     "status": true,
@@ -85,9 +132,10 @@ Response
     }
 }
 
+
 Status: ✅ Passed
 
-2. Login API
+2. 🔐 Login API
 Response
 {
     "status": true,
@@ -102,9 +150,10 @@ Response
     }
 }
 
+
 Status: ✅ Passed
 
-3. Fetch Profile API
+3. 👤 Fetch Profile API
 Response
 {
     "status": true,
@@ -119,9 +168,10 @@ Response
     }
 }
 
+
 Status: ✅ Passed
 
-4. Update Profile API
+4. ✏️ Update Profile API
 Response
 {
     "status": true,
@@ -136,6 +186,7 @@ Response
     }
 }
 
+
 Status: ✅ Passed
 
 📋 API Test Matrix
@@ -144,86 +195,132 @@ Register	true	User registered successfully	✅ Passed
 Login	true	Login successful	✅ Passed
 Fetch Profile	true	User profile fetched successfully	✅ Passed
 Update Profile	true	User profile updated successfully	✅ Passed
-
-📁 Project Structure
-vehicle_repair_service/
-│
-├── lib/
-│   ├── models/
-│   ├── repositories/
-│   ├── services/
-│   ├── screens/
-│   └── main.dart
-│
-├── test/
-│   └── auth_repository_test.dart
-│
-├── android/
-├── ios/
-├── pubspec.yaml
-└── README.md
-
 🚀 Getting Started
 Prerequisites
-Make sure the following are installed:
+
+Before running the application, make sure the following are installed:
 
 Flutter SDK
 Dart SDK
-Android Studio / VS Code
-Android Emulator or Physical Device
+Android Studio or VS Code
+Android Emulator or Physical Android Device
 Installation
-Clone the repository:
-
+1. Clone the Repository
 git clone <repository-url>
 
-Navigate to the project:
-
+2. Navigate to the Project
 cd vehicle_repair_service
 
-Install dependencies:
-
+3. Install Dependencies
 flutter pub get
 
-Run the application:
-
+4. Run the Application
 flutter run
 
-🧪 Testing
-Run all Flutter tests:
+🏗️ Architecture
 
-flutter test
+The project follows a repository-based architecture.
 
-Run only AuthRepository tests:
+┌─────────────────────┐
+│      Flutter UI     │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│   AuthRepository    │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│     REST API        │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│    Backend Server   │
+└─────────────────────┘
 
-flutter test test/auth_repository_test.dart
+AuthRepository Responsibilities
+Handle authentication requests
+Handle profile requests
+Communicate with REST APIs
+Process API responses
+Keep API logic separate from UI
+🔄 Authentication Flow
+User
+  │
+  ▼
+Flutter UI
+  │
+  ▼
+AuthRepository
+  │
+  ▼
+REST API
+  │
+  ▼
+Backend
+  │
+  ▼
+JSON Response
+  │
+  ▼
+Flutter UI
 
 📈 Current Test Status
 Component	Status
-Register API	✅
-Login API	✅
-Fetch Profile API	✅
-Update Profile API	✅
+Register API	🟢 Working
+Login API	🟢 Working
+Fetch Profile API	🟢 Working
+Update Profile API	🟢 Working
 AuthRepository	🟢 Working
 Unit Tests	🟢 Passing
-
 🎯 Final Result
+
 AuthRepository API integration is working as expected.
 
 All 4 authentication APIs have been successfully tested.
 
-4/4 Tests Passed — 100% Success Rate 🎉
+Result	Value
+Total APIs Tested	4
+Successful APIs	4
+Failed APIs	0
+Success Rate	100%
+Overall Status	🟢 PASS
+✅ Conclusion
 
-👨‍💻 Development
-This project uses a repository-based approach to separate API communication from the application UI and business logic.
+The AuthRepository API integration has been successfully implemented and tested.
 
-The AuthRepository is responsible for handling authentication and profile-related API operations.
+The following authentication operations are working correctly:
 
+✅ Register API
+✅ Login API
+✅ Fetch Profile API
+✅ Update Profile API
+🎉 Final Test Result
+
+4 / 4 Tests Passed
+
+100% Success Rate
+
+Authentication Integration: 🟢 Working
+
+📌 Project Status
+Module	Status
+Authentication	🟢 Completed
+Register	🟢 Completed
+Login	🟢 Completed
+Fetch Profile	🟢 Completed
+Update Profile	🟢 Completed
+Unit Testing	🟢 Completed
 📄 License
+
 This project is developed for the Vehicle Repair Service application.
 
-⭐ Status
-Project Status: 🟢 Active Development
+⭐ Support
 
-Authentication Module: 🟢 Completed & Tested
+If you find this project useful, consider giving the repository a ⭐.
 
-Test Status: 🟢 4/4 Passed
+Vehicle Repair Service
+
+Flutter • Dart • REST API • AuthRepository • Unit Testing
