@@ -1,291 +1,411 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Vehicle Repair Service - Auth Repository Testing</title>
+    <title>Vehicle Repair Service - Auth Repository</title>
 
     <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
     <style>
         body {
-            background: #f5f7fb;
+            background: #ffffff;
+            color: #24292f;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Helvetica,
+                Arial,
+                sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
         }
 
-        .hero {
-            background: linear-gradient(135deg, #0d6efd, #084298);
-            color: #fff;
-            border-radius: 18px;
+        .github-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
         }
 
-        .hero-icon {
-            font-size: 45px;
+        /* GitHub Typography */
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            padding-bottom: 0.3em;
+            border-bottom: 1px solid #d0d7de;
+            margin-bottom: 24px;
         }
 
-        .section-card {
-            border: 0;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding-bottom: 0.3em;
+            border-bottom: 1px solid #d8dee4;
+            margin-top: 35px;
+            margin-bottom: 20px;
         }
 
-        .stat-card {
-            border: 0;
-            border-radius: 14px;
-            transition: 0.2s;
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 15px;
         }
 
-        .stat-card:hover {
-            transform: translateY(-3px);
+        p {
+            margin-bottom: 16px;
         }
 
-        .stat-number {
-            font-size: 30px;
-            font-weight: 700;
+        /* Hero */
+
+        .project-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
 
-        .code-box {
-            background: #212529;
-            color: #f8f9fa;
-            border-radius: 10px;
-            padding: 18px;
-            font-size: 14px;
+        .project-description {
+            color: #57606a;
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        /* GitHub badges */
+
+        .badge-github {
+            display: inline-block;
+            padding: 3px 10px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .badge-green {
+            background: #dafbe1;
+            color: #1a7f37;
+            border: 1px solid #aceebb;
+        }
+
+        .badge-blue {
+            background: #ddf4ff;
+            color: #0969da;
+            border: 1px solid #80ccff;
+        }
+
+        .badge-gray {
+            background: #f6f8fa;
+            color: #57606a;
+            border: 1px solid #d0d7de;
+        }
+
+        /* Code */
+
+        code {
+            background: #afb8c133;
+            color: #24292f;
+            padding: 0.15em 0.3em;
+            border-radius: 6px;
+            font-size: 85%;
+        }
+
+        pre {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px;
             overflow-x: auto;
-            white-space: pre-wrap;
+            font-size: 14px;
+            line-height: 1.45;
+            margin-bottom: 20px;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #24292f;
+            font-size: inherit;
         }
 
         .terminal {
-            background: #111827;
-            color: #22c55e;
-            border-radius: 10px;
-            padding: 18px;
-            font-family: monospace;
-            overflow-x: auto;
+            background: #161b22;
+            color: #e6edf3;
+            border: 1px solid #30363d;
         }
 
-        .table > :not(caption) > * > * {
-            padding: 14px;
+        .terminal code {
+            color: #e6edf3;
         }
 
-        .api-title {
-            border-left: 4px solid #0d6efd;
-            padding-left: 12px;
+        /* Table */
+
+        .github-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
         }
 
-        .success-box {
-            background: #d1e7dd;
-            border: 1px solid #a3cfbb;
-            color: #0f5132;
-            border-radius: 12px;
+        .github-table th,
+        .github-table td {
+            border: 1px solid #d0d7de;
+            padding: 8px 13px;
+            text-align: left;
         }
 
-        footer {
-            color: #6c757d;
+        .github-table th {
+            background: #f6f8fa;
+            font-weight: 600;
+        }
+
+        .github-table tr:nth-child(even) {
+            background: #f6f8fa;
+        }
+
+        /* Alert */
+
+        .github-alert {
+            padding: 16px;
+            border: 1px solid #aceebb;
+            border-radius: 6px;
+            background: #dafbe1;
+            color: #1a7f37;
+            margin: 20px 0;
+        }
+
+        /* API response */
+
+        .api-section {
+            margin-bottom: 30px;
+        }
+
+        .api-number {
+            color: #0969da;
+        }
+
+        /* List */
+
+        ul {
+            padding-left: 2em;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* Horizontal line */
+
+        hr {
+            border: 0;
+            border-top: 1px solid #d8dee4;
+            margin: 32px 0;
+        }
+
+        /* Summary cards */
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .summary-item {
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+            background: #ffffff;
+        }
+
+        .summary-number {
+            display: block;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .summary-label {
+            color: #57606a;
+            font-size: 13px;
+        }
+
+        .success {
+            color: #1a7f37;
+        }
+
+        .danger {
+            color: #cf222e;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 768px) {
+            .github-container {
+                padding: 25px 15px 50px;
+            }
+
+            .project-title {
+                font-size: 26px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            .summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .github-table {
+                font-size: 14px;
+            }
+
+            pre {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container py-4">
+<div class="github-container">
 
-        <!-- HERO -->
-        <div class="hero p-4 p-md-5 mb-4 shadow-sm">
-            <div class="row align-items-center">
+    <!-- Project Header -->
 
-                <div class="col-md-8">
-                    <div class="hero-icon mb-2">🚗</div>
+    <h1 class="project-title">
+        🚗 Vehicle Repair Service
+    </h1>
 
-                    <h1 class="fw-bold">
-                        Vehicle Repair Service
-                    </h1>
+    <p class="project-description">
+        A Flutter-based vehicle repair service application.
+    </p>
 
-                    <p class="lead mb-0">
-                        Flutter-based Vehicle Repair Service Application
-                    </p>
-                </div>
+    <div class="mb-4">
+        <span class="badge-github badge-blue">
+            Flutter
+        </span>
 
-                <div class="col-md-4 text-md-end mt-4 mt-md-0">
-                    <span class="badge bg-success fs-6 px-3 py-2">
-                        ✓ 4/4 Tests Passed
-                    </span>
-                </div>
+        <span class="badge-github badge-gray">
+            Dart
+        </span>
 
-            </div>
-        </div>
+        <span class="badge-github badge-green">
+            Tests Passing
+        </span>
 
-
-        <!-- AUTH REPOSITORY -->
-        <div class="card section-card mb-4">
-            <div class="card-body p-4">
-
-                <h2 class="fw-bold mb-3">
-                    🧪 Auth Repository Testing
-                </h2>
-
-                <p class="text-muted mb-0">
-                    The <strong>AuthRepository</strong> has been tested using
-                    Flutter's built-in testing framework to verify the
-                    authentication API integration.
-                </p>
-
-            </div>
-        </div>
+        <span class="badge-github badge-gray">
+            AuthRepository
+        </span>
+    </div>
 
 
-        <!-- RUN TEST -->
-        <div class="card section-card mb-4">
-            <div class="card-body p-4">
+    <!-- Unit Testing -->
 
-                <h4 class="fw-bold mb-3">
-                    ▶️ Run Tests
-                </h4>
+    <h2>🧪 Unit Testing — Auth Repository</h2>
 
-                <div class="terminal">
-                    flutter test test/auth_repository_test.dart
-                </div>
-
-            </div>
-        </div>
+    <p>
+        The <code>AuthRepository</code> has been tested using
+        Flutter's built-in testing framework to verify the
+        authentication API integration.
+    </p>
 
 
-        <!-- TEST COVERAGE -->
-        <div class="card section-card mb-4">
-            <div class="card-body p-4">
+    <!-- Run Test -->
 
-                <h4 class="fw-bold mb-4">
-                    📋 Test Coverage
-                </h4>
+    <h2>▶️ Run Tests</h2>
 
-                <div class="row g-3">
-
-                    <div class="col-md-3 col-sm-6">
-                        <div class="border rounded-3 p-3 bg-light">
-                            <span class="text-success fs-5">✓</span>
-                            Register API
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <div class="border rounded-3 p-3 bg-light">
-                            <span class="text-success fs-5">✓</span>
-                            Login API
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <div class="border rounded-3 p-3 bg-light">
-                            <span class="text-success fs-5">✓</span>
-                            Fetch Profile API
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <div class="border rounded-3 p-3 bg-light">
-                            <span class="text-success fs-5">✓</span>
-                            Update Profile API
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
+    <pre class="terminal"><code>flutter test test/auth_repository_test.dart</code></pre>
 
 
-        <!-- TEST RESULTS -->
-        <div class="card section-card mb-4">
-            <div class="card-body p-4">
+    <!-- Coverage -->
 
-                <h4 class="fw-bold mb-4">
-                    📊 Test Results
-                </h4>
+    <h2>📋 Test Coverage</h2>
 
-                <div class="table-responsive">
-
-                    <table class="table table-hover align-middle">
-
-                        <thead class="table-dark">
-                            <tr>
-                                <th>#</th>
-                                <th>Repository</th>
-                                <th>API</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            <tr>
-                                <td>1</td>
-                                <td>AuthRepository</td>
-                                <td>Register</td>
-                                <td>
-                                    <span class="badge bg-success">
-                                        ✓ Passed
-                                    </span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>2</td>
-                                <td>AuthRepository</td>
-                                <td>Login</td>
-                                <td>
-                                    <span class="badge bg-success">
-                                        ✓ Passed
-                                    </span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>3</td>
-                                <td>AuthRepository</td>
-                                <td>Fetch Profile</td>
-                                <td>
-                                    <span class="badge bg-success">
-                                        ✓ Passed
-                                    </span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>4</td>
-                                <td>AuthRepository</td>
-                                <td>Update Profile</td>
-                                <td>
-                                    <span class="badge bg-success">
-                                        ✓ Passed
-                                    </span>
-                                </td>
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-        </div>
+    <ul>
+        <li>✅ Register API</li>
+        <li>✅ Login API</li>
+        <li>✅ Fetch Profile API</li>
+        <li>✅ Update Profile API</li>
+    </ul>
 
 
-        <!-- TEST OUTPUT -->
-        <div class="card section-card mb-4">
-            <div class="card-body p-4">
+    <!-- Test Results -->
 
-                <h4 class="fw-bold mb-4">
-                    🔍 Test Output
-                </h4>
+    <h2>📊 Test Results</h2>
 
-                <div class="terminal">
+    <div class="table-responsive">
 
-00: AuthRepository Register
+        <table class="github-table">
+
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Repository</th>
+                    <th>API</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>1</td>
+                    <td><code>AuthRepository</code></td>
+                    <td>Register API</td>
+                    <td class="success">✅ Passed</td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td><code>AuthRepository</code></td>
+                    <td>Login API</td>
+                    <td class="success">✅ Passed</td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td><code>AuthRepository</code></td>
+                    <td>Fetch Profile API</td>
+                    <td class="success">✅ Passed</td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td><code>AuthRepository</code></td>
+                    <td>Update Profile API</td>
+                    <td class="success">✅ Passed</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- Test Output -->
+
+    <h2>🔍 Test Output</h2>
+
+    <pre><code>00: AuthRepository Register
     ✓ register API should show result
 
 01: AuthRepository Login
@@ -299,82 +419,51 @@
 
 ────────────────────────────────────────────
 
-✓ All tests passed!
+✓ All tests passed!</code></pre>
 
-                </div>
 
-            </div>
+    <!-- Summary -->
+
+    <h2>📈 Test Summary</h2>
+
+    <div class="summary">
+
+        <div class="summary-item">
+            <span class="summary-number">4</span>
+            <span class="summary-label">APIs Tested</span>
         </div>
 
-
-        <!-- SUMMARY -->
-        <div class="card section-card mb-4">
-            <div class="card-body p-4">
-
-                <h4 class="fw-bold mb-4">
-                    📈 Test Summary
-                </h4>
-
-                <div class="row g-3">
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card stat-card bg-primary text-white">
-                            <div class="card-body">
-                                <small>Total APIs Tested</small>
-                                <div class="stat-number">4</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card stat-card bg-success text-white">
-                            <div class="card-body">
-                                <small>Passed</small>
-                                <div class="stat-number">4</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card stat-card bg-danger text-white">
-                            <div class="card-body">
-                                <small>Failed</small>
-                                <div class="stat-number">0</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card stat-card bg-dark text-white">
-                            <div class="card-body">
-                                <small>Success Rate</small>
-                                <div class="stat-number">100%</div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
+        <div class="summary-item">
+            <span class="summary-number success">4</span>
+            <span class="summary-label">Passed</span>
         </div>
 
+        <div class="summary-item">
+            <span class="summary-number danger">0</span>
+            <span class="summary-label">Failed</span>
+        </div>
 
-        <!-- API RESPONSE -->
-        <div class="card section-card mb-4">
-            <div class="card-body p-4">
+        <div class="summary-item">
+            <span class="summary-number success">100%</span>
+            <span class="summary-label">Success Rate</span>
+        </div>
 
-                <h4 class="fw-bold mb-4">
-                    🌐 API Response Examples
-                </h4>
+    </div>
 
 
-                <!-- Register -->
-                <h5 class="api-title mb-3">
-                    1. Register API
-                </h5>
+    <!-- API Responses -->
 
-                <div class="code-box mb-4">
-{
+    <h2>🌐 API Response Examples</h2>
+
+
+    <div class="api-section">
+
+        <h3>
+            <span class="api-number">1.</span>
+            Register API
+        </h3>
+
+        <pre><code>{
   "status": true,
   "msg": "User register Successfully !!!",
   "result": {
@@ -385,17 +474,19 @@
     "role": "user",
     "created_at": "2026-08-31T11:18:43.344Z"
   }
-}
-                </div>
+}</code></pre>
+
+    </div>
 
 
-                <!-- Login -->
-                <h5 class="api-title mb-3">
-                    2. Login API
-                </h5>
+    <div class="api-section">
 
-                <div class="code-box mb-4">
-{
+        <h3>
+            <span class="api-number">2.</span>
+            Login API
+        </h3>
+
+        <pre><code>{
   "status": true,
   "msg": "Login Successfully !!!",
   "result": {
@@ -406,17 +497,19 @@
     "role": "user",
     "created_at": "2026-08-31T11:18:43.344Z"
   }
-}
-                </div>
+}</code></pre>
+
+    </div>
 
 
-                <!-- Fetch Profile -->
-                <h5 class="api-title mb-3">
-                    3. Fetch Profile API
-                </h5>
+    <div class="api-section">
 
-                <div class="code-box mb-4">
-{
+        <h3>
+            <span class="api-number">3.</span>
+            Fetch Profile API
+        </h3>
+
+        <pre><code>{
   "status": true,
   "msg": "Fetch User Successfully",
   "result": {
@@ -427,17 +520,19 @@
     "role": "user",
     "created_at": "2026-08-31T11:18:43.344Z"
   }
-}
-                </div>
+}</code></pre>
+
+    </div>
 
 
-                <!-- Update Profile -->
-                <h5 class="api-title mb-3">
-                    4. Update Profile API
-                </h5>
+    <div class="api-section">
 
-                <div class="code-box">
-{
+        <h3>
+            <span class="api-number">4.</span>
+            Update Profile API
+        </h3>
+
+        <pre><code>{
   "status": true,
   "msg": "Update Profile Successfully !!!",
   "result": {
@@ -448,107 +543,88 @@
     "role": "user",
     "created_at": "2026-08-31T11:18:43.344Z"
   }
-}
-                </div>
-
-            </div>
-        </div>
-
-
-        <!-- FINAL RESULT -->
-        <div class="card section-card mb-4">
-            <div class="card-body p-4">
-
-                <h4 class="fw-bold mb-4">
-                    🎯 Final Result
-                </h4>
-
-                <div class="table-responsive">
-
-                    <table class="table table-bordered align-middle">
-
-                        <tbody>
-
-                            <tr>
-                                <th class="bg-light">Total APIs Tested</th>
-                                <td>4</td>
-                            </tr>
-
-                            <tr>
-                                <th class="bg-light">Passed</th>
-                                <td>
-                                    <span class="badge bg-success">
-                                        4
-                                    </span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th class="bg-light">Failed</th>
-                                <td>
-                                    <span class="badge bg-danger">
-                                        0
-                                    </span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th class="bg-light">Success Rate</th>
-                                <td>
-                                    <span class="badge bg-success">
-                                        100%
-                                    </span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th class="bg-light">Repository</th>
-                                <td>
-                                    <code>AuthRepository</code>
-                                </td>
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-        </div>
-
-
-        <!-- CONCLUSION -->
-        <div class="card section-card mb-4">
-            <div class="card-body p-4">
-
-                <h4 class="fw-bold mb-3">
-                    ✅ Conclusion
-                </h4>
-
-                <div class="success-box p-4">
-                    The <strong>AuthRepository</strong> API integration is
-                    working correctly, and all <strong>4 authentication
-                    API tests</strong> passed successfully.
-                </div>
-
-            </div>
-        </div>
-
-
-        <!-- FOOTER -->
-        <footer class="text-center py-3">
-            Vehicle Repair Service © 2026
-        </footer>
+}</code></pre>
 
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Final Result -->
+
+    <h2>🎯 Final Result</h2>
+
+    <div class="table-responsive">
+
+        <table class="github-table">
+
+            <tbody>
+
+                <tr>
+                    <th>Total APIs Tested</th>
+                    <td>4</td>
+                </tr>
+
+                <tr>
+                    <th>Passed</th>
+                    <td class="success">
+                        <strong>4</strong>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Failed</th>
+                    <td class="danger">
+                        <strong>0</strong>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Success Rate</th>
+                    <td class="success">
+                        <strong>100%</strong>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Repository</th>
+                    <td>
+                        <code>AuthRepository</code>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- Conclusion -->
+
+    <h2>✅ Conclusion</h2>
+
+    <div class="github-alert">
+
+        The <strong>AuthRepository</strong> API integration is working
+        correctly, and all <strong>4 authentication API tests</strong>
+        passed successfully.
+
+    </div>
+
+
+    <hr>
+
+    <p class="text-secondary text-center">
+        Vehicle Repair Service © 2026
+    </p>
+
+</div>
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
 
 </body>
-
 </html>
-
-
-Is design mein Bootstrap 5 + responsive layout + professional cards + badges + API code blocks + test summary hai. Mobile, tablet aur desktop teeno par properly adjust hoga.
