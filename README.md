@@ -144,7 +144,7 @@ flutter test
 ✓ All tests passed!
 ```
 
-🌐 API Documentation
+## 🌐 API Documentation
 
 1. 📝 Register API
 Response
