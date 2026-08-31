@@ -105,7 +105,7 @@ vehicle_repair_service/
 
 The AuthRepository is responsible for authentication and user profile API operations.
 
-API Overview
+## API Overview
 
 | # | API | Description | Status |
 |:---|:---|:---|:---|
@@ -128,7 +128,7 @@ flutter test test/auth_repository_test.dart
 Run All Tests
 flutter test
 
-📊 Test Results
+## 📊Test Results
 
 | # | Repository | Test Case | Status |
 |:---|:---|:---|:---|
@@ -137,7 +137,7 @@ flutter test
 | 03 | AuthRepository | Fetch Profile API | ✅ Passed |
 | 04 | AuthRepository | Update Profile API | ✅ Passed |
 
-Test Summary
+## Test Summary
 
 | Metric | Result |
 |:---|:---|
@@ -248,7 +248,7 @@ Response
 
 Status: ✅ Passed
 
-📋 API Test Matrix
+## 📋 API Test Matrix
 
 | API | Response Status | Result | Test |
 | :--- | :--- | :--- | :--- |
@@ -357,10 +357,10 @@ Flutter UI
 
 ```
 
-📈 Current Test Status
+## 📈 Current Test Status
 
 | Component | Status |
-| --- | --- |
+|: --- |: --- |
 | Register API | 🟢 Working |
 | Login API | 🟢 Working |
 | Fetch Profile API | 🟢 Working |
@@ -368,14 +368,14 @@ Flutter UI
 | AuthRepository | 🟢 Working |
 | Unit Tests | 🟢 Passing |
 
-🎯 Final Result
+## 🎯 Final Result
 
 AuthRepository API integration is working as expected.
 
 All 4 authentication APIs have been successfully tested.
 
 | Result | Value |
-| --- | --- |
+|:--- |:--- |
 | Total APIs Tested | 4 |
 | Successful APIs | 4 |
 | Failed APIs | 0 |
