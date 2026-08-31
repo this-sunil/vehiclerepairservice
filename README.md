@@ -1,9 +1,7 @@
 🚗 Vehicle Repair Service
-
 A Flutter-based vehicle repair service application for managing vehicle repair and service operations.
 
 📌 Project Overview
-
 The Vehicle Repair Service application is built using Flutter and follows a repository-based architecture for API integration.
 
 The authentication module provides:
@@ -19,8 +17,8 @@ Dart	Programming Language
 REST API	Backend Integration
 Repository Pattern	API & Data Layer
 Flutter Test	Unit Testing
-🔐 Authentication
 
+🔐 Authentication
 The AuthRepository handles all authentication-related API operations.
 
 Available APIs
@@ -29,8 +27,8 @@ Available APIs
 2	Login	Authenticate an existing user
 3	Fetch Profile	Retrieve user profile information
 4	Update Profile	Update user profile information
-🧪 Unit Testing
 
+🧪 Unit Testing
 The authentication repository has been tested using Flutter's built-in testing framework.
 
 Test File
@@ -46,12 +44,14 @@ flutter test test/auth_repository_test.dart
 02	Login	Login API	✅ Passed
 03	Fetch Profile	Fetch Profile API	✅ Passed
 04	Update Profile	Update Profile API	✅ Passed
+
 Test Summary
 Metric	Result
 Total Tests	4
 Passed	4
 Failed	0
 Success Rate	100%
+
 🔍 Test Output
 00: AuthRepository Register
     ✓ register API should show result
@@ -85,7 +85,6 @@ Response
     }
 }
 
-
 Status: ✅ Passed
 
 2. Login API
@@ -102,7 +101,6 @@ Response
         "created_at": "2026-08-31T11:18:43.344Z"
     }
 }
-
 
 Status: ✅ Passed
 
@@ -121,7 +119,6 @@ Response
     }
 }
 
-
 Status: ✅ Passed
 
 4. Update Profile API
@@ -139,7 +136,6 @@ Response
     }
 }
 
-
 Status: ✅ Passed
 
 📋 API Test Matrix
@@ -148,6 +144,7 @@ Register	true	User registered successfully	✅ Passed
 Login	true	Login successful	✅ Passed
 Fetch Profile	true	User profile fetched successfully	✅ Passed
 Update Profile	true	User profile updated successfully	✅ Passed
+
 📁 Project Structure
 vehicle_repair_service/
 │
@@ -168,7 +165,6 @@ vehicle_repair_service/
 
 🚀 Getting Started
 Prerequisites
-
 Make sure the following are installed:
 
 Flutter SDK
@@ -176,32 +172,26 @@ Dart SDK
 Android Studio / VS Code
 Android Emulator or Physical Device
 Installation
-
 Clone the repository:
 
 git clone <repository-url>
-
 
 Navigate to the project:
 
 cd vehicle_repair_service
 
-
 Install dependencies:
 
 flutter pub get
-
 
 Run the application:
 
 flutter run
 
 🧪 Testing
-
 Run all Flutter tests:
 
 flutter test
-
 
 Run only AuthRepository tests:
 
@@ -215,8 +205,8 @@ Fetch Profile API	✅
 Update Profile API	✅
 AuthRepository	🟢 Working
 Unit Tests	🟢 Passing
-🎯 Final Result
 
+🎯 Final Result
 AuthRepository API integration is working as expected.
 
 All 4 authentication APIs have been successfully tested.
@@ -224,17 +214,14 @@ All 4 authentication APIs have been successfully tested.
 4/4 Tests Passed — 100% Success Rate 🎉
 
 👨‍💻 Development
-
 This project uses a repository-based approach to separate API communication from the application UI and business logic.
 
 The AuthRepository is responsible for handling authentication and profile-related API operations.
 
 📄 License
-
 This project is developed for the Vehicle Repair Service application.
 
 ⭐ Status
-
 Project Status: 🟢 Active Development
 
 Authentication Module: 🟢 Completed & Tested
