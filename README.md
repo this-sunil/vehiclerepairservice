@@ -1,41 +1,45 @@
 🚗 Vehicle Repair Service
 
-A Flutter-based vehicle repair service application.
+A modern Flutter application for managing vehicle repair services, user authentication, profiles, and service-related operations.
 
-🧪 Unit Testing — Auth Repository
+<p align="center">
 
-The authentication repository has been tested using Flutter's built-in testing framework.
+Flutter • Dart • REST API • Unit Testing
 
-Run Tests
+</p>
+✨ Authentication Repository
+
+The AuthRepository handles all authentication and user-profile related API operations.
+
+🔐 Tested APIs
+#	API	Description	Status
+01	📝 Register	Create a new user account	✅ Passed
+02	🔑 Login	Authenticate existing user	✅ Passed
+03	👤 Fetch Profile	Retrieve user profile	✅ Passed
+04	✏️ Update Profile	Update user information	✅ Passed
+🧪 Unit Testing
+
+Tests are written using the Flutter testing framework.
+
+▶️ Run Auth Repository Tests
 flutter test test/auth_repository_test.dart
 
-Test Coverage
+📋 Test Execution
+╭──────────────────────────────────────────────────╮
+│           AUTH REPOSITORY TEST SUITE             │
+├──────────────────────────────────────────────────┤
+│                                                  │
+│  ✓ Register API          PASSED                  │
+│  ✓ Login API             PASSED                  │
+│  ✓ Fetch Profile API     PASSED                  │
+│  ✓ Update Profile API    PASSED                  │
+│                                                  │
+├──────────────────────────────────────────────────┤
+│  Result: 4 / 4 Tests Passed 🎉                   │
+╰──────────────────────────────────────────────────╯
 
-The following authentication APIs are covered:
-
-✅ Register API
-✅ Login API
-✅ Fetch Profile API
-✅ Update Profile API
-Test Results
-00: AuthRepository Register
-    ✓ register API should show result
-
-01: AuthRepository Login
-    ✓ login API should show result
-
-02: AuthRepository Fetch Profile
-    ✓ fetchProfile API should show result
-
-03: AuthRepository Update Profile
-    ✓ updateProfile API should show result
-
-────────────────────────────────────────────
-
-✓ All tests passed!
-
-API Response Examples
-1. Register
+📡 API Response
+📝 Register
 {
   "status": true,
   "msg": "User register Successfully !!!",
@@ -49,7 +53,7 @@ API Response Examples
   }
 }
 
-2. Login
+🔑 Login
 {
   "status": true,
   "msg": "Login Successfully !!!",
@@ -63,7 +67,7 @@ API Response Examples
   }
 }
 
-3. Fetch Profile
+👤 Fetch Profile
 {
   "status": true,
   "msg": "Fetch User Successfully",
@@ -77,7 +81,7 @@ API Response Examples
   }
 }
 
-4. Update Profile
+✏️ Update Profile
 {
   "status": true,
   "msg": "Update Profile Successfully !!!",
@@ -91,14 +95,77 @@ API Response Examples
   }
 }
 
-📊 Test Summary
-#	Repository	Test	Status
-1	AuthRepository	Register API	✅ Passed
-2	AuthRepository	Login API	✅ Passed
-3	AuthRepository	Fetch Profile API	✅ Passed
-4	AuthRepository	Update Profile API	✅ Passed
-🎉 Result
+🏗️ Repository Responsibilities
+AuthRepository
+│
+├── 📝 register()
+│   └── Create new user account
+│
+├── 🔑 login()
+│   └── Authenticate user
+│
+├── 👤 fetchProfile()
+│   └── Get logged-in user details
+│
+└── ✏️ updateProfile()
+    └── Update user information
 
-4/4 tests passed successfully.
+📊 Testing Summary
+╭───────────────────────────────╮
+│       TEST SUMMARY            │
+├───────────────────────────────┤
+│                               │
+│  Total Tests       : 4        │
+│  Passed            : 4  ✅    │
+│  Failed            : 0  ❌    │
+│  Success Rate      : 100%     │
+│                               │
+╰───────────────────────────────╯
 
-The AuthRepository API integration is working as expected.
+🎯 Result
+
+All AuthRepository tests passed successfully.
+
+The following operations have been verified:
+
+✅ User registration
+✅ User login
+✅ Profile retrieval
+✅ Profile update
+🛠️ Tech Stack
+Flutter
+Dart
+REST API
+JSON
+Unit Testing
+Repository Pattern
+📁 Test File
+test/
+└── auth_repository_test.dart
+
+
+Run the complete authentication test suite with:
+
+flutter test test/auth_repository_test.dart
+
+🔒 Security Note
+
+⚠️ Never commit JWT tokens, passwords, API keys, or other sensitive credentials to GitHub.
+
+API responses shown above intentionally exclude authentication tokens.
+
+🎉 Final Result
+╔══════════════════════════════════════╗
+║                                      ║
+║       🚗 VEHICLE REPAIR SERVICE      ║
+║                                      ║
+║       AUTH REPOSITORY TESTS          ║
+║                                      ║
+║          ██████████ 100%             ║
+║                                      ║
+║          4 / 4 PASSED ✅             ║
+║                                      ║
+╚══════════════════════════════════════╝
+
+
+Clean code • Tested APIs • Reliable authentication
