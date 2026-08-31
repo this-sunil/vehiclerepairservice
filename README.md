@@ -66,7 +66,6 @@ A Flutter-based vehicle repair service application for managing vehicle repair a
 # 🧪 AuthRepository API Testing
 
 ## Run Test
-GitHub Markdown Format (`README.md`) me exact GitHub-styled tables ke saath document template:
 
 ```markdown
 vehicle_repair_service/
