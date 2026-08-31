@@ -1,9 +1,3 @@
-Yes — you want the actual README.md file, not just a formatted preview.
-
-I can create the file for you, but in this chat I don't have a file-attachment/creation tool available. The content below is the complete file; save it as exactly:
-
-README.md
-
 # 🚗 Vehicle Repair Service
 
 A Flutter-based vehicle repair service application for managing vehicle repair and service operations.
@@ -114,7 +108,7 @@ The AuthRepository is responsible for authentication and user profile API operat
 API Overview
 
 | # | API | Description | Status |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | 1 | Register | Create a new user account | ✅ |
 | 2 | Login | Authenticate an existing user | ✅ |
 | 3 | Fetch Profile | Retrieve user profile | ✅ |
@@ -137,7 +131,7 @@ flutter test
 📊 Test Results
 
 | # | Repository | Test Case | Status |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | 01 | AuthRepository | Register API | ✅ Passed |
 | 02 | AuthRepository | Login API | ✅ Passed |
 | 03 | AuthRepository | Fetch Profile API | ✅ Passed |
@@ -146,7 +140,7 @@ flutter test
 Test Summary
 
 | Metric | Result |
-|---|---|
+|:---|:---|
 | Total Tests | 4 |
 | Passed | 4 ✅ |
 | Failed | 0 ❌ |
@@ -257,7 +251,7 @@ Status: ✅ Passed
 📋 API Test Matrix
 
 | API | Response Status | Result | Test |
-| --- | --- | --- | --- |
+| :--- | :--- | :--- | :--- |
 | Register | true | User registered successfully | ✅ Passed |
 | Login | true | Login successful | ✅ Passed |
 | Fetch Profile | true | User profile fetched successfully | ✅ Passed |
@@ -279,7 +273,7 @@ Installation
 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/this-sunil/vehiclerepairservice.git
 
 ```
 
