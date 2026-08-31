@@ -80,6 +80,11 @@ A Flutter-based vehicle repair service application for managing vehicle repair a
 | Success Rate | 100% 🎉 |
 
 ### Run Tests
+If you mean you want the exact content from your previous message converted into proper README.md Markdown, without changing the information, use this:
+
+# 🧪 AuthRepository API Testing
+
+## Run Test
 
 ```bash
 flutter test test/auth_repository_test.dart
@@ -90,6 +95,9 @@ flutter test test/auth_repository_test.dart
 2	AuthRepository	Login API	✅ Passed
 3	AuthRepository	Fetch Profile API	✅ Passed
 4	AuthRepository	Update Profile API	✅ Passed
+
+Result: 4/4 tests passed successfully.
+
 🔍 Test Output
 00: AuthRepository Register
     ✓ register API should show result
@@ -118,16 +126,16 @@ Phone	9887675778
 Role	user
 Response
 {
-    "status": true,
-    "msg": "User register Successfully !!!",
-    "result": {
-        "id": 27,
-        "name": "Abhinav Jadhav",
-        "phone": "9887675778",
-        "photo": "",
-        "role": "user",
-        "created_at": "2026-08-31T11:18:43.344Z"
-    }
+  "status": true,
+  "msg": "User register Successfully !!!",
+  "result": {
+    "id": 27,
+    "name": "Abhinav Jadhav",
+    "phone": "9887675778",
+    "photo": "",
+    "role": "user",
+    "created_at": "2026-08-31T11:18:43.344Z"
+  }
 }
 
 🔐 2. Login API
@@ -140,16 +148,16 @@ Phone	9887675778
 Role	user
 Response
 {
-    "status": true,
-    "msg": "Login Successfully !!!",
-    "result": {
-        "id": 27,
-        "name": "Abhinav Jadhav",
-        "phone": "9887675778",
-        "photo": "",
-        "role": "user",
-        "created_at": "2026-08-31T11:18:43.344Z"
-    }
+  "status": true,
+  "msg": "Login Successfully !!!",
+  "result": {
+    "id": 27,
+    "name": "Abhinav Jadhav",
+    "phone": "9887675778",
+    "photo": "",
+    "role": "user",
+    "created_at": "2026-08-31T11:18:43.344Z"
+  }
 }
 
 👤 3. Fetch Profile API
@@ -162,16 +170,16 @@ Phone	9887675778
 Role	user
 Response
 {
-    "status": true,
-    "msg": "Fetch User Successfully",
-    "result": {
-        "id": 27,
-        "name": "Abhinav Jadhav",
-        "phone": "9887675778",
-        "photo": "",
-        "role": "user",
-        "created_at": "2026-08-31T11:18:43.344Z"
-    }
+  "status": true,
+  "msg": "Fetch User Successfully",
+  "result": {
+    "id": 27,
+    "name": "Abhinav Jadhav",
+    "phone": "9887675778",
+    "photo": "",
+    "role": "user",
+    "created_at": "2026-08-31T11:18:43.344Z"
+  }
 }
 
 ✏️ 4. Update Profile API
@@ -184,16 +192,16 @@ Updated Phone	9887675759
 Role	user
 Response
 {
-    "status": true,
-    "msg": "Update Profile Successfully !!!",
-    "result": {
-        "id": 27,
-        "name": "Sunil Shedge",
-        "phone": "9887675759",
-        "photo": "",
-        "role": "user",
-        "created_at": "2026-08-31T11:18:43.344Z"
-    }
+  "status": true,
+  "msg": "Update Profile Successfully !!!",
+  "result": {
+    "id": 27,
+    "name": "Sunil Shedge",
+    "phone": "9887675759",
+    "photo": "",
+    "role": "user",
+    "created_at": "2026-08-31T11:18:43.344Z"
+  }
 }
 
 📋 API Test Matrix
@@ -308,5 +316,8 @@ This project is developed for the Vehicle Repair Service application.
 
 If you find this project useful, please consider giving the repository a ⭐.
 
+Vehicle Repair Service
+
+Flutter • Dart • REST API • AuthRepository • Unit Testing
 Vehicle Repair Service
 Flutter • Dart • REST API • AuthRepository • Unit Testing
