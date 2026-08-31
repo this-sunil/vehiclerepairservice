@@ -2,7 +2,6 @@
 
 A new Flutter project.
 
-## Getting Started
 ## Unit Testing Auth Repository
                                                                                                            
 sunilshedge@sunils-MacBook-Pro vehiclerepairservice % flutter test test/auth_repository_test.dart
