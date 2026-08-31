@@ -5,8 +5,9 @@ A new Flutter project.
 ## Getting Started
 ## Unit Testing Auth Repository
                                                                                                            
-(base) sunilshedge@sunils-MacBook-Pro vehiclerepairservice % flutter test test/auth_repository_test.dart
-00:03 +0: AuthRepository Register register API should show result                                                                        
+sunilshedge@sunils-MacBook-Pro vehiclerepairservice % flutter test test/auth_repository_test.dart
+
+##0: AuthRepository Register register API should show result                                                                        
 
  ========== REGISTER RESULT ==========
 
@@ -23,7 +24,8 @@ A new Flutter project.
     "created_at": "2026-08-31T11:18:43.344Z"
   }
 }
-00:04 +1: AuthRepository Login login API should show result                                                                              
+
+##1: AuthRepository Login login API should show result                                                                              
 
  ========== LOGIN RESULT ==========
 
@@ -40,7 +42,8 @@ A new Flutter project.
     "created_at": "2026-08-31T11:18:43.344Z"
   }
 }
-00:05 +2: AuthRepository Fetch Profile fetchProfile API should show result                                                               
+
+##2: AuthRepository Fetch Profile fetchProfile API should show result                                                               
 ========== FETCH PROFILE RESULT ==========
 {
   "status": true,
@@ -55,7 +58,8 @@ A new Flutter project.
     "created_at": "2026-08-31T11:18:43.344Z"
   }
 }
-00:06 +3: AuthRepository Update Profile updateProfile API should show result                                                             
+
+##3: AuthRepository Update Profile updateProfile API should show result                                                             
 
  ========== UPDATE PROFILE RESULT ========== 
 
@@ -72,4 +76,4 @@ A new Flutter project.
     "created_at": "2026-08-31T11:18:43.344Z"
   }
 }
-00:06 +4: All tests passed! 
+##4: All tests passed! 
