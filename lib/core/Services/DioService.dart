@@ -47,7 +47,6 @@ class DioService {
     try {
       final response = await DioService.post(
         '${dotenv.env['BASE_URL']}${dotenv.env['REFRESH_URL']}',
-        data: {"id": refreshToken},
       );
 
       final newAccessToken = response.data['token'];
