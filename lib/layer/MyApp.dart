@@ -61,6 +61,15 @@ class MyApp extends StatelessWidget {
           initialRoute: AppRoute.initialRoute,
           theme: state.themeData,
           onGenerateRoute: AppRoute.generateRoute,
+          builder: (context,child){
+            final ms=MediaQuery.of(context);
+            return MediaQuery(data: ms.copyWith(
+              textScaler: ms.textScaler.clamp(
+                minScaleFactor: 1.0,
+                maxScaleFactor: 1.3
+              ),
+            ), child: child!);
+          },
           home: BlocBuilder<InternetBloc,InternetState>(
               builder: (context,state){
             switch(state.status){

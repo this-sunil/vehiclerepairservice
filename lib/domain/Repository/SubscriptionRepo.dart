@@ -33,11 +33,8 @@ class SubscriptionRepo extends BaseSubscriptionRepo{
           else{
             return Left(Failure(status: SubscriptionStatus.error,msg: result.msg));
           }
-        case 400 || 404:
-          return Left(Failure(status: SubscriptionStatus.error,msg: result.msg));
-
         default:
-          return Left(Failure(status: SubscriptionStatus.error,msg: 'Internal Server Error'));
+          return Left(Failure(status: SubscriptionStatus.error,msg: result.msg));
       }
     }
     on FormatException catch(e){
@@ -57,14 +54,14 @@ class SubscriptionRepo extends BaseSubscriptionRepo{
       return Left(Failure(status: SubscriptionStatus.error,msg: 'Bad Certificate Exception'));
     }
     on DioException catch (e) {
-      log(e.message.toString());
+      print(e.message.toString());
       return Left(
         Failure(status: SubscriptionStatus.error, msg: "Something Went Wrong!!!"),
       );
     }
     catch(e,stk){
-      log("message=>${stk.toString()}");
-      return Left(Failure(status: SubscriptionStatus.error,msg: "Internal Server Error !!!"));
+      print("message=>${stk.toString()}");
+      return Left(Failure(status: SubscriptionStatus.error,msg: "Internal Server Error $stk!!!"));
     }
   }
 

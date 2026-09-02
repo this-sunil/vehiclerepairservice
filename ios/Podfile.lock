@@ -8,10 +8,10 @@ PODS:
     - Flutter
     - Google-Maps-iOS-Utils (< 7.0, >= 5.0)
     - GoogleMaps (< 11.0, >= 8.4)
-  - google_mlkit_commons (0.12.0):
+  - google_mlkit_commons (0.13.0):
     - Flutter
     - MLKitVision (~> 10.0.0)
-  - google_mlkit_translation (0.14.0):
+  - google_mlkit_translation (0.15.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/Translate (~> 9.0.0)
@@ -117,12 +117,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/tha_player/ios"
 
 SPEC CHECKSUMS:
-  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
   flutter_tts: 35ac3c7d42412733e795ea96ad2d7e05d0a75113
   Google-Maps-iOS-Utils: bed22fa703c919259b3901449434d60d994fae20
   google_maps_flutter_ios: 17552876e72723da1d41accc22f03b5f7afbde69
-  google_mlkit_commons: b4dfe2f6ae4cbf24010dc6640a28984d01343c86
-  google_mlkit_translation: 32f759ac50c38fc2eada2cf15fefc86b38faf0f7
+  google_mlkit_commons: b2c0a76e7ef4ff555e70e5d71f21d66ce3d08a97
+  google_mlkit_translation: 8be5aeeee6dc8402b2ee8b64a2987e1163f76a7c
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleMaps: 23807b5617f32664952c04220b3b292df87ee884
   GoogleMLKit: b1eee21a41c57704fe72483b15c85cb2c0cd7444
@@ -139,6 +139,6 @@ SPEC CHECKSUMS:
   SSZipArchive: 8a6ee5677c8e304bebc109e39cf0da91ccef22ea
   tha_player: d1a9ed41c19d6a29221588f66f338dbf3019b205
 
-PODFILE CHECKSUM: 2d8d505e852764126ebb28bb99d335d04865a4b3
+PODFILE CHECKSUM: 4cce258a6b39f4ad5c75ed5f04e035b594e118d4
 
 COCOAPODS: 1.16.2

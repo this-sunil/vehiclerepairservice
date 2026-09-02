@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,15 +7,18 @@ import 'package:image_picker/image_picker.dart';
 import '../../../data/Model/SlotHistoryModel.dart';
 import '../../../domain/Repository/BookRepository.dart';
 import '../../../layer/Widget/Storage.dart';
+
 part 'BookEvent.dart';
 part 'BookState.dart';
 
 class BookBloc extends Bloc<BookEvent, BookState> {
   final BookRepository repository;
+
   BookBloc(this.repository) : super(BookState.initial()) {
     on<BookAppointEvent>(_bookAppointment);
     on<FetchSlotHistoryEvent>(_fetchSlotHistory);
   }
+
   Future<void> _bookAppointment(
     BookAppointEvent event,
     Emitter<BookState> emit,
@@ -24,19 +26,31 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     emit(state.copyWith(status: BookStatus.loading));
     String? uid = await Storage.instance.getUID();
     String? token = await Storage.instance.getToken();
-    String fileName=event.photo.path.split("/").join();
-    FormData body = FormData.fromMap({
-      'uid': uid.toString(),
-      'vehicle_name': event.vehicleName,
-      'photo': await MultipartFile.fromFile(event.photo.path,filename: fileName),
-      'vehicle_type': event.vehicleType,
-      'registerNo': event.registerNo,
-      'service_name': event.serviceName,
-      'slot_date': event.slotDate,
-      'slot_time': event.slotTime,
-    });
+    String fileName = event.photo.path.split("/").join();
+    final body = fileName.isEmpty
+        ? FormData.fromMap({
+            'id': uid.toString(),
+            'vehicle_name': event.vehicleName,
+            'vehicle_type': event.vehicleType,
+            'registration_no': event.registerNo,
+            'service_name': event.serviceName,
+            'slot_date': event.slotDate,
+            'slot_time': event.slotTime,
+          })
+        : FormData.fromMap({
+            'id': uid.toString(),
+            'vehicle_name': event.vehicleName,
+            'vehicle_photo': await MultipartFile.fromFile(
+              event.photo.path,
+              filename: fileName,
+            ),
+            'vehicle_type': event.vehicleType,
+            'registration_no': event.registerNo,
+            'service_name': event.serviceName,
+            'slot_date': event.slotDate,
+            'slot_time': event.slotTime,
+          });
     Map<String, String> header = {
-      "Content-Type": "multipart/form-data",
       "accept": "application/json",
       "Authorization": "Bearer $token",
     };
@@ -51,46 +65,33 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       (r) => emit(state.copyWith(status: r.status, msg: r.msg)),
     );
   }
+
   Future<void> _fetchSlotHistory(
-      FetchSlotHistoryEvent event,
-      Emitter<BookState> emit,
-      ) async {
+    FetchSlotHistoryEvent event,
+    Emitter<BookState> emit,
+  ) async {
     final uid = await Storage.instance.getUID();
     final token = await Storage.instance.getToken();
 
-    final List<Result> currentList = event.page == 1 ? [] : List.from(state.model ?? []);
+    final List<Result> currentList = event.page == 1
+        ? []
+        : List.from(state.model ?? []);
 
     if (event.page == 1) {
       emit(
-        state.copyWith(
-          status: BookStatus.loading,
-          model: [],
-          hasMore: true,
-        ),
+        state.copyWith(status: BookStatus.loading, model: [], hasMore: true),
       );
     }
 
     final result = await repository.fetchSlotHistory(
       url: '${dotenv.env['BASE_URL']}${dotenv.env['FETCH_SLOT_HISTORY']}',
-      header: {
-        'Authorization': 'Bearer $token',
-        'Accept': 'application/json',
-      },
-      body: {
-        'uid': uid,
-        'page': event.page.toString(),
-      },
+      header: {'Authorization': 'Bearer $token', 'Accept': 'application/json'},
+      body: FormData.fromMap({"uid": uid, "page": event.page.toString()}),
     );
 
     result.fold(
-          (l) => emit(
-        state.copyWith(
-          status: l.status,
-          msg: l.msg,
-          hasMore: false,
-        ),
-      ),
-          (r) {
+      (l) => emit(state.copyWith(status: l.status, msg: l.msg, hasMore: false)),
+      (r) {
         final updatedList = currentList..addAll(r.result);
 
         emit(
@@ -98,11 +99,10 @@ class BookBloc extends Bloc<BookEvent, BookState> {
             status: r.status,
             msg: r.msg,
             model: updatedList,
-            hasMore: r.result.length == 10
+            hasMore: r.result.length == 10,
           ),
         );
       },
     );
   }
-
 }

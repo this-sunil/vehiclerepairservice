@@ -10,13 +10,13 @@ import '../../core/Bloc/ServiceBloc/ServiceBloc.dart';
 import 'package:either_dart/either.dart';
 
 abstract class BaseServiceRepo{
-  Future<Either<Failure,Success>> fetchService({required String url,Map<String,String>? header,Map<String,dynamic>? body});
-  Future<Either<Failure,Success>> searchService({required String url,Map<String,String>? header,Map<String,dynamic>? body});
+  Future<Either<Failure,Success>> fetchService({required String url,Map<String,String>? header,required FormData body});
+  Future<Either<Failure,Success>> searchService({required String url,Map<String,String>? header,required FormData body});
 }
 class ServiceRepository implements BaseServiceRepo{
 
   @override
-  Future<Either<Failure, Success>> fetchService({required String url, Map<String, String>? header,Map<String,dynamic>? body}) async{
+  Future<Either<Failure, Success>> fetchService({required String url, Map<String, String>? header,required FormData body}) async{
     // TODO: implement fetchService
     try{
       final resp=await DioService.post(url,options: Options(
@@ -46,7 +46,7 @@ class ServiceRepository implements BaseServiceRepo{
   }
 
   @override
-  Future<Either<Failure, Success>> searchService({required String url, Map<String, String>? header, Map<String, dynamic>? body}) async{
+  Future<Either<Failure, Success>> searchService({required String url, Map<String, String>? header,required FormData body}) async{
     // TODO: implement searchService
     try{
       final resp=await DioService.post(url,options: Options(

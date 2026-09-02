@@ -1,14 +1,15 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import '../../layer/Widget/CustomHelper.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../layer/Widget/LoadingIndicator.dart';
-import '../../layer/Widget/TranslateText.dart';
+import 'package:vehicle_repair_service/layer/Widget/NoDataFoundScreen.dart';
 
 import '../../core/Bloc/NotificationBloc/NotificationBloc.dart';
+import '../../layer/Widget/CustomHelper.dart';
+import '../../layer/Widget/LoadingIndicator.dart';
+import '../../layer/Widget/TranslateText.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -19,23 +20,20 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen>
     with CustomHelperMixin {
-   ScrollController scrollController=ScrollController();
+  ScrollController scrollController = ScrollController();
   int currentIndex = 1;
   bool isLoadingMore = false;
-  void _scrollListener() {
 
+  void _scrollListener() {
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent - 200) {
+      currentIndex++;
+      log("Page=>$currentIndex");
 
-        currentIndex++;
-        log("Page=>$currentIndex");
-
-        context.read<NotificationBloc>().add(
-          FetchNotificationEvent(page: currentIndex),
-        );
-
+      context.read<NotificationBloc>().add(
+        FetchNotificationEvent(page: currentIndex),
+      );
     }
-
   }
 
   @override
@@ -77,13 +75,15 @@ class _NotificationScreenState extends State<NotificationScreen>
                       child: Column(
                         children: [
                           Container(
-
                             width: context.width,
                             height: 200,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                  fit: .cover,
-                                  image: NetworkImage('${dotenv.env['BASE_URL']}/upload/${item.photo.toString()}'))
+                                fit: .cover,
+                                image: NetworkImage(
+                                  '${dotenv.env['BASE_URL']}/upload/${item.photo.toString()}',
+                                ),
+                              ),
                             ),
                           ),
                           Padding(
@@ -100,7 +100,12 @@ class _NotificationScreenState extends State<NotificationScreen>
                                 crossAxisAlignment: .start,
                                 mainAxisAlignment: .start,
                                 children: [
-                                  Text('${item.description}',style: TextStyle(fontSize: 12),textAlign: .justify,overflow: .ellipsis,),
+                                  Text(
+                                    '${item.description}',
+                                    style: TextStyle(fontSize: 12),
+                                    textAlign: .justify,
+                                    overflow: .ellipsis,
+                                  ),
                                   Text(
                                     DateFormat(
                                       "${item.createdAt}",
@@ -119,6 +124,16 @@ class _NotificationScreenState extends State<NotificationScreen>
               );
             case NotificationStatus.loading:
               return LoadingIndicator();
+            case NotificationStatus.error:
+              return NoDataFoundScreen(
+                message: '${state.msg}',
+                buttonText: 'Retry',
+                onRetry: () {
+                  context.read<NotificationBloc>().add(
+                    FetchNotificationEvent(page: currentIndex),
+                  );
+                },
+              );
             default:
               return SizedBox.shrink();
           }

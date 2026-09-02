@@ -84,7 +84,7 @@ void main() {
         body: {'id':id},
       );
 
-      print('========== FETCH PROFILE RESULT ==========');
+      print('========== FETCH PROFILE RESULT=>$token ==========');
       final output = JsonEncoder.withIndent(
         "  ",
       ).convert(result.fold((l) => {'error': l.msg}, (r) => r.result));
@@ -113,9 +113,13 @@ void main() {
       );
 
       print('\n ========== UPDATE PROFILE RESULT ========== \n');
+      result.fold((l){}, (r){
+        Storage.instance.setToken(r.result?.token.toString()??'');
+        Storage.instance.setUId(r.result?.result?.id.toString()??"");
+      });
 
       final output = JsonEncoder.withIndent(
-        "  ",
+        "  "
       ).convert(result.fold((l) => {'error': l.msg}, (r) => r.result));
       if (kDebugMode) {
         print(output);
