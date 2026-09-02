@@ -40,13 +40,14 @@ class DioService {
   }
 
   static Future<String?> refreshToken() async {
-    final refreshToken = await Storage.instance.getToken();
+    final refreshToken = await Storage.instance.getUID();
 
     if (refreshToken == null) return null;
     print("Refresh Token=>$refreshToken");
     try {
       final response = await DioService.post(
         '${dotenv.env['BASE_URL']}${dotenv.env['REFRESH_URL']}',
+        data: {"id": refreshToken},
       );
 
       final newAccessToken = response.data['token'];
