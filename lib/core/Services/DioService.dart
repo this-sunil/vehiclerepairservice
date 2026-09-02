@@ -1,11 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:vehicle_repair_service/layer/Widget/Storage.dart';
 
 class DioService {
-  static final FlutterSecureStorage storage = const FlutterSecureStorage();
-
   static final Dio _dio = Dio(
     BaseOptions(
       baseUrl: dotenv.env['BASE_URL'] ?? '',
@@ -25,7 +22,7 @@ class DioService {
         onRequest: (options, handler) async {
           final token = await Storage.instance.getToken();
           options.headers["Authorization"] = "Bearer $token";
-          //print("Token=>$token");
+
           handler.next(options);
         },
 
@@ -43,7 +40,7 @@ class DioService {
   }
 
   static Future<String?> refreshToken() async {
-    final refreshToken = await Storage.instance.getUID();
+    final refreshToken = await Storage.instance.getToken();
 
     if (refreshToken == null) return null;
     print("Refresh Token=>$refreshToken");
