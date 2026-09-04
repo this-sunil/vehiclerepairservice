@@ -11,9 +11,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
 import '../Widget/TranslateText.dart';
 
-
-
-
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
 
@@ -24,6 +21,7 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> with CustomHelperMixin {
   late ScrollController _scrollController;
   late int page;
+
   void _onScroll() {
     final bloc = context.read<BookBloc>();
     final state = bloc.state;
@@ -64,15 +62,20 @@ class _HistoryPageState extends State<HistoryPage> with CustomHelperMixin {
             case BookStatus.loading:
               return LoadingIndicator();
             case BookStatus.error:
-              return NoDataFoundScreen(message: "${state.msg}",onRetry: (){
-                context.read<BookBloc>().add(FetchSlotHistoryEvent(page: page));
-
-              },buttonText: "Retry");
+              return NoDataFoundScreen(
+                message: "${state.msg}",
+                onRetry: () {
+                  context.read<BookBloc>().add(
+                    FetchSlotHistoryEvent(page: page),
+                  );
+                },
+                buttonText: "Retry",
+              );
             case BookStatus.completed:
               final items = state.model ?? [];
               return ListView.builder(
                 controller: _scrollController,
-                itemCount:items.length,
+                itemCount: items.length,
                 itemBuilder: (context, index) {
                   final item = items[index];
                   if (items.isEmpty) {
@@ -80,25 +83,27 @@ class _HistoryPageState extends State<HistoryPage> with CustomHelperMixin {
                   } else if (index < items.length) {
                     return Card(
                       child: ListTile(
-                        onTap: (){
-                            context.push(AppRoute.historyViews,arguments: {
+                        onTap: () {
+                          context.push(
+                            AppRoute.historyViews,
+                            arguments: {
                               "bookId": item.bookId,
                               "vehicleName": item.vehicleName,
                               'registrationNo': item.registrationNo,
-                              "vehiclePhoto":'${dotenv.env['BASE_URL']}/upload/${item.vehiclePhoto.toString()}',
+                              "vehiclePhoto": item.vehiclePhoto.toString(),
                               "vehicleType": item.vehicleType,
                               "slotDate": item.slotDate,
                               "slotTime": item.slotTime,
                               "serviceName": item.serviceName,
-
-                            });
+                            },
+                          );
                         },
                         leading: Hero(
                           tag: item.bookId.toString(),
                           child: CircleAvatar(
                             maxRadius: 30,
                             backgroundImage: NetworkImage(
-                              '${dotenv.env['BASE_URL']}/upload/${item.vehiclePhoto.toString()}',
+                              item.vehiclePhoto.toString(),
                             ),
                           ),
                         ),

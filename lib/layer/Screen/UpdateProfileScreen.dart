@@ -1,19 +1,17 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:heroicons/heroicons.dart';
-import 'package:image_picker/image_picker.dart';
-
-import '../../core/Bloc/AuthBloc/AuthBloc.dart';
-import '../../layer/Widget/CustomInputText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:image_picker/image_picker.dart';
 
-
-import '../../layer/Widget/TranslateText.dart';
+import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../core/Routes/route.dart';
+import '../../layer/Widget/CustomInputText.dart';
+import '../../layer/Widget/TranslateText.dart';
 import '../Widget/CustomHelper.dart';
 import '../Widget/LoadingButtonIndicator.dart';
 
@@ -31,14 +29,19 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
   String? image;
 
   late TextEditingController name, phone;
+
   Future<XFile?> pickImage(ImageSource source) async {
-    final picker = await imagePicker.pickImage(source: source);
-    if (picker == null) {
-      log("message=>No Image Found !!!");
+    try {
+      final picker = await imagePicker.pickImage(source: source);
+      if (picker == null) {
+        log("message=>No Image Found !!!");
+      }
+      setState(() {
+        file = XFile(picker!.path);
+      });
+    } catch (e) {
+      throw Exception(e);
     }
-    setState(() {
-      file = XFile(picker!.path);
-    });
     return file;
   }
 
@@ -55,11 +58,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
           insetPadding: .zero,
           title: Text(
             "Choose Photo",
-            style: TextStyle(
-
-              fontSize: 18,
-              fontWeight: .bold,
-            ),
+            style: TextStyle(fontSize: 18, fontWeight: .bold),
           ),
           content: Column(
             mainAxisSize: .min,
@@ -108,7 +107,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: TranslateText("Update Profile",style: TextStyle(color: Colors.white))),
+      appBar: AppBar(
+        title: TranslateText(
+          "Update Profile",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           switch (state.status) {
@@ -122,7 +126,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
           }
         },
         child: Column(
-
           children: [
             SizedBox(height: 20),
             Center(
@@ -133,31 +136,34 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(4),
-                  child: BlocBuilder<AuthBloc,AuthState>(builder: (context,state){
-                    return CircleAvatar(
-                      maxRadius: 80,
-                      backgroundImage: file != null
-                          ? FileImage(File(file!.path))
-                          :state.status==AuthStatus.fetchProfile?NetworkImage(
-                        '${dotenv.env['STORE_URL']}/upload/${state.result?.result?.photo}',
-                      )
-                          : AssetImage(splashIcon),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Card(
-                          shape: const CircleBorder(),
-                          color: Colors.white,
-                          child: IconButton(
-                            onPressed: () => popup(context),
-                            icon: const HeroIcon(
-                              HeroIcons.pencil,
-                              color: Colors.black,
+                  child: BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      return CircleAvatar(
+                        maxRadius: 80,
+                        backgroundImage: file != null
+                            ? FileImage(File(file!.path))
+                            : state.result?.result?.photo == null
+                            ? AssetImage(splashIcon)
+                            : NetworkImage(
+                                '${dotenv.env['STORE_URL']}/upload/${state.result?.result?.photo}',
+                              ),
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: Card(
+                            shape: const CircleBorder(),
+                            color: Colors.white,
+                            child: IconButton(
+                              onPressed: () => popup(context),
+                              icon: const HeroIcon(
+                                HeroIcons.pencil,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -179,9 +185,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
               child: CustomInputText(
                 controller: phone,
                 maxLength: 10,
-                inputFormatter:[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
+                inputFormatter: [FilteringTextInputFormatter.digitsOnly],
                 textInputType: TextInputType.phone,
                 primaryColor: Colors.grey.shade300,
                 hintText: 'Enter phone number',
@@ -227,14 +231,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
                         ),
                         onPressed: () {
                           context.read<AuthBloc>().add(
-                            file==null?UpdateProfileEvent(
-                              name: name.text,
-                              phone: phone.text,
-                            ):UpdateProfileEvent(
-                              file: File(file!.path.toString()),
-                              name: name.text,
-                              phone: phone.text,
-                            ),
+                            file == null
+                                ? UpdateProfileEvent(
+                                    name: name.text,
+                                    phone: phone.text,
+                                  )
+                                : UpdateProfileEvent(
+                                    file: File(file!.path.toString()),
+                                    name: name.text,
+                                    phone: phone.text,
+                                  ),
                           );
                         },
                         child: Text(

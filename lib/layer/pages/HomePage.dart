@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:heroicons/heroicons.dart';
 import 'package:vehicle_repair_service/layer/Widget/NoDataFoundScreen.dart';
 
@@ -15,6 +17,7 @@ import '../../data/Model/ServiceModel.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -29,6 +32,18 @@ class _HomePageState extends State<HomePage>
   late ScrollController scrollController;
   TextEditingController searchController = TextEditingController();
   List<Result> filteredList = [];
+
+  Timer? _debounce;
+
+  void onSearchChanged(String query) {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 400), () {
+      context.read<ServiceBloc>().add(
+        SearchEvent(searchText: query.toString().toLowerCase(), page: page),
+      );
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -78,15 +93,7 @@ class _HomePageState extends State<HomePage>
                 child: CustomInputText(
                   controller: searchController,
                   primaryColor: Colors.white,
-
-                  onChanged: (v) {
-                    context.read<ServiceBloc>().add(
-                      SearchEvent(
-                        searchText: v.toString().toLowerCase(),
-                        page: page,
-                      ),
-                    );
-                  },
+                  onChanged: (v) => onSearchChanged(v),
                   prefixIcon: HeroIcon(
                     HeroIcons.magnifyingGlass,
                     color: Colors.black,

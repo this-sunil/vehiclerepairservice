@@ -1,4 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:vehicle_repair_service/core/Services/FirebaseSetup.dart';
 import '../../core/Bloc/InternetBloc/InternetBloc.dart';
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
 import '../../core/Routes/route.dart';
@@ -30,6 +32,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   HistoryPage historyPage = HistoryPage();
   ServicePage servicePage = ServicePage();
   SettingScreen settingScreen = SettingScreen(flag: false);
+
   @override
   void initState() {
     // TODO: implement initState
@@ -47,7 +50,6 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<InternetBloc, InternetState>(
       builder: (context, state) {
         switch (state.status) {
@@ -77,10 +79,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                           ? "Slot Book History"
                           : "My Account",
                       style: TextStyle(
-
                         fontWeight: .w600,
                         fontSize: 18,
-                        color: Colors.white
+                        color: Colors.white,
                       ),
                     ),
                     BlocBuilder<LocationBloc, LocationState>(
@@ -91,8 +92,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                               '${state.model?.currentAddress?[0].locality}',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Colors.white
-
+                                color: Colors.white,
                               ),
                             );
                           default:
@@ -153,10 +153,21 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ],
                 color: Colors.deepOrangeAccent,
               ),
-              floatingActionButton: FloatingActionButton.extended(onPressed: (){
-                context.push(AppRoute.player);
-
-              },label: Icon(Icons.qr_code)),
+              floatingActionButton: FloatingActionButton.extended(
+                onPressed: () {
+                  // context.push(AppRoute.player);
+                  FirebaseSetup.sendNotification(
+                    RemoteMessage(
+                      notification: RemoteNotification(
+                        title: appName,
+                        body:
+                            "Welcome to start the journey vehicle repair services",
+                      ),
+                    ),
+                  );
+                },
+                label: Icon(Icons.notifications),
+              ),
             );
         }
       },

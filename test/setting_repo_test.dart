@@ -12,8 +12,9 @@ void main() {
     await dotenv.load(fileName: '.env');
     baseUrl = dotenv.env['BASE_URL'].toString();
     FlutterSecureStorage.setMockInitialValues({
-      //'key': "23",
-      //'token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODgzMjg2MTQsImV4cCI6MTc4ODMyOTgxNH0.EvG8d7jk19PKxCN8ZML2wiX3K9jYX-G1NK1GtvPnpb4",
+      'key': "35",
+      'token':
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODg1MDY5NDksImV4cCI6MTc4ODUwODc0OX0.NdnrDnHGukAdiiC5GVc8VwAYwIbhLIydy9O32x4R3WA",
     });
     print("===================");
     print(baseUrl);
@@ -33,7 +34,7 @@ void main() {
       );
       print("=============Fetch Setting==============");
       final output = const JsonEncoder.withIndent(
-        "  "
+        "  ",
       ).convert(result.fold((l) => {'error': l.msg}, (r) => r.result));
       print(output);
     });

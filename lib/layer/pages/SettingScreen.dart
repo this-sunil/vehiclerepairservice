@@ -1,6 +1,5 @@
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:heroicons/heroicons.dart';
-
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../core/Bloc/ThemeBloc/ThemeBloc.dart';
 import '../Widget/CustomHelper.dart';
@@ -16,6 +15,7 @@ import '../Widget/LoadingIndicator.dart';
 
 class SettingScreen extends StatefulWidget {
   final bool flag;
+
   const SettingScreen({super.key, required this.flag});
 
   @override
@@ -23,8 +23,6 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
-
-
   final languages = [
     {'code': TranslateLanguage.english.bcpCode, 'label': 'English'},
     {'code': TranslateLanguage.hindi.bcpCode, 'label': 'Hindi'},
@@ -35,6 +33,7 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
     {'code': TranslateLanguage.tamil.bcpCode, 'label': 'Tamil'},
   ];
   String? selectedCode;
+
   Future<String?> fetchData() async {
     selectedCode =
         await Storage.instance.getLanguage() ??
@@ -76,18 +75,16 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
                     groupValue: selectedCode,
                     title: TranslateText(lang['label'].toString()),
                     onChanged: (value) async {
-
                       setState(() {
                         selectedCode = value;
                       });
-                      await Storage.instance.setLanguage(
-                        selectedCode.toString(),
-                      ).whenComplete((){
-                        if(mounted) {
-                          context.pushAndRemoveUntil(AppRoute.dashboard);
-                        }
-                      });
-
+                      await Storage.instance
+                          .setLanguage(selectedCode.toString())
+                          .whenComplete(() {
+                            if (mounted) {
+                              context.pushAndRemoveUntil(AppRoute.dashboard);
+                            }
+                          });
                     },
                   );
                 }).toList(),
@@ -103,54 +100,63 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: widget.flag == true
-          ? AppBar(title: TranslateText("Setting",style: TextStyle(color: Colors.white)))
+          ? AppBar(
+              title: TranslateText(
+                "Setting",
+                style: TextStyle(color: Colors.white),
+              ),
+            )
           : null,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            BlocBuilder<AuthBloc,AuthState>(builder: (context,state){
-              switch(state.status){
-                case AuthStatus.loading:
-                  return SizedBox(
-                    height: 150,
-                    child: LoadingIndicator(),
-                  );
-                case AuthStatus.fetchProfile:
-                  final item=state.result?.result;
-                  return Column(
-                    mainAxisSize: .min,
-                    children: [
-                      Center(
-                        child: Card(
-                          elevation: 2,
-                          shape: CircleBorder(
-                            side: BorderSide(color: Colors.grey.shade300),
-                          ),
-                          child: Padding(
-                            padding: .all(4),
-                            child:CircleAvatar(
-                              maxRadius: 80,
-                              backgroundImage:  item!=null && item.photo!.toString().isEmpty?AssetImage(splashIcon):NetworkImage('${dotenv.env['STORE_URL']}/upload/${item?.photo}'),
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                switch (state.status) {
+                  case AuthStatus.loading:
+                    return SizedBox(height: 150, child: LoadingIndicator());
+                  case AuthStatus.fetchProfile:
+                    final item = state.result?.result;
+                    return Column(
+                      mainAxisSize: .min,
+                      children: [
+                        Center(
+                          child: Card(
+                            elevation: 2,
+                            shape: CircleBorder(
+                              side: BorderSide(color: Colors.grey.shade300),
+                            ),
+                            child: Padding(
+                              padding: .all(4),
+                              child: CircleAvatar(
+                                maxRadius: 80,
+                                backgroundImage:
+                                    item != null &&
+                                        item.photo!.toString().isEmpty
+                                    ? AssetImage(splashIcon)
+                                    : NetworkImage(
+                                        '${dotenv.env['STORE_URL']}/upload/${item?.photo}',
+                                      ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        "${state.result?.result?.name}",
-                        style: TextStyle(fontWeight: .bold),
-                      ),
-                      Text(
-                        "${state.result?.result?.phone}",
-                        style: TextStyle(fontWeight: .bold),
-                      ),
-                    ],
-                  );
-                default:
-                  return Container();
-              }
-            }),
-
+                        SizedBox(height: 10),
+                        Text(
+                          "${state.result?.result?.name}",
+                          style: TextStyle(fontWeight: .bold),
+                        ),
+                        Text(
+                          "${state.result?.result?.phone}",
+                          style: TextStyle(fontWeight: .bold),
+                        ),
+                      ],
+                    );
+                  default:
+                    return Container();
+                }
+              },
+            ),
 
             Card(
               elevation: 5,
@@ -168,7 +174,7 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
             Card(
               elevation: 5,
               child: ListTile(
-               onTap: () => showLanguageDialog(),
+                onTap: () => showLanguageDialog(),
                 leading: HeroIcon(HeroIcons.language),
                 title: TranslateText(
                   "App Language",

@@ -9,6 +9,7 @@ import '../../../domain/Repository/BookRepository.dart';
 import '../../../layer/Widget/Storage.dart';
 
 part 'BookEvent.dart';
+
 part 'BookState.dart';
 
 class BookBloc extends Bloc<BookEvent, BookState> {
@@ -26,39 +27,32 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     emit(state.copyWith(status: BookStatus.loading));
     String? uid = await Storage.instance.getUID();
     String? token = await Storage.instance.getToken();
-    String fileName = event.photo.path.split("/").join();
-    final body = fileName.isEmpty
-        ? FormData.fromMap({
-            'id': uid.toString(),
-            'vehicle_name': event.vehicleName,
-            'vehicle_type': event.vehicleType,
-            'registration_no': event.registerNo,
-            'service_name': event.serviceName,
-            'slot_date': event.slotDate,
-            'slot_time': event.slotTime,
-          })
-        : FormData.fromMap({
-            'id': uid.toString(),
-            'vehicle_name': event.vehicleName,
-            'vehicle_photo': await MultipartFile.fromFile(
-              event.photo.path,
-              filename: fileName,
-            ),
-            'vehicle_type': event.vehicleType,
-            'registration_no': event.registerNo,
-            'service_name': event.serviceName,
-            'slot_date': event.slotDate,
-            'slot_time': event.slotTime,
-          });
+    final Map<String, dynamic> body = {
+      "id": uid.toString(),
+      "vehicle_name": event.vehicleName,
+      "vehicle_type": event.vehicleType,
+      "registration_no": event.registerNo,
+      "service_name": event.serviceName,
+      "slot_date": event.slotDate,
+      "slot_time": event.slotTime,
+    };
+    if (event.photo.path.isNotEmpty) {
+      String fileName = event.photo.path.split('/').last;
+      body['vehicle_photo'] = await MultipartFile.fromFile(
+        event.photo.path,
+        filename: fileName,
+      );
+    }
     Map<String, String> header = {
-      "accept": "application/json",
       "Authorization": "Bearer $token",
+      "Accept": "application/json",
+      "Content-Type": "multipart/form-data",
     };
 
     final result = await repository.bookAppointment(
       url: '${dotenv.env['BASE_URL']}${dotenv.env['BOOK_APPOINTMENT']}',
       header: header,
-      body: body,
+      body: FormData.fromMap(body),
     );
     return result.fold(
       (l) => emit(state.copyWith(status: l.status, msg: l.msg)),

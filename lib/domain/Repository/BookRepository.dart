@@ -40,8 +40,8 @@ class BookRepository implements BaseBookRepo {
         options: Options(headers: header),
         data: body,
       );
-      print("Resp=>${resp.statusCode}");
-      final result = await Isolate.run(() => BookingModel.fromJson(resp.data));
+      print("Resp=>${resp.data}");
+      final result = BookingModel.fromJson(resp.data);
 
       switch (resp.statusCode) {
         case 200:
@@ -73,12 +73,15 @@ class BookRepository implements BaseBookRepo {
     } on DioException catch (e) {
       log(e.message.toString());
       return Left(
-        Failure(status: BookStatus.error, msg: "Something Went Wrong!!!"),
+        Failure(status: BookStatus.error, msg: "Something Went Wrong =>$e!!!"),
       );
     } catch (e, stk) {
       print("object=>$e");
       return Left(
-        Failure(status: BookStatus.error, msg: "Internal Server Error !!!"),
+        Failure(
+          status: BookStatus.error,
+          msg: "Internal Server Error =>$e !!!",
+        ),
       );
     }
   }
@@ -96,9 +99,7 @@ class BookRepository implements BaseBookRepo {
         data: body,
         options: Options(headers: header),
       );
-      final result = await Isolate.run(
-        () => SlotHistoryModel.fromJson(resp.data),
-      );
+      final result = SlotHistoryModel.fromJson(resp.data);
       log("Slot History=>${resp.data}");
       switch (resp.statusCode) {
         case 200:
@@ -106,7 +107,7 @@ class BookRepository implements BaseBookRepo {
             Success(
               status: BookStatus.completed,
               msg: "${result.msg}",
-              result: result,
+              result: result.result,
             ),
           );
 

@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:vehicle_repair_service/layer/Widget/Storage.dart';
 
@@ -9,8 +11,7 @@ class DioService {
       connectTimeout: const Duration(seconds: 60),
       receiveTimeout: const Duration(seconds: 60),
       sendTimeout: const Duration(seconds: 60),
-      validateStatus: (v) => true,
-      // Remove validateStatus
+      validateStatus: (status) => status != 401,
     ),
   );
 
@@ -22,12 +23,13 @@ class DioService {
         onRequest: (options, handler) async {
           final token = await Storage.instance.getToken();
           options.headers["Authorization"] = "Bearer $token";
-
           handler.next(options);
         },
 
         onError: (error, handler) async {
-          print("Status=>${error.response?.statusCode}");
+          if (kDebugMode) {
+            print("Status Code=>${error.response?.statusCode}");
+          }
           if (error.response?.statusCode == 401) {
             await refreshToken();
             final retry = await dio.fetch(error.requestOptions);
@@ -43,24 +45,17 @@ class DioService {
     final refreshToken = await Storage.instance.getUID();
 
     if (refreshToken == null) return null;
-    print("Refresh Token=>$refreshToken");
-    try {
-      final response = await DioService.post(
-        '${dotenv.env['BASE_URL']}${dotenv.env['REFRESH_URL']}',
-        data: {"id": refreshToken},
-      );
+    log("Refresh Token=>$refreshToken");
 
-      final newAccessToken = response.data['token'];
+    final response = await _dio.post(
+      '${dotenv.env['BASE_URL']}${dotenv.env['REFRESH_URL']}',
+      data: {"id": refreshToken},
+    );
 
-      await Storage.instance.setToken(newAccessToken);
-      print("New Token=>$newAccessToken");
-      return newAccessToken;
-    } on DioException catch (e) {
-      //log("Dio Exception=>${e.message}");
-    } catch (_) {
-      return null;
-    }
-    return null;
+    final newAccessToken = response.data['token'];
+
+    await Storage.instance.setToken(newAccessToken);
+    return newAccessToken;
   }
 
   static Future<Response> get(

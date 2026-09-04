@@ -14,7 +14,9 @@ void main() {
   setUpAll(() async {
     await dotenv.load(fileName: '.env');
     FlutterSecureStorage.setMockInitialValues({
-      //'token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODgyNjY1MjIsImV4cCI6MTc4ODI2NzcyMn0.A5Fwz3_c07FPwKSTzjZusNa4SGaG4ONTDrUhv89OQwU',
+      'key': "35",
+      'token':
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODg1MDY5NDksImV4cCI6MTc4ODUwODc0OX0.NdnrDnHGukAdiiC5GVc8VwAYwIbhLIydy9O32x4R3WA",
     });
     baseUrl = dotenv.env['BASE_URL'].toString();
     print('======================================');
