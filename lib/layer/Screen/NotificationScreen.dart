@@ -64,7 +64,7 @@ class _NotificationScreenState extends State<NotificationScreen>
           switch (state.status) {
             case NotificationStatus.completed:
               final model = state.model ?? [];
-              isLoadingMore = false;
+
               return ListView.builder(
                 controller: scrollController,
                 itemCount: model.length,
@@ -101,7 +101,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                 mainAxisAlignment: .start,
                                 children: [
                                   Text(
-                                    '${item.description}',
+                                    item.description.toString(),
                                     style: TextStyle(fontSize: 12),
                                     textAlign: .justify,
                                     overflow: .ellipsis,

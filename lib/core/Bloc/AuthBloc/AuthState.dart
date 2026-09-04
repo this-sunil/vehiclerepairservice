@@ -1,17 +1,28 @@
 part of 'AuthBloc.dart';
-enum AuthStatus { initial, loading,updateLoading, login, register,fetchProfile,update, error }
+
+enum AuthStatus {
+  initial,
+  loading,
+  updateLoading,
+  login,
+  register,
+  fetchProfile,
+  update,
+  error,
+}
 
 class AuthState extends Equatable {
   final AuthStatus? status;
   final String? msg;
-  final AuthModel? result;
+  final AuthEntity? result;
+
   const AuthState({this.status, this.msg, this.result});
 
   factory AuthState.initial() {
     return AuthState(status: AuthStatus.initial);
   }
 
-  AuthState copyWith({AuthStatus? status, String? msg, AuthModel? result}) {
+  AuthState copyWith({AuthStatus? status, String? msg, AuthEntity? result}) {
     return AuthState(
       status: status ?? status,
       msg: msg ?? msg,

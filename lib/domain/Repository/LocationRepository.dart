@@ -5,16 +5,17 @@ import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
-import '../../data/Model/Failure.dart';
-import '../../data/Model/LocationModel.dart';
-import '../../data/Model/Success.dart';
+import '../../data/entity/Failure.dart';
+import '../../data/entity/LocationModel.dart';
+import '../../data/entity/Success.dart';
 
 abstract class BaseLocationRepository {
   Future<Either<Failure, Success>> fetchLocation();
 }
 
 class LocationRepository extends BaseLocationRepository {
-  Geocoding geocoding=Geocoding();
+  Geocoding geocoding = Geocoding();
+
   @override
   Future<Either<Failure, Success>> fetchLocation() async {
     // TODO: implement fetchLocation

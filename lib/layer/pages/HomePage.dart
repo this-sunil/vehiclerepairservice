@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
 import '../../layer/Widget/TranslateText.dart';
-import '../../data/Model/ServiceModel.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,7 +30,6 @@ class _HomePageState extends State<HomePage>
   late int page;
   late ScrollController scrollController;
   TextEditingController searchController = TextEditingController();
-  List<Result> filteredList = [];
 
   Timer? _debounce;
 

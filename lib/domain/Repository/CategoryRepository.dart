@@ -4,12 +4,12 @@ import 'dart:isolate';
 
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
+import 'package:vehicle_repair_service/data/entity/cat_entity/cat_entity.dart';
 
 import '../../core/Bloc/CategoryBloc/CategoryBloc.dart';
 import '../../core/Services/DioService.dart';
-import '../../data/Model/CategoryModel.dart';
-import '../../data/Model/Failure.dart';
-import '../../data/Model/Success.dart';
+import '../../data/entity/Failure.dart';
+import '../../data/entity/Success.dart';
 
 abstract class BaseCatRepo {
   Future<Either<Failure, Success>> fetchCat({
@@ -28,7 +28,7 @@ class CategoryRepository implements BaseCatRepo {
     try {
       final resp = await DioService.get(url, options: Options(headers: header));
       //log("Category message=>${resp.data}");
-      final result = await Isolate.run(() => CategoryModel.fromJson(resp.data));
+      final result = await Isolate.run(() => CatEntity.fromJson(resp.data));
 
       switch (resp.statusCode) {
         case 200:

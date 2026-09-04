@@ -1,16 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
-import 'dart:isolate';
-
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:vehicle_repair_service/core/Services/DioService.dart';
+import 'package:vehicle_repair_service/data/entity/book_entity/book_entity.dart';
+import 'package:vehicle_repair_service/data/entity/slot_entity/slot_entity.dart';
 
 import '../../core/Bloc/BookBloc/BookBloc.dart';
-import '../../data/Model/BookingModel.dart';
-import '../../data/Model/Failure.dart';
-import '../../data/Model/SlotHistoryModel.dart';
-import '../../data/Model/Success.dart';
+import '../../data/entity/Failure.dart';
+import '../../data/entity/Success.dart';
 
 abstract class BaseBookRepo {
   Future<Either<Failure, Success>> bookAppointment({
@@ -41,7 +39,7 @@ class BookRepository implements BaseBookRepo {
         data: body,
       );
       print("Resp=>${resp.data}");
-      final result = BookingModel.fromJson(resp.data);
+      final result = BookEntity.fromJson(resp.data);
 
       switch (resp.statusCode) {
         case 200:
@@ -99,7 +97,7 @@ class BookRepository implements BaseBookRepo {
         data: body,
         options: Options(headers: header),
       );
-      final result = SlotHistoryModel.fromJson(resp.data);
+      final result = SlotEntity.fromJson(resp.data);
       log("Slot History=>${resp.data}");
       switch (resp.statusCode) {
         case 200:

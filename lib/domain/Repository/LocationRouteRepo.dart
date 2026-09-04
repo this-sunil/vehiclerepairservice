@@ -2,29 +2,49 @@ import 'package:either_dart/either.dart';
 import 'package:geocoding/geocoding.dart';
 
 import '../../core/Bloc/LocationRouteBloc/LocationRouteBloc.dart';
-import '../../data/Model/Failure.dart';
-import '../../data/Model/Success.dart';
+import '../../data/entity/Failure.dart';
+import '../../data/entity/Success.dart';
 
-abstract class BaseLocationRouteRepo{
-  Future<Either<Failure,Success>> fetchRouteInfo({required double lat,required double long});
+abstract class BaseLocationRouteRepo {
+  Future<Either<Failure, Success>> fetchRouteInfo({
+    required double lat,
+    required double long,
+  });
 }
-class LocationRouteRepo implements BaseLocationRouteRepo{
-  Geocoding geocoding=Geocoding();
+
+class LocationRouteRepo implements BaseLocationRouteRepo {
+  Geocoding geocoding = Geocoding();
+
   @override
-  Future<Either<Failure, Success>> fetchRouteInfo({required double lat,required double long}) async{
+  Future<Either<Failure, Success>> fetchRouteInfo({
+    required double lat,
+    required double long,
+  }) async {
     // TODO: implement fetchRouteInfo
-    try{
-      final placeMark=await geocoding.placemarkFromCoordinates(lat, long);
-      if(placeMark.isEmpty){
-        return Left(Failure(status: LocationRouteStatus.error,msg: "Address not found !!!"));
+    try {
+      final placeMark = await geocoding.placemarkFromCoordinates(lat, long);
+      if (placeMark.isEmpty) {
+        return Left(
+          Failure(
+            status: LocationRouteStatus.error,
+            msg: "Address not found !!!",
+          ),
+        );
       }
       final p = placeMark.first;
-      final address = "${p.name}, ${p.locality}, ${p.administrativeArea}, ${p.country}";
-      return Right(Success(status: LocationRouteStatus.completed,msg: 'Address Found !!!',result: address));
-    }
-    catch(e){
-      return Left(Failure(msg: 'No Routes Found !!!',status: LocationRouteStatus.error));
+      final address =
+          "${p.name}, ${p.locality}, ${p.administrativeArea}, ${p.country}";
+      return Right(
+        Success(
+          status: LocationRouteStatus.completed,
+          msg: 'Address Found !!!',
+          result: address,
+        ),
+      );
+    } catch (e) {
+      return Left(
+        Failure(msg: 'No Routes Found !!!', status: LocationRouteStatus.error),
+      );
     }
   }
-
 }

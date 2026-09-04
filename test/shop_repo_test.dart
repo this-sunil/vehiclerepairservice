@@ -14,7 +14,7 @@ void main() {
     FlutterSecureStorage.setMockInitialValues({
       'key': "35",
       'token':
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODg1MDY5NDksImV4cCI6MTc4ODUwODc0OX0.NdnrDnHGukAdiiC5GVc8VwAYwIbhLIydy9O32x4R3WA",
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlhdCI6MTc4ODUyNTI2NiwiZXhwIjoxNzg4NTI3MDY2fQ.5oFWIzhoXo2h6NG1lD8yhWzv2SPpEj1RpralNcusv9Y",
     });
     print("==================================");
     baseUrl = dotenv.env["BASE_URL"].toString();

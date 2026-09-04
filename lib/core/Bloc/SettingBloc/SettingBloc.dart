@@ -1,12 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:vehicle_repair_service/data/entity/setting_entity/setting_entity.dart';
 
-import '../../../data/Model/SettingModel.dart';
 import '../../../domain/Repository/SettingRepository.dart';
 import '../../../layer/Widget/Storage.dart';
 
 part 'SettingEvent.dart';
+
 part 'SettingState.dart';
 
 class SettingBloc extends Bloc<SettingEvent, SettingState> {

@@ -7,7 +7,6 @@ import '../../core/Routes/route.dart';
 import '../../layer/Widget/TranslateText.dart';
 import 'package:intl/intl.dart';
 import '../../core/Bloc/CategoryBloc/CategoryBloc.dart';
-import '../../data/Model/ServiceModel.dart';
 import '../../layer/Widget/CustomHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,7 +44,6 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   String? selectedVehicleType;
-  List<Result> selectedServices = [];
 
   XFile? file;
   ImagePicker imagePicker = ImagePicker();

@@ -3,11 +3,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '../../../data/Model/ServiceModel.dart';
+import '../../../data/entity/service_entity/service_entity.dart';
 import '../../../domain/Repository/ServiceRepository.dart';
 import '../../../layer/Widget/Storage.dart';
 
 part 'ServiceEvent.dart';
+
 part 'ServiceState.dart';
 
 class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {

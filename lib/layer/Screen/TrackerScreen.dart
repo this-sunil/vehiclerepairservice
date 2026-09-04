@@ -9,8 +9,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
-import '../../data/Model/RouteDirectionModel.dart';
 import '../../core/Routes/route.dart';
+import '../../data/entity/RouteDirectionModel.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
 
 class TrackerScreen extends StatefulWidget {
@@ -19,6 +19,7 @@ class TrackerScreen extends StatefulWidget {
   final String city;
   final String shopTime;
   final LatLng destination;
+
   const TrackerScreen({
     super.key,
     required this.destination,
@@ -39,7 +40,8 @@ class _TrackerScreenState extends State<TrackerScreen> {
 
   String mapStyle = "";
 
-  final Brightness brightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+  final Brightness brightness =
+      WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
   Future<String>? loadMapStyle() async {
     if (kDebugMode) {
@@ -161,7 +163,6 @@ class _TrackerScreenState extends State<TrackerScreen> {
     );
 
     return (distance / 1000).round();
-
   }
 
   Future<List<LatLng>> getRoute(LatLng src, LatLng dst) async {
@@ -263,7 +264,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
 
     points.clear();
     _mapController.dispose();
-    stopNavigate=false;
+    stopNavigate = false;
     super.dispose();
   }
 
@@ -481,7 +482,11 @@ class _TrackerScreenState extends State<TrackerScreen> {
                                   },
                                   child: Text(
                                     "Stop Navigate",
-                                    style: TextStyle(color: Colors.white,fontWeight: .bold,fontSize: 16),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: .bold,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 )
                               : ElevatedButton.icon(
@@ -497,8 +502,6 @@ class _TrackerScreenState extends State<TrackerScreen> {
                                     ),
                                   ),
                                   onPressed: () async {
-
-
                                     setState(() {
                                       isNavigating = true;
                                       stopNavigate = false;

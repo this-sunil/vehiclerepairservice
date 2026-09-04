@@ -1,6 +1,6 @@
+import '../data/entity/ItemModel.dart';
 import '../layer/Widget/CustomHelper.dart';
 import 'package:flutter/material.dart';
-import '../data/Model/ItemModel.dart';
 import '../core/Routes/route.dart';
 
 class OverViewScreen extends StatefulWidget {
@@ -82,8 +82,8 @@ class _OverViewScreenState extends State<OverViewScreen>
   void dispose() {
     // TODO: implement dispose
     _pageController.dispose();
-     list.clear();
-     _controller.removeListener((){});
+    list.clear();
+    _controller.removeListener(() {});
     _controller.dispose();
 
     super.dispose();
@@ -227,9 +227,9 @@ class _OverViewScreenState extends State<OverViewScreen>
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.white,
-                          fontWeight: .bold
+                          fontWeight: .bold,
                         ),
-                        textAlign: .justify
+                        textAlign: .justify,
                       ),
                     ),
                   ],

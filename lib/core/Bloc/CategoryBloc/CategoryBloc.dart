@@ -1,30 +1,43 @@
 import 'dart:developer';
 
-import '../../../data/Model/CategoryModel.dart';
 import '../../../domain/Repository/CategoryRepository.dart';
 import '../../../layer/Widget/Storage.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../../../data/entity/cat_entity/cat_entity.dart';
+
 part 'CategoryEvent.dart';
+
 part 'CategoryState.dart';
 
-class CategoryBloc extends Bloc<CategoryEvent,CategoryState>{
+class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final CategoryRepository repository;
-  CategoryBloc(this.repository):super(CategoryState.initial()){
+
+  CategoryBloc(this.repository) : super(CategoryState.initial()) {
     on<FetchCatEvent>(_fetchCategoryApi);
   }
 
-  Future<void> _fetchCategoryApi(FetchCatEvent event,Emitter<CategoryState> emit) async{
-      emit(state.copyWith(status: CatStatus.loading));
-      log("message=>Category Service");
-      String? token=await Storage.instance.getToken();
-      final result=await repository.fetchCat(url: '${dotenv.env['BASE_URL']}${dotenv.env['FETCH_CAT_API']}',header: {
-        "Authorization":"Bearer $token",
-        "Content-Type":"application/json",
-        "Accept":"application/json"
-      });
-      return result.fold((l)=>emit(state.copyWith(status: l.status,msg: l.msg)), (r)=>emit(state.copyWith(status: r.status,msg: r.msg,result: r.result)));
+  Future<void> _fetchCategoryApi(
+    FetchCatEvent event,
+    Emitter<CategoryState> emit,
+  ) async {
+    emit(state.copyWith(status: CatStatus.loading));
+    log("message=>Category Service");
+    String? token = await Storage.instance.getToken();
+    final result = await repository.fetchCat(
+      url: '${dotenv.env['BASE_URL']}${dotenv.env['FETCH_CAT_API']}',
+      header: {
+        "Authorization": "Bearer $token",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+    );
+    return result.fold(
+      (l) => emit(state.copyWith(status: l.status, msg: l.msg)),
+      (r) =>
+          emit(state.copyWith(status: r.status, msg: r.msg, result: r.result)),
+    );
   }
 
   @override

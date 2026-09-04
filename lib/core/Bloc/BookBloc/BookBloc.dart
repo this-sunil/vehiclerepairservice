@@ -3,8 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../../data/Model/SlotHistoryModel.dart';
+import '../../../data/entity/slot_entity/slot_entity.dart';
 import '../../../domain/Repository/BookRepository.dart';
 import '../../../layer/Widget/Storage.dart';
 

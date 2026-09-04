@@ -4,16 +4,16 @@ import 'dart:isolate';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:vehicle_repair_service/core/Services/DioService.dart';
+import 'package:vehicle_repair_service/data/entity/notification_entity/notification_entity.dart';
 import '../../core/Bloc/NotificationBloc/NotificationBloc.dart';
-import '../../data/Model/Failure.dart';
-import '../../data/Model/NotificationModel.dart';
-import '../../data/Model/Success.dart';
+import '../../data/entity/Failure.dart';
+import '../../data/entity/Success.dart';
 
 abstract class BaseNotificationRepo {
   Future<Either<Failure, Success>> fetchNotification({
     required String url,
     Map<String, String>? header,
-    Map<String, dynamic>? body
+    Map<String, dynamic>? body,
   });
 }
 
@@ -34,7 +34,7 @@ class NotificationRepository extends BaseNotificationRepo {
       log("Notification Response=> ${resp.data}");
 
       final result = await Isolate.run(
-        () => NotificationModel.fromJson(resp.data),
+        () => NotificationEntity.fromJson(resp.data),
       );
       switch (resp.statusCode) {
         case 200:
@@ -44,7 +44,7 @@ class NotificationRepository extends BaseNotificationRepo {
                   Success(
                     status: NotificationStatus.completed,
                     msg: result.msg,
-                    result: result.result
+                    result: result.result,
                   ),
                 );
 

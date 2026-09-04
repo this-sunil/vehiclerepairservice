@@ -4,15 +4,17 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import '../../../data/Model/AuthModel.dart';
+import 'package:vehicle_repair_service/data/entity/auth_entity/auth_entity.dart';
 import '../../../domain/Repository/AuthRepository.dart';
 import '../../../layer/Widget/Storage.dart';
 
 part 'AuthEvent.dart';
+
 part 'AuthState.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository repository;
+
   AuthBloc(this.repository) : super(AuthState.initial()) {
     on<LoginEvent>(_loginApi);
     on<RegisterEvent>(_registerApi);
@@ -25,8 +27,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     final result = await repository.login(
       url: '${dotenv.env['BASE_URL']}${dotenv.env["LOGIN"]}',
-      header: {"Content-Type": "application/json","Accept":"application/json"},
-      body: {"phone": event.phone, "pass": event.pass}
+      header: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: {"phone": event.phone, "pass": event.pass},
     );
     return result.fold(
       (l) => emit(state.copyWith(status: l.status, msg: l.msg)),
@@ -44,17 +49,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Map<String, dynamic> body = {
       "name": event.name,
       "phone": event.phone,
-      "pass": event.pass
+      "pass": event.pass,
     };
 
     final result = await repository.register(
       url: '${dotenv.env['BASE_URL']}${dotenv.env["REGISTER"]}',
-      header: {"Content-Type":"application/json","Accept":"application/json"},
+      header: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
       body: body,
     );
     return result.fold(
       (l) => emit(state.copyWith(status: l.status, msg: l.msg)),
-      (r) => emit(state.copyWith(status: r.status, msg: r.msg, result: r.result))
+      (r) =>
+          emit(state.copyWith(status: r.status, msg: r.msg, result: r.result)),
     );
   }
 
@@ -62,7 +71,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     FetchProfileEvent event,
     Emitter<AuthState> emit,
   ) async {
-
     emit(state.copyWith(status: AuthStatus.loading));
 
     String? id = await Storage.instance.getUID();
@@ -70,17 +78,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Map<String, dynamic> body = {"id": id};
     final result = await repository.fetchProfile(
       url: '${dotenv.env['BASE_URL']}${dotenv.env["FETCH_PROFILE"]}',
-      header: {"Content-Type": "application/json","Authorization":"Bearer $token"},
-      body: body
+      header: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+      },
+      body: body,
     );
     return result.fold(
       (l) => emit(state.copyWith(status: l.status, msg: l.msg)),
-      (r) => emit(state.copyWith(status: r.status, msg: r.msg, result: r.result)));
+      (r) =>
+          emit(state.copyWith(status: r.status, msg: r.msg, result: r.result)),
+    );
   }
 
   Future<void> _updateProfileApi(
     UpdateProfileEvent event,
-    Emitter<AuthState> emit
+    Emitter<AuthState> emit,
   ) async {
     emit(state.copyWith(status: AuthStatus.updateLoading));
     Future.delayed(Duration(seconds: 5));
@@ -96,22 +109,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event.file != null) {
       String fileName = event.file!.path.split('/').last;
       body['photo'] = await MultipartFile.fromFile(
-        event.file?.path??'',
+        event.file?.path ?? '',
         filename: fileName,
       );
     }
     final result = await repository.updateProfile(
       url: '${dotenv.env['BASE_URL']}${dotenv.env['UPDATE_PROFILE']}',
-      body:  FormData.fromMap(body),
+      body: FormData.fromMap(body),
       header: {
-        'Authorization':'Bearer $token',
+        'Authorization': 'Bearer $token',
         'Content-Type': 'multipart/form-data',
-        'Accept': 'application/json'
-      }
+        'Accept': 'application/json',
+      },
     );
     return result.fold(
       (l) => emit(state.copyWith(status: l.status, msg: l.msg)),
-      (r) => emit(state.copyWith(status: r.status, msg: r.msg, result: r.result)),
+      (r) =>
+          emit(state.copyWith(status: r.status, msg: r.msg, result: r.result)),
     );
   }
 }
