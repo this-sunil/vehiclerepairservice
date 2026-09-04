@@ -1,4 +1,3 @@
-
 import 'package:vehicle_repair_service/layer/Widget/NoInternetScreen.dart';
 
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
@@ -28,6 +27,7 @@ import '../../core/Routes/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../layer/SplashScreen.dart';
+import '../flavors.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -36,58 +36,73 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=>InternetBloc()..add(FetchInternetEvent())),
-        BlocProvider(create: (context)=>ThemeBloc()..add(LoadThemeEvent())),
+        BlocProvider(
+          create: (context) => InternetBloc()..add(FetchInternetEvent()),
+        ),
+        BlocProvider(create: (context) => ThemeBloc()..add(LoadThemeEvent())),
         BlocProvider(create: (context) => AuthBloc(AuthRepository())),
         BlocProvider(create: (context) => CategoryBloc(CategoryRepository())),
         BlocProvider(create: (context) => ServiceBloc(ServiceRepository())),
         BlocProvider(create: (context) => SettingBloc(SettingRepository())),
-        BlocProvider(create: (context)=>ForgotPassBloc()),
-        BlocProvider(create: (context)=>InternetBloc()),
-        BlocProvider(create: (context)=>BookBloc(BookRepository())),
+        BlocProvider(create: (context) => ForgotPassBloc()),
+        BlocProvider(create: (context) => InternetBloc()),
+        BlocProvider(create: (context) => BookBloc(BookRepository())),
         //BlocProvider(create: (context)=>PhoneAuthBloc(PhoneAuthRepo())),
-        BlocProvider(create: (context)=>LocationBloc(LocationRepository())..add(FetchLocationEvent())),
-        BlocProvider(create: (context)=>ShopBloc(SearchShopRepo())),
+        BlocProvider(
+          create: (context) =>
+              LocationBloc(LocationRepository())..add(FetchLocationEvent()),
+        ),
+        BlocProvider(create: (context) => ShopBloc(SearchShopRepo())),
 
-        BlocProvider(create: (context)=>LocationRouteBloc(LocationRouteRepo())),
+        BlocProvider(
+          create: (context) => LocationRouteBloc(LocationRouteRepo()),
+        ),
 
-        BlocProvider(create: (context)=>SubscriptionBloc(SubscriptionRepo())),
-        BlocProvider(create: (context)=>NotificationBloc(NotificationRepository()))
+        BlocProvider(create: (context) => SubscriptionBloc(SubscriptionRepo())),
+        BlocProvider(
+          create: (context) => NotificationBloc(NotificationRepository()),
+        ),
       ],
-      child: BlocBuilder<ThemeBloc,ThemeState>(builder: (context,state){
-        return MaterialApp(
-          title: AppRoute.appName,
-          debugShowCheckedModeBanner: false,
-          initialRoute: AppRoute.initialRoute,
-          theme: state.themeData,
-          onGenerateRoute: AppRoute.generateRoute,
-          builder: (context,child){
-            final ms=MediaQuery.of(context);
-            return MediaQuery(data: ms.copyWith(
-              textScaler: ms.textScaler.clamp(
-                minScaleFactor: 1.0,
-                maxScaleFactor: 1.3
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp(
+            title: F.title,
+            debugShowCheckedModeBanner: false,
+            initialRoute: AppRoute.initialRoute,
+            theme: state.themeData,
+            onGenerateRoute: AppRoute.generateRoute,
+            builder: (context, child) {
+              final ms = MediaQuery.of(context);
+              return MediaQuery(
+                data: ms.copyWith(
+                  textScaler: ms.textScaler.clamp(
+                    minScaleFactor: 1.0,
+                    maxScaleFactor: 1.3,
+                  ),
+                ),
+                child: child!,
+              );
+            },
+            home: Banner(
+              message: F.name,
+              location: BannerLocation.topEnd,
+              color: F.appFlavor == Flavor.development
+                  ? Colors.red
+                  : Colors.orange,
+              child: BlocBuilder<InternetBloc, InternetState>(
+                builder: (context, state) {
+                  switch (state.status) {
+                    case InternetStatus.error:
+                      return NoInternetScreen();
+                    default:
+                      return SplashScreen();
+                  }
+                },
               ),
-            ), child: child!);
-          },
-          home: BlocBuilder<InternetBloc,InternetState>(
-              builder: (context,state){
-            switch(state.status){
-              case InternetStatus.error:
-                return NoInternetScreen();
-              default:
-                return SplashScreen();
-            }
-          }),
-        );
-      }),
+            ),
+          );
+        },
+      ),
     );
   }
 }
-
-
-
-
-
-
-

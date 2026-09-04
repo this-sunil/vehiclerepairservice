@@ -30,9 +30,10 @@ import '../../layer/Menu/SubscriptionScreen.dart';
 
 class AppRoute {
   AppRoute._();
+
   AppRoute get instance => AppRoute._();
 
-  static const String appName = 'Vehicle Repair Service';
+  //static const String appName = 'Vehicle Repair Service';
   static const String initialRoute = '/';
   static const String dashboard = '/dashboard';
   static const String register = '/register';
@@ -57,8 +58,8 @@ class AppRoute {
   static const String verifyOtp = '/verifyOtp';
   static const String generatePdf = "/generatePdf";
   static const String chatAdmin = "/chatAdmin";
-  static const String player='/player';
-  static const String scanQrCode='/scanQrCode';
+  static const String player = '/player';
+  static const String scanQrCode = '/scanQrCode';
 
   static RouteTransitionsBuilder transitionsBuilder =
       (context, Animation<double> animation, secondaryAnimation, child) {
@@ -96,8 +97,10 @@ class AppRoute {
       //   );
       case player:
         return PageRouteBuilder(
-            transitionsBuilder: transitionsBuilder,
-            pageBuilder: (context,animation,secondaryAnimation)=>PlayerScreen());
+          transitionsBuilder: transitionsBuilder,
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              PlayerScreen(),
+        );
       case historyViews:
         final args = setting.arguments as Map<String, dynamic>;
         final int bookId = args['bookId'];
@@ -144,8 +147,9 @@ class AppRoute {
 
       case scanQrCode:
         return PageRouteBuilder(
-            transitionsBuilder: transitionsBuilder,
-            pageBuilder: (context,animation,secondaryAnimation)=>ScanQrCode());
+          transitionsBuilder: transitionsBuilder,
+          pageBuilder: (context, animation, secondaryAnimation) => ScanQrCode(),
+        );
       case overView:
         return PageRouteBuilder(
           transitionsBuilder: transitionsBuilder,
@@ -156,7 +160,7 @@ class AppRoute {
         return PageRouteBuilder(
           transitionsBuilder: transitionsBuilder,
           pageBuilder: (context, animation, secondaryAnimation) =>
-              ChatAdminScreen()
+              ChatAdminScreen(),
         );
       case servicePage:
         return PageRouteBuilder(
@@ -252,7 +256,7 @@ class AppRoute {
         return PageRouteBuilder(
           transitionsBuilder: transitionsBuilder,
           pageBuilder: (context, animation, secondaryAnimation) =>
-              UpdateProfileScreen()
+              UpdateProfileScreen(),
         );
       default:
         return PageRouteBuilder(

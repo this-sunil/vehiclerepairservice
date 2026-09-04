@@ -87,7 +87,6 @@ dependencies:
   cached_network_image: ^4.0.0
   json_serializable: ^6.14.1
   freezed_annotation: ^3.1.0
-
 dependency_overrides:
   intl: ^0.19.0
 
@@ -104,6 +103,38 @@ dev_dependencies:
   freezed: ^4.0.1
   build_runner: ^2.16.1
   json_annotation: ^4.12.0
+  flutter_flavorizr: ^2.5.0
+  
+flavorizr:
+  app:
+    android:
+      flavorDimensions: "app"
+
+  flavors:
+    development:
+      app:
+        name: "Vehicle Repair Service Dev"
+      android:
+        applicationId: "com.brand.vehiclerepairservice.dev"
+      ios:
+        bundleId: "com.brand.vehiclerepairservice.dev"
+
+    staging:
+      app:
+        name: "Vehicle Repair Service Staging"
+      android:
+        applicationId: "com.brand.vehiclerepairservice.staging"
+      ios:
+        bundleId: "com.brand.vehiclerepairservice.staging"
+
+    production:
+      app:
+        name: "Vehicle Repair Service"
+      android:
+        applicationId: "com.brand.vehiclerepairservice"
+      ios:
+        bundleId: "com.brand.vehiclerepairservice"
+
 icons_launcher:
   image_path: "assets/icons/logo.png"
 

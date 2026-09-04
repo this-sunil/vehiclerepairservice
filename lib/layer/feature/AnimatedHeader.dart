@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../../core/Routes/route.dart';
+import '../../flavors.dart';
 import '../Widget/CustomHelper.dart';
-
 
 class AnimatedHeader extends StatefulWidget {
   final bool isDark;
+
   const AnimatedHeader({super.key, required this.isDark});
 
   @override
@@ -13,7 +12,7 @@ class AnimatedHeader extends StatefulWidget {
 }
 
 class AnimatedHeaderState extends State<AnimatedHeader>
-    with SingleTickerProviderStateMixin,CustomHelperMixin{
+    with SingleTickerProviderStateMixin, CustomHelperMixin {
   late final AnimationController _controller;
   late final Animation<double> _fade;
   late final Animation<double> _scale;
@@ -27,17 +26,12 @@ class AnimatedHeaderState extends State<AnimatedHeader>
       duration: const Duration(milliseconds: 600),
     );
 
-    _fade = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
+    _fade = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
-    _scale = Tween<double>(begin: 0.92, end: 1).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeOutBack,
-      ),
-    );
+    _scale = Tween<double>(
+      begin: 0.92,
+      end: 1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
 
     _controller.forward();
   }
@@ -70,15 +64,11 @@ class AnimatedHeaderState extends State<AnimatedHeader>
                     ),
                   ],
                 ),
-                child: customImage(
-                  path: logoIcon,
-                  width: 140,
-                  height: 140,
-                ),
+                child: customImage(path: logoIcon, width: 140, height: 140),
               ),
               const SizedBox(height: 14),
               Text(
-                AppRoute.appName,
+                F.title,
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
