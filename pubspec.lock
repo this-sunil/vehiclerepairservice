@@ -193,14 +193,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-  code_builder:
-    dependency: transitive
-    description:
-      name: code_builder
-      sha256: aa5932e94c6c39c2f9ec4e5e06dfdd11a9430a61f6c41b6ba75b28ce0c481baf
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.12.0"
   collection:
     dependency: transitive
     description:
@@ -289,14 +281,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.1"
-  data_assets:
-    dependency: transitive
-    description:
-      name: data_assets
-      sha256: "8bfdbf25ec8a0f4b5a3c993042c4ab9996ba354f0b03d40f4e360f3730d71cae"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.20.0"
   dbus:
     dependency: transitive
     description:
@@ -309,10 +293,10 @@ packages:
     dependency: "direct main"
     description:
       name: dio
-      sha256: "0df44ebba85e503958eb75d07eedd3c86275a58c1d3eda2f2ce8f0a2c3abbb3c"
+      sha256: "852ec3b48cc431ac04fff978413c541502b67ffc3e26921e74e3d994694192c1"
       url: "https://pub.dev"
     source: hosted
-    version: "5.11.0"
+    version: "5.11.1"
   dio_web_adapter:
     dependency: transitive
     description:
@@ -526,19 +510,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.5.0"
-  flutter_gpu:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  flutter_gpu_shaders:
-    dependency: transitive
-    description:
-      name: flutter_gpu_shaders
-      sha256: "1e8c5438c24e79629f5688c7b5dfd2b7cf09b36b443a806bc8c083cd8c04644a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -802,14 +773,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.5"
-  glint_engine:
-    dependency: "direct main"
-    description:
-      name: glint_engine
-      sha256: ea7bc7e44f84269907e8e8e636c9baec7461a0560b2505bd0a8d6576eedc0850
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.1"
   glob:
     dependency: transitive
     description:
@@ -1250,14 +1213,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.4.0"
-  mockito:
-    dependency: "direct main"
-    description:
-      name: mockito
-      sha256: "6c1970612452260366064d4df80fdb3eece1ec5e52610ae34a0e51f2f3d8e64f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.8.1"
   nested:
     dependency: transitive
     description:
@@ -1929,4 +1884,4 @@ packages:
     version: "2.1.0"
 sdks:
   dart: ">=3.13.0 <4.0.0"
-  flutter: ">=3.44.1"
+  flutter: ">=3.44.0"

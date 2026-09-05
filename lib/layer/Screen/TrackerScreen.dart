@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,9 +9,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vehicle_repair_service/data/entity/route_entity/route_entity.dart';
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
 import '../../core/Routes/route.dart';
-import '../../data/entity/RouteDirectionModel.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
 
 class TrackerScreen extends StatefulWidget {
@@ -175,7 +176,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
 
     final res = await get(Uri.parse(url));
 
-    final cords = routeDirectionModelFromJson(res.body);
+    final cords = RouteEntity.fromJson(jsonDecode(res.body));
     final routes = cords.routes ?? [];
     final coordinates = routes[0].geometry?.coordinates ?? [];
     return coordinates.map<LatLng>((c) => LatLng(c[1], c[0])).toList();

@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:vehicle_repair_service/layer/Widget/Storage.dart';
 
@@ -23,13 +22,10 @@ class DioService {
         onRequest: (options, handler) async {
           final token = await Storage.instance.getToken();
           options.headers["Authorization"] = "Bearer $token";
-          handler.next(options);
+          return handler.next(options);
         },
-
         onError: (error, handler) async {
-          if (kDebugMode) {
-            print("Status Code=>${error.response?.statusCode}");
-          }
+          print("Status Code=>${error.response?.statusCode}");
           if (error.response?.statusCode == 401) {
             await refreshToken();
             final retry = await dio.fetch(error.requestOptions);
