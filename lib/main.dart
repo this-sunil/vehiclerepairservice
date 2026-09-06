@@ -8,7 +8,6 @@ import 'package:vehicle_repair_service/core/Services/DioService.dart';
 import 'package:vehicle_repair_service/core/Services/FirebaseSetup.dart';
 import 'package:vehicle_repair_service/firebase_options.dart';
 import 'package:vehicle_repair_service/layer/MyApp.dart';
-import 'package:sentry/sentry.dart';
 import 'flavors.dart';
 import "package:intl/date_symbol_data_local.dart";
 
@@ -23,7 +22,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((v) {
-    log("Firebase Connected Successfully !!!");
+    log("Firebase Connected Successfully ${v.options.androidClientId} !!!");
   });
 
   await FirebaseSetup.instance.init();
@@ -33,19 +32,10 @@ Future<void> main() async {
     orElse: () => Flavor.development, // fallback
   );
 
-  await Sentry.init(
-    (options) {
-      options.dsn =
-          'https://8ee49dd2103f3157b6d1c14ac028bb7a@o4508844157763584.ingest.de.sentry.io/4510814872338512';
-    },
-
-    appRunner: () => runApp(
-      SensitiveContent(
-        sensitivity: ContentSensitivity.autoSensitive,
-        child: const MyApp(),
-      ),
+  runApp(
+    SensitiveContent(
+      sensitivity: ContentSensitivity.autoSensitive,
+      child: const MyApp(),
     ),
-  ).then((v) {
-    log("Sentry Connected Successfully !!!");
-  });
+  );
 }

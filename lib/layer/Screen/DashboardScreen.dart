@@ -153,21 +153,21 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ],
                 color: Colors.deepOrangeAccent,
               ),
-              floatingActionButton: FloatingActionButton.extended(
-                onPressed: () {
-                  // context.push(AppRoute.player);
-                  FirebaseSetup.sendNotification(
-                    RemoteMessage(
-                      notification: RemoteNotification(
-                        title: appName,
-                        body:
-                            "Welcome to start the journey vehicle repair services",
-                      ),
-                    ),
-                  );
-                },
-                label: Icon(Icons.notifications),
-              ),
+              // floatingActionButton: FloatingActionButton.extended(
+              //   onPressed: () {
+              //     // context.push(AppRoute.player);
+              //     FirebaseSetup.sendNotification(
+              //       RemoteMessage(
+              //         notification: RemoteNotification(
+              //           title: appName,
+              //           body:
+              //               "Welcome to start the journey vehicle repair services",
+              //         ),
+              //       ),
+              //     );
+              //   },
+              //   label: Icon(Icons.notifications),
+              // ),
             );
         }
       },

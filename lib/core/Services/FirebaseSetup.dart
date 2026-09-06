@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:vehicle_repair_service/core/Services/Services.dart';
 
 class FirebaseSetup {
   FirebaseSetup._();
@@ -26,15 +28,20 @@ class FirebaseSetup {
 
     await messaging.setAutoInitEnabled(true);
     await messaging.getInitialMessage();
-    //String? token=await messaging.getToken();
-    //print("Device Token=>$token");
-    //await messaging.subscribeToTopic("all");
+    // String? token = Platform.isIOS
+    //     ? await messaging.getAPNSToken()
+    //     : await messaging.getToken();
+    // print("Device Token=>$token");
+    // await messaging.subscribeToTopic("all");
 
     FirebaseMessaging.onMessage.listen((message) {
       print(
         "Message=>${message.notification?.title} ${message.notification?.body}",
       );
+      sendNotification(message);
     });
+
+    FirebaseMessaging.onBackgroundMessage(handleRemoteMsg);
 
     OneSignal.initialize('${dotenv.env['ONESIGNAL_APP_ID']}');
     OneSignal.Notifications.requestPermission(true);
@@ -43,7 +50,9 @@ class FirebaseSetup {
 
   @pragma('vm:entry-point')
   Future<void> handleRemoteMsg(RemoteMessage message) async {
-    if (message.notification != null) {}
+    if (message.notification != null) {
+      sendNotification(message);
+    }
   }
 
   Future<UserCredential?> signInGoogle() async {

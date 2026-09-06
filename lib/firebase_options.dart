@@ -41,49 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB0CW1FOaAxytovqujq8_Tw7pV4b8bYYpw',
-    appId: '1:383036743837:web:3f9a6093b32be445d97474',
-    messagingSenderId: '383036743837',
-    projectId: 'vehiclerepairservice-64661',
-    authDomain: 'vehiclerepairservice-64661.firebaseapp.com',
-    storageBucket: 'vehiclerepairservice-64661.firebasestorage.app',
-    measurementId: 'G-RXPFR3ZDQQ',
+    apiKey: 'AIzaSyCwgmB7G09cQwka165cEAx9udghwFZUjW0',
+    appId: '1:83742564:web:d73e3cacd899b288227471',
+    messagingSenderId: '83742564',
+    projectId: 'vehiclerepairservice',
+    authDomain: 'vehiclerepairservice.firebaseapp.com',
+    storageBucket: 'vehiclerepairservice.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBhntmcpOx695Lcgyzk6WEY5ISjSRMaT5Q',
-    appId: '1:383036743837:android:d4a4ba7ec0c20ce7d97474',
-    messagingSenderId: '383036743837',
-    projectId: 'vehiclerepairservice-64661',
-    storageBucket: 'vehiclerepairservice-64661.firebasestorage.app',
+    apiKey: 'AIzaSyAP86FX69qNOe6YnU_0LMIjIwSXVWaS_aE',
+    appId: '1:83742564:android:4d199392c060aeee227471',
+    messagingSenderId: '83742564',
+    projectId: 'vehiclerepairservice',
+    storageBucket: 'vehiclerepairservice.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAFoy39pS4u2zTpozDhRW69fDjHDlcQmhI',
-    appId: '1:383036743837:ios:3cfff784ba7ee6a4d97474',
-    messagingSenderId: '383036743837',
-    projectId: 'vehiclerepairservice-64661',
-    storageBucket: 'vehiclerepairservice-64661.firebasestorage.app',
+    apiKey: 'AIzaSyC1IFI2SLBxX-6qenXmTujKFKfl8yG-uw4',
+    appId: '1:83742564:ios:857827a005554ddd227471',
+    messagingSenderId: '83742564',
+    projectId: 'vehiclerepairservice',
+    storageBucket: 'vehiclerepairservice.firebasestorage.app',
     iosBundleId: 'com.brand.vehiclerepairservice',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAFoy39pS4u2zTpozDhRW69fDjHDlcQmhI',
-    appId: '1:383036743837:ios:3cfff784ba7ee6a4d97474',
-    messagingSenderId: '383036743837',
-    projectId: 'vehiclerepairservice-64661',
-    storageBucket: 'vehiclerepairservice-64661.firebasestorage.app',
-    iosBundleId: 'com.brand.vehiclerepairservice',
+    apiKey: 'AIzaSyC1IFI2SLBxX-6qenXmTujKFKfl8yG-uw4',
+    appId: '1:83742564:ios:a42579664f043e01227471',
+    messagingSenderId: '83742564',
+    projectId: 'vehiclerepairservice',
+    storageBucket: 'vehiclerepairservice.firebasestorage.app',
+    iosBundleId: 'com.brand.vehicleRepairService',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyB0CW1FOaAxytovqujq8_Tw7pV4b8bYYpw',
-    appId: '1:383036743837:web:dc649a2809f1ea2ed97474',
-    messagingSenderId: '383036743837',
-    projectId: 'vehiclerepairservice-64661',
-    authDomain: 'vehiclerepairservice-64661.firebaseapp.com',
-    storageBucket: 'vehiclerepairservice-64661.firebasestorage.app',
-    measurementId: 'G-KW6D56QHVZ',
+    apiKey: 'AIzaSyCwgmB7G09cQwka165cEAx9udghwFZUjW0',
+    appId: '1:83742564:web:53d7456682c96e7d227471',
+    messagingSenderId: '83742564',
+    projectId: 'vehiclerepairservice',
+    authDomain: 'vehiclerepairservice.firebaseapp.com',
+    storageBucket: 'vehiclerepairservice.firebasestorage.app',
   );
 
 }

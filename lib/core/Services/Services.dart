@@ -82,10 +82,3 @@ class Services {
     return _dio.delete(url, data: data, options: option);
   }
 }
-
-Future<void> remoteMessage(RemoteMessage message) async {
-  if (message.notification != null) {
-    print("Title =>${message.notification?.title}");
-    print("Body =>${message.notification?.body}");
-  }
-}

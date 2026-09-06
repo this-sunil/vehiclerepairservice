@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyAFoy39pS4u2zTpozDhRW69fDjHDlcQmhI</string>
+	<string>AIzaSyC1IFI2SLBxX-6qenXmTujKFKfl8yG-uw4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>383036743837</string>
+	<string>83742564</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.brand.vehiclerepairservice</string>
+	<string>com.brand.vehicleRepairService</string>
 	<key>PROJECT_ID</key>
-	<string>vehiclerepairservice-64661</string>
+	<string>vehiclerepairservice</string>
 	<key>STORAGE_BUCKET</key>
-	<string>vehiclerepairservice-64661.firebasestorage.app</string>
+	<string>vehiclerepairservice.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:383036743837:ios:3cfff784ba7ee6a4d97474</string>
+	<string>1:83742564:ios:a42579664f043e01227471</string>
 </dict>
 </plist>
