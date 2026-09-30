@@ -1,0 +1,38 @@
+# Flutter Pruner project configuration (schema version 1).
+# Review every target before asserting that the matrix is complete.
+version: 1
+
+# The mode controls root strategy and apply authorization.
+analysis:
+  mode: application
+
+# Set complete only after declaring every supported build target.
+target_matrix:
+  complete: true
+  targets:
+    - name: android-default
+      platform: android
+      entrypoint: lib/main.dart
+    - name: ios-default
+      platform: ios
+      entrypoint: lib/main.dart
+    - name: linux-default
+      platform: linux
+      entrypoint: lib/main.dart
+    - name: macos-default
+      platform: macos
+      entrypoint: lib/main.dart
+    - name: web-default
+      platform: web
+      entrypoint: lib/main.dart
+    - name: windows-default
+      platform: windows
+      entrypoint: lib/main.dart
+
+# Commands run before and after each mutation transaction.
+verification:
+  steps:
+    - id: flutter-analyze
+      argv: [flutter, analyze, --fatal-infos, --fatal-warnings, --no-pub]
+    - id: flutter-test
+      argv: [flutter, test]

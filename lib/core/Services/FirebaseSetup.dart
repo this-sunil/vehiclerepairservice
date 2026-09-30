@@ -1,13 +1,9 @@
-import 'dart:developer';
-import 'dart:io';
 import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:vehicle_repair_service/core/Services/Services.dart';
 
 class FirebaseSetup {
   FirebaseSetup._();
@@ -43,9 +39,9 @@ class FirebaseSetup {
 
     FirebaseMessaging.onBackgroundMessage(handleRemoteMsg);
 
-    OneSignal.initialize('${dotenv.env['ONESIGNAL_APP_ID']}');
-    OneSignal.Notifications.requestPermission(true);
-    OneSignal.User.pushSubscription.optIn();
+    // OneSignal.initialize('${dotenv.env['ONESIGNAL_APP_ID']}');
+    // OneSignal.Notifications.requestPermission(true);
+    // OneSignal.User.pushSubscription.optIn();
   }
 
   @pragma('vm:entry-point')

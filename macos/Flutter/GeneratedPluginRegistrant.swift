@@ -16,7 +16,6 @@ import flutter_tts
 import geocoding_darwin
 import geolocator_apple
 import google_sign_in_ios
-import mobile_scanner
 import package_info_plus
 import sqflite_darwin
 import url_launcher_macos
@@ -32,8 +31,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   FlutterTtsPlugin.register(with: registry.registrar(forPlugin: "FlutterTtsPlugin"))
   GeocodingDarwinPlugin.register(with: registry.registrar(forPlugin: "GeocodingDarwinPlugin"))
   GeolocatorPlugin.register(with: registry.registrar(forPlugin: "GeolocatorPlugin"))
-  FLTGoogleSignInPlugin.register(with: registry.registrar(forPlugin: "FLTGoogleSignInPlugin"))
-  MobileScannerPlugin.register(with: registry.registrar(forPlugin: "MobileScannerPlugin"))
+  GoogleSignInPlugin.register(with: registry.registrar(forPlugin: "GoogleSignInPlugin"))
   FPPPackageInfoPlusPlugin.register(with: registry.registrar(forPlugin: "FPPPackageInfoPlusPlugin"))
   SqflitePlugin.register(with: registry.registrar(forPlugin: "SqflitePlugin"))
   UrlLauncherPlugin.register(with: registry.registrar(forPlugin: "UrlLauncherPlugin"))

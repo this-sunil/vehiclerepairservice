@@ -93,7 +93,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
     );
 
     final driverIcon = AssetMapBitmap(
-      'assets/icons/driver.png',
+      'assets/icons/driver.webp',
       width: 80,
       height: 80,
       imagePixelRatio: 3,
@@ -219,7 +219,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
         infoWindow: InfoWindow(title: "Source", anchor: Offset(.5, .9)),
         anchor: const Offset(.5, .9),
         icon: AssetMapBitmap(
-          'assets/icons/driver.png',
+          'assets/icons/driver.webp',
           width: 80,
           height: 80,
           imagePixelRatio: 3,

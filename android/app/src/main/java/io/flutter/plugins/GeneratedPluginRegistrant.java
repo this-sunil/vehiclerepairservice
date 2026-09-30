@@ -101,16 +101,6 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin jni_flutter, com.github.dart_lang.jni_flutter.JniFlutterPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new dev.steenbakker.mobile_scanner.MobileScannerPlugin());
-    } catch (Exception e) {
-      Log.e(TAG, "Error registering plugin mobile_scanner, dev.steenbakker.mobile_scanner.MobileScannerPlugin", e);
-    }
-    try {
-      flutterEngine.getPlugins().add(new com.onesignal.flutter.OneSignalPlugin());
-    } catch (Exception e) {
-      Log.e(TAG, "Error registering plugin onesignal_flutter, com.onesignal.flutter.OneSignalPlugin", e);
-    }
-    try {
       flutterEngine.getPlugins().add(new dev.fluttercommunity.plus.packageinfo.PackageInfoPlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin package_info_plus, dev.fluttercommunity.plus.packageinfo.PackageInfoPlugin", e);
@@ -119,11 +109,6 @@ public final class GeneratedPluginRegistrant {
       flutterEngine.getPlugins().add(new com.tekartik.sqflite.SqflitePlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin sqflite_android, com.tekartik.sqflite.SqflitePlugin", e);
-    }
-    try {
-      flutterEngine.getPlugins().add(new com.example.tha_player.ThaPlayerPlugin());
-    } catch (Exception e) {
-      Log.e(TAG, "Error registering plugin tha_player, com.example.tha_player.ThaPlayerPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.urllauncher.UrlLauncherPlugin());

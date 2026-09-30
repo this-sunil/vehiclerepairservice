@@ -73,7 +73,7 @@ class BookRepository implements BaseBookRepo {
       return Left(
         Failure(status: BookStatus.error, msg: "Something Went Wrong =>$e!!!"),
       );
-    } catch (e, stk) {
+    } catch (e) {
       print("object=>$e");
       return Left(
         Failure(

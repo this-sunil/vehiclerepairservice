@@ -1,89 +1,99 @@
-#########################################
-# 1. Flutter (MANDATORY)
-#########################################
--keep class io.flutter.** { *; }
--dontwarn io.flutter.**
+# ============================================================
+# Flutter + Firebase + Google + OneSignal + Maps + ML Kit
+# Complete R8 / ProGuard Rules
+# ============================================================
 
-#########################################
-# 2. Firebase & Google Services
-#########################################
+# ---------------- Flutter ----------------
+-keep class io.flutter.plugins.** { *; }
+-keep class io.flutter.embedding.** { *; }
+
+# ---------------- Firebase ----------------
 -keep class com.google.firebase.** { *; }
--keep class com.google.android.gms.** { *; }
--dontwarn com.google.firebase.**
--dontwarn com.google.android.gms.**
-
-# Firebase Messaging
+-keep class com.google.firebase.components.** { *; }
 -keep class com.google.firebase.messaging.** { *; }
+-keep class com.google.firebase.auth.** { *; }
 
-#########################################
-# 3. Google Sign-In
-#########################################
--keep class com.google.android.gms.auth.api.signin.** { *; }
+# ---------------- Google Sign In / Play Services ----------------
+-keep class com.google.android.gms.** { *; }
+-dontwarn com.google.android.play.core.**
 
-#########################################
-# 4. OneSignal
-#########################################
--keep class com.onesignal.** { *; }
--dontwarn com.onesignal.**
-
-#########################################
-# 5. Razorpay (Payments)
-#########################################
--keep class com.razorpay.** { *; }
--dontwarn com.razorpay.**
-
-#########################################
-# 6. Google Maps & Location
-#########################################
+# ---------------- Google Maps ----------------
 -keep class com.google.android.gms.maps.** { *; }
--dontwarn com.google.android.gms.maps.**
+-keep class com.google.android.gms.maps.model.** { *; }
 
-#########################################
-# 7. Sentry
-#########################################
--keep class io.sentry.** { *; }
--dontwarn io.sentry.**
+# ---------------- Google ML Kit ----------------
+-keep class com.google.mlkit.** { *; }
+-keep class com.google.android.gms.internal.mlkit_** { *; }
 
-#########################################
-# 8. Kotlin
-#########################################
--keep class kotlin.Metadata { *; }
--keepclassmembers class kotlin.** { *; }
--dontwarn kotlin.**
+# ---------------- OneSignal ----------------
+-keep class com.onesignal.** { *; }
+-keep class com.onesignal.**Service { *; }
+-keep class com.onesignal.**Receiver { *; }
 
-#########################################
-# 9. AndroidX
-#########################################
--keep class androidx.** { *; }
--dontwarn androidx.**
+# ---------------- Socket.IO ----------------
+-keep class io.socket.** { *; }
+-keep class okhttp3.** { *; }
+-keep class okio.** { *; }
 
-#########################################
-# 10. Networking
-#########################################
--dontwarn okhttp3.**
--dontwarn okio.**
--dontwarn javax.annotation.**
+# ---------------- Local Notifications ----------------
+-keep class com.dexterous.flutterlocalnotifications.** { *; }
 
-#########################################
-# 11. Plugins (Geolocator, Storage, URL)
-#########################################
--keep class com.baseflow.** { *; }
--keep class com.it_nomads.fluttersecurestorage.** { *; }
+# ---------------- Geolocator ----------------
+-keep class com.baseflow.geolocator.** { *; }
+
+# ---------------- Geocoding ----------------
+-keep class com.baseflow.geocoding.** { *; }
+
+# ---------------- Connectivity Plus ----------------
+-keep class dev.fluttercommunity.plus.connectivity.** { *; }
+
+# ---------------- Image Picker ----------------
+-keep class io.flutter.plugins.imagepicker.** { *; }
+
+# ---------------- URL Launcher ----------------
 -keep class io.flutter.plugins.urllauncher.** { *; }
 
-#########################################
-# 🚨 CRITICAL FIXES (NO DEPENDENCIES VERSION)
-#########################################
+# ---------------- Secure Storage ----------------
+-keep class com.it_nomads.fluttersecurestorage.** { *; }
 
-# Ignore OpenTelemetry (causing Jackson errors)
--dontwarn io.opentelemetry.**
+# ---------------- Shorebird ----------------
+-keep class com.shorebird.** { *; }
 
-# Ignore Jackson (do NOT add dependency)
--dontwarn com.fasterxml.jackson.**
+# ---------------- Lottie ----------------
+-keep class com.airbnb.lottie.** { *; }
 
-# Ignore Play Core (Flutter internal reference)
--dontwarn com.google.android.play.core.**
--dontwarn io.flutter.embedding.engine.deferredcomponents.**
+# ---------------- Android Speech / TTS ----------------
+-keep class android.speech.** { *; }
 
-# Ignore AutoValue
--dontwarn com.google.auto.value.**
+# ---------------- JSON / Reflection ----------------
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod
+
+# ---------------- Gson / JSON adapters if used ----------------
+-keep class **JsonAdapter { *; }
+
+# ---------------- Parcelable ----------------
+-keepclassmembers class * implements android.os.Parcelable {
+    static ** CREATOR;
+}
+
+# ---------------- Serializable ----------------
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+# ---------------- Common Warnings ----------------
+-dontwarn javax.annotation.**
+-dontwarn org.conscrypt.**
+-dontwarn org.bouncycastle.**
+-dontwarn sun.misc.**
+
+
+

@@ -1,0 +1,4 @@
+# Keep the reviewed configuration, ignore generated Flutter Pruner state.
+*
+!.gitignore
+!config.yaml

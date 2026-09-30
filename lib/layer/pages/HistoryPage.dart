@@ -7,7 +7,6 @@ import '../../core/Routes/route.dart';
 import '../../layer/Widget/CustomHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
 import '../Widget/TranslateText.dart';
 

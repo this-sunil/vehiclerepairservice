@@ -1,6 +1,4 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:vehicle_repair_service/core/Services/FirebaseSetup.dart';
 import '../../core/Bloc/InternetBloc/InternetBloc.dart';
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
 import '../../core/Routes/route.dart';
