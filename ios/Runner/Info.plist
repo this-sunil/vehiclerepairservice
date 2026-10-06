@@ -77,9 +77,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>googleMapsApiKey</key>
-	<string>AIzaSyCFEIrn6AL1cAcPrJQmF5a7pfExyp-7Cvk
-    AIzaSyCFEIrn6AL1cAcPrJQmF5a7pfExyp-7Cvk
-    AIzaSyCFEIrn6AL1cAcPrJQmF5a7pfExyp-7Cvk
-AIzaSyCFEIrn6AL1cAcPrJQmF5a7pfExyp-7Cvk</string>
+	<string>AIzaSyCFEIrn6AL1cAcPrJQmF5a7pfExyp-7Cvk</string>
 </dict>
 </plist>
