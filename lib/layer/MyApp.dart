@@ -1,11 +1,10 @@
-import 'package:vehicle_repair_service/layer/Screen/ARViewScreen.dart';
-import 'package:vehicle_repair_service/layer/Widget/NoInternetScreen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../core/Bloc/BookBloc/BookBloc.dart';
 import '../../core/Bloc/CategoryBloc/CategoryBloc.dart';
 import '../../core/Bloc/ForgotPassBloc/ForgotPassBloc.dart';
-import '../../core/Bloc/InternetBloc/InternetBloc.dart';
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
 import '../../core/Bloc/LocationRouteBloc/LocationRouteBloc.dart';
 import '../../core/Bloc/NotificationBloc/NotificationBloc.dart';
@@ -14,6 +13,8 @@ import '../../core/Bloc/SettingBloc/SettingBloc.dart';
 import '../../core/Bloc/ShopBloc/ShopBloc.dart';
 import '../../core/Bloc/SubscriptionBloc/SubscriptionBloc.dart';
 import '../../core/Bloc/ThemeBloc/ThemeBloc.dart';
+import '../../core/Routes/route.dart';
+import '../../layer/SplashScreen.dart';
 import '../domain/Repository/AuthRepository.dart';
 import '../domain/Repository/BookRepository.dart';
 import '../domain/Repository/CategoryRepository.dart';
@@ -24,10 +25,6 @@ import '../domain/Repository/SearchShopRepository.dart';
 import '../domain/Repository/ServiceRepository.dart';
 import '../domain/Repository/SettingRepository.dart';
 import '../domain/Repository/SubscriptionRepo.dart';
-import '../../core/Routes/route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../layer/SplashScreen.dart';
 import '../flavors.dart';
 
 class MyApp extends StatelessWidget {
@@ -37,16 +34,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => InternetBloc()..add(FetchInternetEvent()),
-        ),
         BlocProvider(create: (context) => ThemeBloc()..add(LoadThemeEvent())),
         BlocProvider(create: (context) => AuthBloc(AuthRepository())),
         BlocProvider(create: (context) => CategoryBloc(CategoryRepository())),
         BlocProvider(create: (context) => ServiceBloc(ServiceRepository())),
         BlocProvider(create: (context) => SettingBloc(SettingRepository())),
         BlocProvider(create: (context) => ForgotPassBloc()),
-        BlocProvider(create: (context) => InternetBloc()),
         BlocProvider(create: (context) => BookBloc(BookRepository())),
         //BlocProvider(create: (context)=>PhoneAuthBloc(PhoneAuthRepo())),
         BlocProvider(
@@ -90,16 +83,7 @@ class MyApp extends StatelessWidget {
               color: F.appFlavor == Flavor.development
                   ? Colors.red
                   : Colors.orange,
-              child: BlocBuilder<InternetBloc, InternetState>(
-                builder: (context, state) {
-                  switch (state.status) {
-                    case InternetStatus.error:
-                      return NoInternetScreen();
-                    default:
-                      return SplashScreen();
-                  }
-                },
-              ),
+              child: SplashScreen(),
             ),
           );
         },

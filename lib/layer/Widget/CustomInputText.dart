@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../../layer/Widget/TranslateText.dart';
 
 class CustomInputText extends StatelessWidget {
@@ -19,49 +20,65 @@ class CustomInputText extends StatelessWidget {
   final Function(String)? onChanged;
   final bool? readOnly;
   final Color? primaryColor;
-  const CustomInputText({super.key,this.controller,  this.maxLength, required this.inputFormatter, this.focusNode, this.textInputType, this.validator, this.maxLines, this.obscureText=false, this.onChanged, this.readOnly=false, this.padding, this.hintText, this.prefixIcon, this.suffixIcon, this.radius, this.primaryColor});
+  const CustomInputText({
+    super.key,
+    this.controller,
+    this.maxLength,
+    required this.inputFormatter,
+    this.focusNode,
+    this.textInputType,
+    this.validator,
+    this.maxLines,
+    this.obscureText = false,
+    this.onChanged,
+    this.readOnly = false,
+    this.padding,
+    this.hintText,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.radius,
+    this.primaryColor,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       style: TextStyle(color: Colors.black),
-      decoration:InputDecoration(
-
-
+      decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: .circular(10),
-          borderSide: BorderSide.none
+          borderSide: BorderSide.none,
         ),
-        contentPadding: .all(padding??12.0),
+        contentPadding: .all(padding ?? 12.0),
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
-        hint: TranslateText('$hintText',style:TextStyle(color: Colors.black)),
+        hint: TranslateText('$hintText', style: TextStyle(color: Colors.black)),
 
-        fillColor: primaryColor??Colors.grey.shade300,
+        fillColor: primaryColor ?? Colors.grey.shade300,
         filled: true,
         counterText: '',
         disabledBorder: OutlineInputBorder(
-            borderRadius: .circular(10),
-            borderSide: BorderSide.none
+          borderRadius: .circular(10),
+          borderSide: BorderSide.none,
         ),
-        enabledBorder:OutlineInputBorder(
-            borderRadius: .circular(10),
-            borderSide: BorderSide.none
+        enabledBorder: OutlineInputBorder(
+          borderRadius: .circular(10),
+          borderSide: BorderSide.none,
         ),
         floatingLabelAlignment: .center,
-        floatingLabelBehavior: .auto
+        floatingLabelBehavior: .auto,
       ),
       maxLength: maxLength,
       keyboardType: textInputType,
       validator: validator,
 
-      obscureText: obscureText??false,
+      obscureText: obscureText ?? false,
       focusNode: focusNode,
       onChanged: onChanged,
       autovalidateMode: AutovalidateMode.disabled,
       inputFormatters: inputFormatter,
-      readOnly: readOnly??false,
+      readOnly: readOnly ?? false,
     );
   }
 }

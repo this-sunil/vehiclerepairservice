@@ -1,17 +1,16 @@
-import 'package:google_mlkit_translation/google_mlkit_translation.dart';
-import 'package:heroicons/heroicons.dart';
-import '../../core/Bloc/AuthBloc/AuthBloc.dart';
-import '../../core/Bloc/ThemeBloc/ThemeBloc.dart';
-import '../Widget/CustomHelper.dart';
+//import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:heroicons/heroicons.dart';
 
+import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../core/Bloc/SettingBloc/SettingBloc.dart';
+import '../../core/Bloc/ThemeBloc/ThemeBloc.dart';
 import '../../core/Routes/route.dart';
-import '../Widget/Storage.dart';
-import '../Widget/TranslateText.dart';
+import '../Widget/CustomHelper.dart';
 import '../Widget/LoadingIndicator.dart';
+import '../Widget/TranslateText.dart';
 
 class SettingScreen extends StatefulWidget {
   final bool flag;
@@ -23,28 +22,28 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
-  final languages = [
-    {'code': TranslateLanguage.english.bcpCode, 'label': 'English'},
-    {'code': TranslateLanguage.hindi.bcpCode, 'label': 'Hindi'},
-    {'code': TranslateLanguage.marathi.bcpCode, 'label': 'Marathi'},
-    {'code': TranslateLanguage.gujarati.bcpCode, 'label': 'Gujarati'},
-    {'code': TranslateLanguage.bengali.bcpCode, 'label': 'Bengali'},
-    {'code': TranslateLanguage.telugu.bcpCode, 'label': 'Telugu'},
-    {'code': TranslateLanguage.tamil.bcpCode, 'label': 'Tamil'},
-  ];
-  String? selectedCode;
-
-  Future<String?> fetchData() async {
-    selectedCode =
-        await Storage.instance.getLanguage() ??
-        TranslateLanguage.english.bcpCode;
-    return selectedCode;
-  }
+  // final languages = [
+  //   {'code': TranslateLanguage.english.bcpCode, 'label': 'English'},
+  //   {'code': TranslateLanguage.hindi.bcpCode, 'label': 'Hindi'},
+  //   {'code': TranslateLanguage.marathi.bcpCode, 'label': 'Marathi'},
+  //   {'code': TranslateLanguage.gujarati.bcpCode, 'label': 'Gujarati'},
+  //   {'code': TranslateLanguage.bengali.bcpCode, 'label': 'Bengali'},
+  //   {'code': TranslateLanguage.telugu.bcpCode, 'label': 'Telugu'},
+  //   {'code': TranslateLanguage.tamil.bcpCode, 'label': 'Tamil'},
+  // ];
+  // String? selectedCode;
+  //
+  // Future<String?> fetchData() async {
+  //   selectedCode =
+  //       await Storage.instance.getLanguage() ??
+  //       TranslateLanguage.english.bcpCode;
+  //   return selectedCode;
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
-    fetchData();
+    //fetchData();
     context.read<AuthBloc>().add(FetchProfileEvent());
     context.read<SettingBloc>().add(FetchSetting());
 
@@ -57,44 +56,44 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
     super.dispose();
   }
 
-  void showLanguageDialog() async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              insetPadding: .zero,
-              contentPadding: .zero,
-              title: TranslateText("Change App Language"),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: languages.map((lang) {
-                  return RadioListTile<String>(
-                    value: lang['code'].toString(),
-                    groupValue: selectedCode,
-                    title: TranslateText(lang['label'].toString()),
-                    onChanged: (value) async {
-                      setState(() {
-                        selectedCode = value;
-                      });
-                      await Storage.instance
-                          .setLanguage(selectedCode.toString())
-                          .whenComplete(() {
-                            if (mounted) {
-                              context.pushAndRemoveUntil(AppRoute.dashboard);
-                            }
-                          });
-                    },
-                  );
-                }).toList(),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
+  // void showLanguageDialog() async {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return StatefulBuilder(
+  //         builder: (context, setState) {
+  //           return AlertDialog(
+  //             insetPadding: .zero,
+  //             contentPadding: .zero,
+  //             title: TranslateText("Change App Language"),
+  //             content: Column(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: languages.map((lang) {
+  //                 return RadioListTile<String>(
+  //                   value: lang['code'].toString(),
+  //                   groupValue: selectedCode,
+  //                   title: TranslateText(lang['label'].toString()),
+  //                   onChanged: (value) async {
+  //                     setState(() {
+  //                       selectedCode = value;
+  //                     });
+  //                     await Storage.instance
+  //                         .setLanguage(selectedCode.toString())
+  //                         .whenComplete(() {
+  //                           if (mounted) {
+  //                             context.pushAndRemoveUntil(AppRoute.dashboard);
+  //                           }
+  //                         });
+  //                   },
+  //                 );
+  //               }).toList(),
+  //             ),
+  //           );
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +173,7 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
             Card(
               elevation: 5,
               child: ListTile(
-                onTap: () => showLanguageDialog(),
+                //onTap: () => showLanguageDialog(),
                 leading: HeroIcon(HeroIcons.language),
                 title: TranslateText(
                   "App Language",

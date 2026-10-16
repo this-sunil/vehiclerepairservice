@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vehicle_repair_service/data/entity/route_entity/route_entity.dart';
+
 import '../../core/Bloc/LocationBloc/LocationBloc.dart';
 import '../../core/Routes/route.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
@@ -56,22 +57,22 @@ class _TrackerScreenState extends State<TrackerScreen> {
     return mapStyle;
   }
 
-  FlutterTts flutterTts = FlutterTts();
-
-  Future<void> speak(String value) async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.setIosAudioCategory(
-      IosTextToSpeechAudioCategory.playback,
-      [IosTextToSpeechAudioCategoryOptions.mixWithOthers],
-    );
-    await flutterTts.setPitch(1.0);
-    await flutterTts.setSpeechRate(0.5);
-    await flutterTts.speak(value);
-  }
-
-  Future<void> stop() async {
-    await flutterTts.stop(); // Stop any ongoing speech
-  }
+  // FlutterTts flutterTts = FlutterTts();
+  //
+  // Future<void> speak(String value) async {
+  //   await flutterTts.setLanguage("en-US");
+  //   await flutterTts.setIosAudioCategory(
+  //     IosTextToSpeechAudioCategory.playback,
+  //     [IosTextToSpeechAudioCategoryOptions.mixWithOthers],
+  //   );
+  //   await flutterTts.setPitch(1.0);
+  //   await flutterTts.setSpeechRate(0.5);
+  //   await flutterTts.speak(value);
+  // }
+  //
+  // Future<void> stop() async {
+  //   await flutterTts.stop(); // Stop any ongoing speech
+  // }
 
   String? distanceInKM;
   bool removed = false;
@@ -83,7 +84,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
 
   Future<void> moveCamera(List<LatLng> route) async {
     if (route.isEmpty) return;
-    speak("Start Your Journey");
+    //speak("Start Your Journey");
     const MarkerId sourceMarkerId = MarkerId('source');
 
     await _mapController.moveCamera(
@@ -142,7 +143,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
     }
 
     // Destination reached
-    speak("Destination Completed");
+    // speak("Destination Completed");
   }
 
   Future<void> callPhone(String phoneNumber) async {
@@ -258,8 +259,8 @@ class _TrackerScreenState extends State<TrackerScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    flutterTts.clearVoice();
-    flutterTts.stop();
+    //flutterTts.clearVoice();
+    //flutterTts.stop();
     _marker.clear();
     _polyline.clear();
 

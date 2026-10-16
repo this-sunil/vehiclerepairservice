@@ -34,7 +34,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   void initState() {
     // TODO: implement initState
-    context.read<InternetBloc>().add(FetchInternetEvent());
     pages = [homePage, servicePage, historyPage, settingScreen];
     currentPage = pages[currentIndex];
     super.initState();
@@ -48,127 +47,112 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<InternetBloc, InternetState>(
-      builder: (context, state) {
-        switch (state.status) {
-          case InternetStatus.error:
-            return NoInternetScreen();
-          default:
-            return Scaffold(
-              appBar: AppBar(
-                centerTitle: false,
-                leading: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Card(
-                    elevation: 5,
-                    shape: CircleBorder(),
-                    child: RotateAnimation(),
-                  ),
-                ),
-                title: Column(
-                  crossAxisAlignment: .start,
-                  children: [
-                    TranslateText(
-                      currentIndex == 0
-                          ? "Vehicle Repair Service"
-                          : currentIndex == 1
-                          ? "Nearby Service Center"
-                          : currentIndex == 2
-                          ? "Slot Book History"
-                          : "My Account",
-                      style: TextStyle(
-                        fontWeight: .w600,
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                    BlocBuilder<LocationBloc, LocationState>(
-                      builder: (context, state) {
-                        switch (state.status) {
-                          case LocationStatus.completed:
-                            return TranslateText(
-                              '${state.model?.currentAddress?[0].locality}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.white,
-                              ),
-                            );
-                          default:
-                            return Container();
-                        }
-                      },
-                    ),
-                  ],
-                ),
-
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      context.push(AppRoute.notification);
-                    },
-                    icon: HeroIcon(HeroIcons.bell),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      context.push(AppRoute.settings);
-                    },
-                    icon: HeroIcon(HeroIcons.cog6Tooth),
-                  ),
-                ],
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        leading: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Card(
+            elevation: 5,
+            shape: CircleBorder(),
+            child: RotateAnimation(),
+          ),
+        ),
+        title: Column(
+          crossAxisAlignment: .start,
+          children: [
+            TranslateText(
+              currentIndex == 0
+                  ? "Vehicle Repair Service"
+                  : currentIndex == 1
+                  ? "Nearby Service Center"
+                  : currentIndex == 2
+                  ? "Slot Book History"
+                  : "My Account",
+              style: TextStyle(
+                fontWeight: .w600,
+                fontSize: 18,
+                color: Colors.white,
               ),
-              body: currentPage,
+            ),
+            BlocBuilder<LocationBloc, LocationState>(
+              builder: (context, state) {
+                switch (state.status) {
+                  case LocationStatus.completed:
+                    return TranslateText(
+                      '${state.model?.currentAddress?[0].locality}',
+                      style: TextStyle(fontSize: 12, color: Colors.white),
+                    );
+                  default:
+                    return Container();
+                }
+              },
+            ),
+          ],
+        ),
 
-              bottomNavigationBar: CircleNavBar(
-                height: 90,
-                gradient: LinearGradient(
-                  begin: AlignmentGeometry.topLeft,
-                  end: AlignmentGeometry.bottomRight,
-                  colors: [Colors.orangeAccent, Colors.redAccent],
-                ),
-                onTap: (index) {
-                  setState(() {
-                    currentIndex = index;
-                    currentPage = pages[currentIndex];
-                  });
-                },
-                cornerRadius: BorderRadius.circular(10),
-                tabCurve: Curves.fastOutSlowIn,
-                activeIndex: currentIndex,
-                activeIcons: [
-                  HeroIcon(HeroIcons.home, color: Colors.white),
-                  HeroIcon(HeroIcons.square3Stack3d, color: Colors.white),
-                  HeroIcon(HeroIcons.archiveBox, color: Colors.white),
-                  Icon(Icons.menu, color: Colors.white),
-                ],
-                inactiveIcons: [
-                  HeroIcon(HeroIcons.home, color: Colors.grey.shade300),
-                  HeroIcon(
-                    HeroIcons.square3Stack3d,
-                    color: Colors.grey.shade300,
-                  ),
-                  HeroIcon(HeroIcons.archiveBox, color: Colors.grey.shade300),
-                  Icon(Icons.menu, color: Colors.grey.shade300),
-                ],
-                color: Colors.deepOrangeAccent,
-              ),
-              // floatingActionButton: FloatingActionButton.extended(
-              //   onPressed: () {
-              //     // context.push(AppRoute.player);
-              //     FirebaseSetup.sendNotification(
-              //       RemoteMessage(
-              //         notification: RemoteNotification(
-              //           title: appName,
-              //           body:
-              //               "Welcome to start the journey vehicle repair services",
-              //         ),
-              //       ),
-              //     );
-              //   },
-              //   label: Icon(Icons.notifications),
-              // ),
-            );
-        }
-      },
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.push(AppRoute.notification);
+            },
+            icon: HeroIcon(HeroIcons.bell),
+          ),
+          IconButton(
+            onPressed: () {
+              context.push(AppRoute.settings);
+            },
+            icon: HeroIcon(HeroIcons.cog6Tooth),
+          ),
+        ],
+      ),
+      body: currentPage,
+
+      bottomNavigationBar: CircleNavBar(
+        height: 90,
+        gradient: LinearGradient(
+          begin: AlignmentGeometry.topLeft,
+          end: AlignmentGeometry.bottomRight,
+          colors: [Colors.orangeAccent, Colors.redAccent],
+        ),
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+            currentPage = pages[currentIndex];
+          });
+        },
+        cornerRadius: BorderRadius.circular(10),
+        tabCurve: Curves.fastOutSlowIn,
+        activeIndex: currentIndex,
+        activeIcons: [
+          HeroIcon(HeroIcons.home, color: Colors.white),
+          HeroIcon(HeroIcons.square3Stack3d, color: Colors.white),
+          HeroIcon(HeroIcons.archiveBox, color: Colors.white),
+          Icon(Icons.menu, color: Colors.white),
+        ],
+        inactiveIcons: [
+          HeroIcon(HeroIcons.home, color: Colors.grey.shade300),
+          HeroIcon(HeroIcons.square3Stack3d, color: Colors.grey.shade300),
+          HeroIcon(HeroIcons.archiveBox, color: Colors.grey.shade300),
+          Icon(Icons.menu, color: Colors.grey.shade300),
+        ],
+        color: Colors.deepOrangeAccent,
+      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+      //     // context.push(AppRoute.player);
+      //     FirebaseSetup.sendNotification(
+      //       RemoteMessage(
+      //         notification: RemoteNotification(
+      //           title: appName,
+      //           body:
+      //               "Welcome to start the journey vehicle repair services",
+      //         ),
+      //       ),
+      //     );
+      //   },
+      //   label: Icon(Icons.notifications),
+      // ),
     );
   }
 }

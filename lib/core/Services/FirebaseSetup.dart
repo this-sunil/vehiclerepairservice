@@ -1,18 +1,12 @@
 import 'dart:math';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class FirebaseSetup {
   FirebaseSetup._();
 
   static FirebaseSetup get instance => FirebaseSetup._();
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  FirebaseAuth auth = FirebaseAuth.instance;
-  GoogleSignIn signIn = GoogleSignIn.instance;
-  UserCredential? user;
 
   Future<void> init() async {
     await messaging.requestPermission(
@@ -51,32 +45,32 @@ class FirebaseSetup {
     }
   }
 
-  Future<UserCredential?> signInGoogle() async {
-    try {
-      final GoogleSignInAccount googleUser = await signIn.authenticate(
-        scopeHint: ['email', 'profile'],
-      );
-      final authClient = signIn.authorizationClient;
-      final authorization = await authClient.authorizationForScopes(['email']);
-
-      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: authorization?.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      if (user == null) {
-        print("message=>No User Found");
-      }
-      user = await auth.signInWithCredential(credential);
-    } on FirebaseAuthException catch (e) {
-      print("message=>${e.message}");
-    } catch (e) {
-      print("message=>$e");
-    }
-    return user;
-  }
+  // Future<UserCredential?> signInGoogle() async {
+  //   try {
+  //     final GoogleSignInAccount googleUser = await signIn.authenticate(
+  //       scopeHint: ['email', 'profile'],
+  //     );
+  //     final authClient = signIn.authorizationClient;
+  //     final authorization = await authClient.authorizationForScopes(['email']);
+  //
+  //     final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+  //
+  //     final credential = GoogleAuthProvider.credential(
+  //       accessToken: authorization?.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+  //
+  //     if (user == null) {
+  //       print("message=>No User Found");
+  //     }
+  //     user = await auth.signInWithCredential(credential);
+  //   } on FirebaseAuthException catch (e) {
+  //     print("message=>${e.message}");
+  //   } catch (e) {
+  //     print("message=>$e");
+  //   }
+  //   return user;
+  // }
 
   static Future<void> sendNotification(RemoteMessage message) async {
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
