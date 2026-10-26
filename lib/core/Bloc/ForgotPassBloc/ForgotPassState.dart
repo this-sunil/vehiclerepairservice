@@ -12,9 +12,9 @@ class ForgotPassState extends Equatable{
 
   ForgotPassState copyWith({ForgotStatus? status,String? msg,dynamic result}){
     return ForgotPassState(
-      status: status??status,
-      msg: msg??msg,
-      result: result??result
+      status: status ?? this.status,
+      msg: msg ?? this.msg,
+      result: result ?? this.result,
     );
   }
 

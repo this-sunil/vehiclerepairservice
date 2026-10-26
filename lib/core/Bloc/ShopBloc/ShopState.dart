@@ -11,8 +11,18 @@ class ShopState extends Equatable{
     return ShopState(status: ShopStatus.initial,hasMore: false);
   }
 
-  ShopState copyWith({ShopStatus? status,String? msg,List<Result>? model,required bool hasMore}){
-    return ShopState(status: status??status,msg: msg??msg,model: model??model,hasMore: hasMore);
+  ShopState copyWith({
+    ShopStatus? status,
+    String? msg,
+    List<Result>? model,
+    bool? hasMore,
+  }) {
+    return ShopState(
+      status: status ?? this.status,
+      msg: msg ?? this.msg,
+      model: model ?? this.model,
+      hasMore: hasMore ?? this.hasMore,
+    );
   }
 
   @override

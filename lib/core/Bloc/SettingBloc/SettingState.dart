@@ -17,9 +17,9 @@ class SettingState extends Equatable {
     SettingEntity? result,
   }) {
     return SettingState(
-      status: status ?? status,
-      msg: msg ?? msg,
-      result: result ?? result,
+      status: status ?? this.status,
+      msg: msg ?? this.msg,
+      result: result ?? this.result,
     );
   }
 

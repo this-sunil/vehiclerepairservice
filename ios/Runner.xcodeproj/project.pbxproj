@@ -9,26 +9,26 @@
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
-		3675E75F9FCC44984FE3659A /* productionDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A93712964C8FB4EBA9D1BF84 /* productionDebug.xcconfig */; };
+		3675E75F9FCC44984FE3659A /* Flutter/productionDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A93712964C8FB4EBA9D1BF84 /* Flutter/productionDebug.xcconfig */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		3B5BA4223DC7151D61850F77 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F85AD4495544918BEAC6ECC2 /* GoogleService-Info.plist */; };
-		6F19A535F27F9C07FA2DC2F8 /* productionRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F25104F50017F40BB2A44403 /* productionRelease.xcconfig */; };
-		72A7DEF3A083E15D06451355 /* stagingDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 50542280B966207D358920DC /* stagingDebug.xcconfig */; };
+		6F19A535F27F9C07FA2DC2F8 /* Flutter/productionRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F25104F50017F40BB2A44403 /* Flutter/productionRelease.xcconfig */; };
+		72A7DEF3A083E15D06451355 /* Flutter/stagingDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 50542280B966207D358920DC /* Flutter/stagingDebug.xcconfig */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		7884E8682EC3CC0700C636F2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7884E8672EC3CC0400C636F2 /* SceneDelegate.swift */; };
 		78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */; };
-		78BB1C523224E66A23814212 /* stagingLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D34D56A5CAA8CCDE4DA1AA94 /* stagingLaunchScreen.storyboard */; };
-		8B11271C66F4FD9AA8A6AF0F /* developmentLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9ADEA49555711EF10EDCF3C /* developmentLaunchScreen.storyboard */; };
-		9693C807365D9EFAF1617153 /* developmentProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2C867CEEAD49C6C52282B7BD /* developmentProfile.xcconfig */; };
+		78BB1C523224E66A23814212 /* Runner/stagingLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D34D56A5CAA8CCDE4DA1AA94 /* Runner/stagingLaunchScreen.storyboard */; };
+		8B11271C66F4FD9AA8A6AF0F /* Runner/developmentLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9ADEA49555711EF10EDCF3C /* Runner/developmentLaunchScreen.storyboard */; };
+		9693C807365D9EFAF1617153 /* Flutter/developmentProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2C867CEEAD49C6C52282B7BD /* Flutter/developmentProfile.xcconfig */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
-		BE0B7668E6159A7F4F8E605A /* productionLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45B08A0BE9B24FF9A74F9F26 /* productionLaunchScreen.storyboard */; };
-		BE3D3F5125B7A7F84752952D /* stagingRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8D034421721D89204410A897 /* stagingRelease.xcconfig */; };
-		C55064C89566F4F4BE0ADC09 /* stagingProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 315924EEB24ADEC834889EED /* stagingProfile.xcconfig */; };
-		E4488B082A8F24CA3C3BC063 /* developmentRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6F3219679FDB5FD8E069ABC9 /* developmentRelease.xcconfig */; };
-		EA18E77FC759549ABDE28FF3 /* developmentDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1284B2A2CF9500657F8354D8 /* developmentDebug.xcconfig */; };
-		FE6B4F3B9CF2D471768B6861 /* productionProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7D24B6717E5FBF90428C5ED0 /* productionProfile.xcconfig */; };
+		BE0B7668E6159A7F4F8E605A /* Runner/productionLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45B08A0BE9B24FF9A74F9F26 /* Runner/productionLaunchScreen.storyboard */; };
+		BE3D3F5125B7A7F84752952D /* Flutter/stagingRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8D034421721D89204410A897 /* Flutter/stagingRelease.xcconfig */; };
+		C55064C89566F4F4BE0ADC09 /* Flutter/stagingProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 315924EEB24ADEC834889EED /* Flutter/stagingProfile.xcconfig */; };
+		E4488B082A8F24CA3C3BC063 /* Flutter/developmentRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6F3219679FDB5FD8E069ABC9 /* Flutter/developmentRelease.xcconfig */; };
+		EA18E77FC759549ABDE28FF3 /* Flutter/developmentDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1284B2A2CF9500657F8354D8 /* Flutter/developmentDebug.xcconfig */; };
+		FE6B4F3B9CF2D471768B6861 /* Flutter/productionProfile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7D24B6717E5FBF90428C5ED0 /* Flutter/productionProfile.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,24 +55,24 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1284B2A2CF9500657F8354D8 /* developmentDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/developmentDebug.xcconfig; sourceTree = "<group>"; };
+		1284B2A2CF9500657F8354D8 /* Flutter/developmentDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/developmentDebug.xcconfig; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
-		2C867CEEAD49C6C52282B7BD /* developmentProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/developmentProfile.xcconfig; sourceTree = "<group>"; };
-		315924EEB24ADEC834889EED /* stagingProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/stagingProfile.xcconfig; sourceTree = "<group>"; };
+		2C867CEEAD49C6C52282B7BD /* Flutter/developmentProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/developmentProfile.xcconfig; sourceTree = "<group>"; };
+		315924EEB24ADEC834889EED /* Flutter/stagingProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/stagingProfile.xcconfig; sourceTree = "<group>"; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
-		45B08A0BE9B24FF9A74F9F26 /* productionLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; path = Runner/productionLaunchScreen.storyboard; sourceTree = "<group>"; };
-		50542280B966207D358920DC /* stagingDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/stagingDebug.xcconfig; sourceTree = "<group>"; };
-		6F3219679FDB5FD8E069ABC9 /* developmentRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/developmentRelease.xcconfig; sourceTree = "<group>"; };
+		45B08A0BE9B24FF9A74F9F26 /* Runner/productionLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; path = Runner/productionLaunchScreen.storyboard; sourceTree = "<group>"; };
+		50542280B966207D358920DC /* Flutter/stagingDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/stagingDebug.xcconfig; sourceTree = "<group>"; };
+		6F3219679FDB5FD8E069ABC9 /* Flutter/developmentRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/developmentRelease.xcconfig; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7884E8672EC3CC0400C636F2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		78E0A7A72DC9AD7400C4905E /* FlutterGeneratedPluginSwiftPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FlutterGeneratedPluginSwiftPackage; path = Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
-		7D24B6717E5FBF90428C5ED0 /* productionProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/productionProfile.xcconfig; sourceTree = "<group>"; };
-		8D034421721D89204410A897 /* stagingRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/stagingRelease.xcconfig; sourceTree = "<group>"; };
+		7D24B6717E5FBF90428C5ED0 /* Flutter/productionProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/productionProfile.xcconfig; sourceTree = "<group>"; };
+		8D034421721D89204410A897 /* Flutter/stagingRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/stagingRelease.xcconfig; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,11 +80,11 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A93712964C8FB4EBA9D1BF84 /* productionDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/productionDebug.xcconfig; sourceTree = "<group>"; };
-		D34D56A5CAA8CCDE4DA1AA94 /* stagingLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; path = Runner/stagingLaunchScreen.storyboard; sourceTree = "<group>"; };
-		F25104F50017F40BB2A44403 /* productionRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/productionRelease.xcconfig; sourceTree = "<group>"; };
+		A93712964C8FB4EBA9D1BF84 /* Flutter/productionDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/productionDebug.xcconfig; sourceTree = "<group>"; };
+		D34D56A5CAA8CCDE4DA1AA94 /* Runner/stagingLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; path = Runner/stagingLaunchScreen.storyboard; sourceTree = "<group>"; };
+		F25104F50017F40BB2A44403 /* Flutter/productionRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter/productionRelease.xcconfig; sourceTree = "<group>"; };
 		F85AD4495544918BEAC6ECC2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runner/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		F9ADEA49555711EF10EDCF3C /* developmentLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; path = Runner/developmentLaunchScreen.storyboard; sourceTree = "<group>"; };
+		F9ADEA49555711EF10EDCF3C /* Runner/developmentLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; path = Runner/developmentLaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,15 +122,15 @@
 				9740EEB21CF90195004384FC /* Debug.xcconfig */,
 				7AFA3C8E1D35360C0083082E /* Release.xcconfig */,
 				9740EEB31CF90195004384FC /* Generated.xcconfig */,
-				1284B2A2CF9500657F8354D8 /* developmentDebug.xcconfig */,
-				2C867CEEAD49C6C52282B7BD /* developmentProfile.xcconfig */,
-				6F3219679FDB5FD8E069ABC9 /* developmentRelease.xcconfig */,
-				50542280B966207D358920DC /* stagingDebug.xcconfig */,
-				315924EEB24ADEC834889EED /* stagingProfile.xcconfig */,
-				8D034421721D89204410A897 /* stagingRelease.xcconfig */,
-				A93712964C8FB4EBA9D1BF84 /* productionDebug.xcconfig */,
-				7D24B6717E5FBF90428C5ED0 /* productionProfile.xcconfig */,
-				F25104F50017F40BB2A44403 /* productionRelease.xcconfig */,
+				1284B2A2CF9500657F8354D8 /* Flutter/developmentDebug.xcconfig */,
+				2C867CEEAD49C6C52282B7BD /* Flutter/developmentProfile.xcconfig */,
+				6F3219679FDB5FD8E069ABC9 /* Flutter/developmentRelease.xcconfig */,
+				50542280B966207D358920DC /* Flutter/stagingDebug.xcconfig */,
+				315924EEB24ADEC834889EED /* Flutter/stagingProfile.xcconfig */,
+				8D034421721D89204410A897 /* Flutter/stagingRelease.xcconfig */,
+				A93712964C8FB4EBA9D1BF84 /* Flutter/productionDebug.xcconfig */,
+				7D24B6717E5FBF90428C5ED0 /* Flutter/productionProfile.xcconfig */,
+				F25104F50017F40BB2A44403 /* Flutter/productionRelease.xcconfig */,
 			);
 			name = Flutter;
 			sourceTree = "<group>";
@@ -142,9 +142,9 @@
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
 				331C8082294A63A400263BE5 /* RunnerTests */,
-				F9ADEA49555711EF10EDCF3C /* developmentLaunchScreen.storyboard */,
-				D34D56A5CAA8CCDE4DA1AA94 /* stagingLaunchScreen.storyboard */,
-				45B08A0BE9B24FF9A74F9F26 /* productionLaunchScreen.storyboard */,
+				F9ADEA49555711EF10EDCF3C /* Runner/developmentLaunchScreen.storyboard */,
+				D34D56A5CAA8CCDE4DA1AA94 /* Runner/stagingLaunchScreen.storyboard */,
+				45B08A0BE9B24FF9A74F9F26 /* Runner/productionLaunchScreen.storyboard */,
 				F85AD4495544918BEAC6ECC2 /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
@@ -248,7 +248,7 @@
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
 			packageReferences = (
-				781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "FlutterGeneratedPluginSwiftPackage" */,
+				781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage" */,
 			);
 			productRefGroup = 97C146EF1CF9000F007C117D /* Products */;
 			projectDirPath = "";
@@ -276,18 +276,18 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
-				EA18E77FC759549ABDE28FF3 /* developmentDebug.xcconfig in Resources */,
-				9693C807365D9EFAF1617153 /* developmentProfile.xcconfig in Resources */,
-				E4488B082A8F24CA3C3BC063 /* developmentRelease.xcconfig in Resources */,
-				72A7DEF3A083E15D06451355 /* stagingDebug.xcconfig in Resources */,
-				C55064C89566F4F4BE0ADC09 /* stagingProfile.xcconfig in Resources */,
-				BE3D3F5125B7A7F84752952D /* stagingRelease.xcconfig in Resources */,
-				3675E75F9FCC44984FE3659A /* productionDebug.xcconfig in Resources */,
-				FE6B4F3B9CF2D471768B6861 /* productionProfile.xcconfig in Resources */,
-				6F19A535F27F9C07FA2DC2F8 /* productionRelease.xcconfig in Resources */,
-				8B11271C66F4FD9AA8A6AF0F /* developmentLaunchScreen.storyboard in Resources */,
-				78BB1C523224E66A23814212 /* stagingLaunchScreen.storyboard in Resources */,
-				BE0B7668E6159A7F4F8E605A /* productionLaunchScreen.storyboard in Resources */,
+				EA18E77FC759549ABDE28FF3 /* Flutter/developmentDebug.xcconfig in Resources */,
+				9693C807365D9EFAF1617153 /* Flutter/developmentProfile.xcconfig in Resources */,
+				E4488B082A8F24CA3C3BC063 /* Flutter/developmentRelease.xcconfig in Resources */,
+				72A7DEF3A083E15D06451355 /* Flutter/stagingDebug.xcconfig in Resources */,
+				C55064C89566F4F4BE0ADC09 /* Flutter/stagingProfile.xcconfig in Resources */,
+				BE3D3F5125B7A7F84752952D /* Flutter/stagingRelease.xcconfig in Resources */,
+				3675E75F9FCC44984FE3659A /* Flutter/productionDebug.xcconfig in Resources */,
+				FE6B4F3B9CF2D471768B6861 /* Flutter/productionProfile.xcconfig in Resources */,
+				6F19A535F27F9C07FA2DC2F8 /* Flutter/productionRelease.xcconfig in Resources */,
+				8B11271C66F4FD9AA8A6AF0F /* Runner/developmentLaunchScreen.storyboard in Resources */,
+				78BB1C523224E66A23814212 /* Runner/stagingLaunchScreen.storyboard in Resources */,
+				BE0B7668E6159A7F4F8E605A /* Runner/productionLaunchScreen.storyboard in Resources */,
 				3B5BA4223DC7151D61850F77 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -451,11 +451,13 @@
 		};
 		06E254E46AABCD936F717651 /* Profile-development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C867CEEAD49C6C52282B7BD /* developmentProfile.xcconfig */;
+			baseConfigurationReference = 2C867CEEAD49C6C52282B7BD /* Flutter/developmentProfile.xcconfig */;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -464,7 +466,7 @@
 		};
 		1146A051119CF172A34D1A68 /* Release-production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F25104F50017F40BB2A44403 /* productionRelease.xcconfig */;
+			baseConfigurationReference = F25104F50017F40BB2A44403 /* Flutter/productionRelease.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-$(ASSET_PREFIX)";
@@ -536,7 +538,7 @@
 		};
 		14F33A7BBCEB1667DE92B4E2 /* Profile-production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D24B6717E5FBF90428C5ED0 /* productionProfile.xcconfig */;
+			baseConfigurationReference = 7D24B6717E5FBF90428C5ED0 /* Flutter/productionProfile.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-$(ASSET_PREFIX)";
@@ -606,7 +608,7 @@
 		};
 		1799ECBEBD11FEE3EA27F232 /* Release-staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8D034421721D89204410A897 /* stagingRelease.xcconfig */;
+			baseConfigurationReference = 8D034421721D89204410A897 /* Flutter/stagingRelease.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-$(ASSET_PREFIX)";
@@ -740,6 +742,8 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -756,11 +760,13 @@
 		};
 		27C91EE250D4E825334E3516 /* Profile-staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 315924EEB24ADEC834889EED /* stagingProfile.xcconfig */;
+			baseConfigurationReference = 315924EEB24ADEC834889EED /* Flutter/stagingProfile.xcconfig */;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -769,11 +775,13 @@
 		};
 		315EE4B19091681DB047B18B /* Profile-production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D24B6717E5FBF90428C5ED0 /* productionProfile.xcconfig */;
+			baseConfigurationReference = 7D24B6717E5FBF90428C5ED0 /* Flutter/productionProfile.xcconfig */;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -832,7 +840,7 @@
 		};
 		377180A9A13B46278F8ACDC6 /* Debug-staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50542280B966207D358920DC /* stagingDebug.xcconfig */;
+			baseConfigurationReference = 50542280B966207D358920DC /* Flutter/stagingDebug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-$(ASSET_PREFIX)";
@@ -907,7 +915,7 @@
 		};
 		3E552BC4244C613521B99479 /* Profile-staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 315924EEB24ADEC834889EED /* stagingProfile.xcconfig */;
+			baseConfigurationReference = 315924EEB24ADEC834889EED /* Flutter/stagingProfile.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-$(ASSET_PREFIX)";
@@ -977,7 +985,7 @@
 		};
 		6A90FC07082043ADBCBCDA64 /* Release-development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F3219679FDB5FD8E069ABC9 /* developmentRelease.xcconfig */;
+			baseConfigurationReference = 6F3219679FDB5FD8E069ABC9 /* Flutter/developmentRelease.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-$(ASSET_PREFIX)";
@@ -1049,11 +1057,13 @@
 		};
 		8F7CC7DE6DFB4305DDBA827E /* Release-staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8D034421721D89204410A897 /* stagingRelease.xcconfig */;
+			baseConfigurationReference = 8D034421721D89204410A897 /* Flutter/stagingRelease.xcconfig */;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1183,6 +1193,8 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1210,6 +1222,8 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1226,7 +1240,7 @@
 		};
 		A2882DFB91C02B143CA7B407 /* Debug-production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A93712964C8FB4EBA9D1BF84 /* productionDebug.xcconfig */;
+			baseConfigurationReference = A93712964C8FB4EBA9D1BF84 /* Flutter/productionDebug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-$(ASSET_PREFIX)";
@@ -1301,11 +1315,13 @@
 		};
 		A42BB87EEEF04D3071061470 /* Debug-staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50542280B966207D358920DC /* stagingDebug.xcconfig */;
+			baseConfigurationReference = 50542280B966207D358920DC /* Flutter/stagingDebug.xcconfig */;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1314,7 +1330,7 @@
 		};
 		AEF5417984266BDA3580F1C3 /* Debug-development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1284B2A2CF9500657F8354D8 /* developmentDebug.xcconfig */;
+			baseConfigurationReference = 1284B2A2CF9500657F8354D8 /* Flutter/developmentDebug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-$(ASSET_PREFIX)";
@@ -1389,11 +1405,13 @@
 		};
 		B4ACB07FD3275A5533D7AEB8 /* Debug-development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1284B2A2CF9500657F8354D8 /* developmentDebug.xcconfig */;
+			baseConfigurationReference = 1284B2A2CF9500657F8354D8 /* Flutter/developmentDebug.xcconfig */;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1402,7 +1420,7 @@
 		};
 		BDDCA9E939E55F3F48214DAF /* Profile-development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C867CEEAD49C6C52282B7BD /* developmentProfile.xcconfig */;
+			baseConfigurationReference = 2C867CEEAD49C6C52282B7BD /* Flutter/developmentProfile.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-$(ASSET_PREFIX)";
@@ -1472,11 +1490,13 @@
 		};
 		CF5BB72F1802D6E193466938 /* Debug-production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A93712964C8FB4EBA9D1BF84 /* productionDebug.xcconfig */;
+			baseConfigurationReference = A93712964C8FB4EBA9D1BF84 /* Flutter/productionDebug.xcconfig */;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1485,11 +1505,13 @@
 		};
 		EFAB9BBF598AC6EB0005D1E6 /* Release-production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F25104F50017F40BB2A44403 /* productionRelease.xcconfig */;
+			baseConfigurationReference = F25104F50017F40BB2A44403 /* Flutter/productionRelease.xcconfig */;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1498,11 +1520,13 @@
 		};
 		F14CCCDD2691B7C68335B202 /* Release-development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F3219679FDB5FD8E069ABC9 /* developmentRelease.xcconfig */;
+			baseConfigurationReference = 6F3219679FDB5FD8E069ABC9 /* Flutter/developmentRelease.xcconfig */;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "Vehicle Repair Service";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1572,7 +1596,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "FlutterGeneratedPluginSwiftPackage" */ = {
+		781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage;
 		};

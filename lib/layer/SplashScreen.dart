@@ -24,6 +24,7 @@ class _SplashScreenState extends State<SplashScreen>
     String? id = await Storage.instance.getUID();
     String? token = await Storage.instance.getToken();
     log("User id=>$id Token=>$token");
+    if (!mounted) return;
     if (id == null) {
       context.pushAndRemoveUntil(AppRoute.overView);
     } else {
@@ -65,11 +66,15 @@ class _SplashScreenState extends State<SplashScreen>
       }
     });
     _updater.readCurrentPatch().then((patch) {
+      if (!mounted) return;
       setState(() => _currentPatch = patch);
+      log('Current Shorebird patch=>${_currentPatch?.number}');
     });
 
     _updater.checkForUpdate().then((status) {
+      if (!mounted) return;
       setState(() => _updateAvailable = status == UpdateStatus.outdated);
+      log('Shorebird update available=>$_updateAvailable');
     });
     super.initState();
   }

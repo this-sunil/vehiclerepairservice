@@ -15,8 +15,18 @@ class BookState extends Equatable{
     );
   }
 
-  BookState copyWith({BookStatus? status,String? msg,List<Result>? model,bool? hasMore}){
-    return BookState(status: status??status,msg: msg??msg,model: model??model,hasMore: hasMore??hasMore);
+  BookState copyWith({
+    BookStatus? status,
+    String? msg,
+    List<Result>? model,
+    bool? hasMore,
+  }) {
+    return BookState(
+      status: status ?? this.status,
+      msg: msg ?? this.msg,
+      model: model ?? this.model,
+      hasMore: hasMore ?? this.hasMore,
+    );
   }
 
   @override

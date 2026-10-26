@@ -11,8 +11,18 @@ class ServiceState extends Equatable{
     return ServiceState(status: ServiceStatus.initial);
   }
 
-  ServiceState copyWith({ServiceStatus? status,String? msg,List<Result>? result,bool? hasMore}){
-    return ServiceState(status: status??status,msg: msg??msg,result: result??result,hasMore:hasMore??hasMore);
+  ServiceState copyWith({
+    ServiceStatus? status,
+    String? msg,
+    List<Result>? result,
+    bool? hasMore,
+  }) {
+    return ServiceState(
+      status: status ?? this.status,
+      msg: msg ?? this.msg,
+      result: result ?? this.result,
+      hasMore: hasMore ?? this.hasMore,
+    );
   }
 
   @override

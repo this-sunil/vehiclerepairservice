@@ -26,7 +26,7 @@ class BookingScreen extends StatefulWidget {
   });
 
   @override
-  _BookingScreenState createState() => _BookingScreenState();
+  State<BookingScreen> createState() => _BookingScreenState();
 }
 
 class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {

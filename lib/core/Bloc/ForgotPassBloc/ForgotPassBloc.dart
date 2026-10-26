@@ -21,7 +21,10 @@ class ForgotPassBloc extends Bloc<ForgotPassEvent, ForgotPassState> {
     });
   }
 
-  Future<void> _setForgotPass(SetForgotPassEvent event, Emitter<ForgotPassState> emit) async {
-
+  Future<void> _setForgotPass(
+    SetForgotPassEvent event,
+    Emitter<ForgotPassState> emit,
+  ) async {
+    emit(state.copyWith(status: ForgotStatus.set));
   }
 }

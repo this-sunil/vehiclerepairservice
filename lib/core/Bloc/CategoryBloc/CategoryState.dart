@@ -12,9 +12,9 @@ class CategoryState extends Equatable{
   }
   CategoryState copyWith({CatStatus? status,String? msg,List<Result>? result}){
     return CategoryState(
-      status: status??status,
-      msg: msg??msg,
-      result: result??result
+      status: status ?? this.status,
+      msg: msg ?? this.msg,
+      result: result ?? this.result,
     );
   }
   @override

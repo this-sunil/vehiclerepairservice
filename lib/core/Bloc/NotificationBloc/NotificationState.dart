@@ -9,8 +9,16 @@ class NotificationState extends Equatable{
 
   factory NotificationState.initial()=>NotificationState(status: NotificationStatus.initial);
 
-  NotificationState copyWith({NotificationStatus? status,String? msg,List<Result>? model}){
-    return NotificationState(status: status??status,msg: msg??msg,model: model??model);
+  NotificationState copyWith({
+    NotificationStatus? status,
+    String? msg,
+    List<Result>? model,
+  }) {
+    return NotificationState(
+      status: status ?? this.status,
+      msg: msg ?? this.msg,
+      model: model ?? this.model,
+    );
   }
 
   @override

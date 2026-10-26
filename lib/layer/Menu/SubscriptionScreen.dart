@@ -72,18 +72,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
 
   Future<void> startTransaction(String title,String planType,String planPrice,String phone) async{
 
-    Map<String,dynamic> options={
-      'key': 'rzp_live_ILgsfZCZoFIKMb',
-      'amount': double.parse(planPrice).toInt(),
-      'name': title,
-      'description': planType.toString(),
-      'prefill': {
-        'contact': phone.toString(),
-      }
-    };
-
-    // _razorPay.open(options);
-
+    await showToast(
+      'Payment for $title ($planType) of $planPrice for $phone is not available yet.',
+    );
   }
 
   Future<void> showToast(String val) async{

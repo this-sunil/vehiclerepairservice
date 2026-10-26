@@ -1,18 +1,17 @@
-import 'package:heroicons/heroicons.dart';
-import '../../core/Bloc/InternetBloc/InternetBloc.dart';
-import '../../core/Bloc/LocationBloc/LocationBloc.dart';
-import '../../core/Routes/route.dart';
-import '../pages/SettingScreen.dart';
-import '../../layer/pages/HistoryPage.dart';
-import '../../layer/pages/ServicePage.dart';
-import '../../layer/pages/HomePage.dart';
-import '../../layer/Widget/CustomHelper.dart';
-import '../../layer/Widget/NoInternetScreen.dart';
-import '../../layer/Widget/TranslateText.dart';
 import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:heroicons/heroicons.dart';
+
+import '../../core/Bloc/LocationBloc/LocationBloc.dart';
+import '../../core/Routes/route.dart';
+import '../../layer/Widget/CustomHelper.dart';
 import '../../layer/Widget/RotateAnimation.dart';
+import '../../layer/Widget/TranslateText.dart';
+import '../../layer/pages/HistoryPage.dart';
+import '../../layer/pages/HomePage.dart';
+import '../../layer/pages/ServicePage.dart';
+import '../pages/SettingScreen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -77,15 +76,17 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
             BlocBuilder<LocationBloc, LocationState>(
               builder: (context, state) {
-                switch (state.status) {
-                  case LocationStatus.completed:
-                    return TranslateText(
-                      '${state.model?.currentAddress?[0].locality}',
-                      style: TextStyle(fontSize: 12, color: Colors.white),
-                    );
-                  default:
-                    return Container();
+                final locality =
+                    state.model?.currentAddress?.firstOrNull?.locality;
+                if (state.status != LocationStatus.completed ||
+                    locality == null ||
+                    locality.isEmpty) {
+                  return const SizedBox.shrink();
                 }
+                return TranslateText(
+                  locality,
+                  style: const TextStyle(fontSize: 12, color: Colors.white),
+                );
               },
             ),
           ],

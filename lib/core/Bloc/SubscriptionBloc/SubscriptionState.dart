@@ -18,9 +18,9 @@ class SubscriptionState extends Equatable {
     SubscriptionEntity? model,
   }) {
     return SubscriptionState(
-      status: status ?? status,
-      msg: msg ?? msg,
-      model: model ?? model,
+      status: status ?? this.status,
+      msg: msg ?? this.msg,
+      model: model ?? this.model,
     );
   }
 

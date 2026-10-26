@@ -56,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen>
     phone = TextEditingController();
     pass = TextEditingController();
 
-    // Fade-in animation
+    // Fade-in animation.
     _opacityController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1200),
@@ -69,7 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 
     _opacityController.forward();
 
-    // Registration card slide-up animation
+    // Registration card slide-up animation.
     _slideController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
@@ -82,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 
     _slideController.forward();
 
-    // Continuous slow logo rotation
+    // Continuous slow logo rotation.
     rotateController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 12),
@@ -90,7 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 
     rotateAnimation = Tween<double>(begin: 0, end: 1).animate(rotateController);
 
-    // Floating background circles
+    // Floating background circles.
     bounceController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
@@ -112,7 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen>
           CurvedAnimation(parent: bounceController, curve: Curves.easeInOut),
         );
 
-    // Animated password visibility icon
+    // Animated password visibility icon.
     _passwordController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 220),
@@ -140,19 +140,21 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
   Widget _buildGlow({required double size, required Color color}) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color.withValues(alpha: 0.12),
-        boxShadow: [
-          BoxShadow(
-            color: color.withValues(alpha: 0.12),
-            blurRadius: 70,
-            spreadRadius: 18,
-          ),
-        ],
+    return IgnorePointer(
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: color.withValues(alpha: 0.12),
+          boxShadow: [
+            BoxShadow(
+              color: color.withValues(alpha: 0.12),
+              blurRadius: 70,
+              spreadRadius: 18,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -236,6 +238,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         if (value == null || value.trim().isEmpty) {
           return 'Enter your name';
         }
+
         return null;
       },
       hintText: 'Enter your full name',
@@ -253,9 +256,11 @@ class _SignUpScreenState extends State<SignUpScreen>
         if (value == null || value.isEmpty) {
           return 'Enter phone number';
         }
+
         if (value.length != 10) {
           return 'Enter a valid 10-digit number';
         }
+
         return null;
       },
       hintText: 'Enter phone number',
@@ -286,20 +291,25 @@ class _SignUpScreenState extends State<SignUpScreen>
             _passwordController.forward();
           }
         },
-        icon: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 220),
-          transitionBuilder: (child, animation) {
-            return ScaleTransition(
-              scale: animation,
-              child: FadeTransition(opacity: animation, child: child),
-            );
-          },
-          child: Icon(
-            visiblePass
-                ? Icons.visibility_off_outlined
-                : Icons.visibility_outlined,
-            key: ValueKey<bool>(visiblePass),
-            color: Colors.grey.shade700,
+        icon: RotationTransition(
+          turns: Tween<double>(begin: 0, end: 0.5).animate(
+            _passwordIconAnimation,
+          ),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 220),
+            transitionBuilder: (child, animation) {
+              return ScaleTransition(
+                scale: animation,
+                child: FadeTransition(opacity: animation, child: child),
+              );
+            },
+            child: Icon(
+              visiblePass
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              key: ValueKey<bool>(visiblePass),
+              color: Colors.grey.shade700,
+            ),
           ),
         ),
       ),
@@ -307,9 +317,11 @@ class _SignUpScreenState extends State<SignUpScreen>
         if (value == null || value.isEmpty) {
           return 'Enter password';
         }
+
         if (value.length < 6) {
           return 'Password must be at least 6 characters';
         }
+
         return null;
       },
       hintText: 'Enter password',
@@ -338,34 +350,33 @@ class _SignUpScreenState extends State<SignUpScreen>
         }
       },
       builder: (context, state) {
-        if (state.status == AuthStatus.loading) {
-          return const SizedBox(
-            height: 52,
-            child: Center(child: LoadingButtonIndicator()),
-          );
-        }
+        final isLoading = state.status == AuthStatus.loading;
 
         return SizedBox(
           width: double.infinity,
           height: 52,
           child: ElevatedButton(
-            onPressed: () {
-              final isValid = registerKey.currentState?.validate() ?? false;
+            onPressed: isLoading
+                ? null
+                : () {
+                    final isValid =
+                        registerKey.currentState?.validate() ?? false;
 
-              if (!isValid) return;
+                    if (!isValid) return;
 
-              FocusScope.of(context).unfocus();
+                    FocusScope.of(context).unfocus();
 
-              context.read<AuthBloc>().add(
-                RegisterEvent(
-                  name: name.text.trim(),
-                  phone: phone.text.trim(),
-                  pass: pass.text,
-                ),
-              );
-            },
+                    context.read<AuthBloc>().add(
+                      RegisterEvent(
+                        name: name.text.trim(),
+                        phone: phone.text.trim(),
+                        pass: pass.text,
+                      ),
+                    );
+                  },
             style: ElevatedButton.styleFrom(
               backgroundColor: primaryColor,
+              disabledBackgroundColor: primaryColor.withValues(alpha: 0.65),
               foregroundColor: Colors.white,
               elevation: 4,
               shadowColor: primaryColor.withValues(alpha: 0.35),
@@ -373,16 +384,30 @@ class _SignUpScreenState extends State<SignUpScreen>
                 borderRadius: BorderRadius.circular(14),
               ),
             ),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Create Account',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                ),
-                SizedBox(width: 10),
-                Icon(Icons.arrow_forward_rounded, size: 20),
-              ],
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 220),
+              child: isLoading
+                  ? const SizedBox(
+                      key: ValueKey('loading'),
+                      height: 24,
+                      width: 24,
+                      child: LoadingButtonIndicator(),
+                    )
+                  : const Row(
+                      key: ValueKey('register'),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Create Account',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Icon(Icons.arrow_forward_rounded, size: 20),
+                      ],
+                    ),
             ),
           ),
         );
@@ -404,9 +429,10 @@ class _SignUpScreenState extends State<SignUpScreen>
           onPressed: () {
             context.pushReplace(AppRoute.login);
           },
+          style: TextButton.styleFrom(foregroundColor: primaryColor),
           child: const Text(
             'Login',
-            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w800),
+            style: TextStyle(fontWeight: FontWeight.w800),
           ),
         ),
       ],
@@ -468,7 +494,7 @@ class _SignUpScreenState extends State<SignUpScreen>
       resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
-          // Full-screen gradient background
+          // Full-screen gradient background.
           const Positioned.fill(
             child: DecoratedBox(
               decoration: BoxDecoration(
@@ -486,21 +512,21 @@ class _SignUpScreenState extends State<SignUpScreen>
             ),
           ),
 
-          // Top purple ambient glow
+          // Top purple ambient glow.
           Positioned(
             top: -110,
             right: -100,
             child: _buildGlow(size: 280, color: const Color(0xFF7C3AED)),
           ),
 
-          // Bottom cyan ambient glow
+          // Bottom cyan ambient glow.
           Positioned(
             bottom: -110,
             left: -100,
             child: _buildGlow(size: 300, color: const Color(0xFF06B6D4)),
           ),
 
-          // Floating purple circle
+          // Floating purple circle.
           Positioned(
             top: 85,
             left: 20,
@@ -525,7 +551,7 @@ class _SignUpScreenState extends State<SignUpScreen>
             ),
           ),
 
-          // Floating cyan circle
+          // Floating cyan circle.
           Positioned(
             bottom: 100,
             right: 24,
@@ -550,10 +576,12 @@ class _SignUpScreenState extends State<SignUpScreen>
             ),
           ),
 
-          // Responsive animated registration content
+          // Responsive registration content.
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 22,
                   vertical: 28,
@@ -570,14 +598,16 @@ class _SignUpScreenState extends State<SignUpScreen>
                         _buildHeading(),
                         const SizedBox(height: 28),
 
-                        // Animated registration card
+                        // Animated registration card.
                         SlideTransition(
                           position: _slideAnimation,
-                          child: _buildRegisterCard(),
+                          child: FadeTransition(
+                            opacity: _opacityAnimation,
+                            child: _buildRegisterCard(),
+                          ),
                         ),
 
                         const SizedBox(height: 24),
-
                         FadeTransition(
                           opacity: _opacityAnimation,
                           child: Text(

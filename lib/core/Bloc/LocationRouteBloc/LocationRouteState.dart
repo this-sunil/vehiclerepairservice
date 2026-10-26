@@ -18,9 +18,9 @@ class LocationRouteState extends Equatable {
     List<String>? address,
   }) {
     return LocationRouteState(
-      status: status ?? status,
-      msg: msg ?? msg,
-      address: address ?? address,
+      status: status ?? this.status,
+      msg: msg ?? this.msg,
+      address: address ?? this.address,
     );
   }
 

@@ -40,7 +40,6 @@ class _SignInScreenState extends State<SignInScreen>
   late final Animation<double> _pulseAnimation;
 
   bool visiblePass = true;
-  bool _loginStarted = false;
 
   static const Color backgroundColor = Color(0xFF090B1A);
   static const Color primaryColor = Color(0xFF6D4AFF);
@@ -54,7 +53,6 @@ class _SignInScreenState extends State<SignInScreen>
     phone = TextEditingController();
     pass = TextEditingController();
 
-    // Overall fade animation
     _opacityController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1100),
@@ -65,7 +63,6 @@ class _SignInScreenState extends State<SignInScreen>
       curve: Curves.easeInOut,
     );
 
-    // Content slide animation
     _slideController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 900),
@@ -76,7 +73,6 @@ class _SignInScreenState extends State<SignInScreen>
           CurvedAnimation(parent: _slideController, curve: Curves.easeOutCubic),
         );
 
-    // One-time logo entrance rotation
     rotateController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
@@ -86,7 +82,6 @@ class _SignInScreenState extends State<SignInScreen>
       CurvedAnimation(parent: rotateController, curve: Curves.easeOutBack),
     );
 
-    // Floating background decorations
     bounceController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
@@ -108,7 +103,6 @@ class _SignInScreenState extends State<SignInScreen>
           CurvedAnimation(parent: bounceController, curve: Curves.easeInOut),
         );
 
-    // Subtle logo pulse
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1800),
@@ -118,7 +112,6 @@ class _SignInScreenState extends State<SignInScreen>
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
 
-    // Start entrance animations
     _opacityController.forward();
     _slideController.forward();
     rotateController.forward();
@@ -310,7 +303,6 @@ class _SignInScreenState extends State<SignInScreen>
           final userId = state.result?.result?.id;
 
           if (token == null || userId == null) {
-            _loginStarted = false;
             return;
           }
 
@@ -320,10 +312,6 @@ class _SignInScreenState extends State<SignInScreen>
           if (!context.mounted) return;
 
           context.pushAndRemoveUntil(AppRoute.dashboard);
-        }
-
-        if (state.status != AuthStatus.loading) {
-          _loginStarted = false;
         }
       },
       builder: (context, state) {
@@ -347,17 +335,11 @@ class _SignInScreenState extends State<SignInScreen>
             onPressed: isLoading
                 ? null
                 : () {
-                    if (_loginStarted) return;
-
                     final isValid = loginKey.currentState?.validate() ?? false;
 
                     if (!isValid) return;
 
                     FocusScope.of(context).unfocus();
-
-                    setState(() {
-                      _loginStarted = true;
-                    });
 
                     context.read<AuthBloc>().add(
                       LoginEvent(phone: phone.text.trim(), pass: pass.text),
@@ -508,7 +490,6 @@ class _SignInScreenState extends State<SignInScreen>
       resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
-          // Background gradient
           const Positioned.fill(
             child: DecoratedBox(
               decoration: BoxDecoration(
@@ -525,8 +506,6 @@ class _SignInScreenState extends State<SignInScreen>
               ),
             ),
           ),
-
-          // Ambient glow
           Positioned(
             top: -100,
             right: -90,
@@ -537,8 +516,6 @@ class _SignInScreenState extends State<SignInScreen>
             left: -100,
             child: _buildGlow(size: 300, color: const Color(0xFF06B6D4)),
           ),
-
-          // Floating decorative circles
           Positioned(
             top: 85,
             left: 18,
@@ -559,12 +536,10 @@ class _SignInScreenState extends State<SignInScreen>
               child: _buildDecorativeCircle(
                 size: 55,
                 colors: const [Color(0xFF06B6D4), Color(0xFF6366F1)],
-                shadowColor: const Color(0xFF06B6D4),
+                shadowColor: Color(0xFF06B6D4),
               ),
             ),
           ),
-
-          // Main content
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
@@ -585,8 +560,6 @@ class _SignInScreenState extends State<SignInScreen>
                         const SizedBox(height: 28),
                         _buildHeading(),
                         const SizedBox(height: 30),
-
-                        // Login card entry animation
                         SlideTransition(
                           position: _slideAnimation,
                           child: FadeTransition(
@@ -594,9 +567,7 @@ class _SignInScreenState extends State<SignInScreen>
                             child: _buildLoginCard(),
                           ),
                         ),
-
                         const SizedBox(height: 24),
-
                         FadeTransition(
                           opacity: _opacityAnimation,
                           child: Text(

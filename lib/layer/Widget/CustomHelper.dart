@@ -109,9 +109,9 @@ mixin CustomHelperMixin {
                           ),
                         ),
                         onPressed: () async {
-                          await Storage.instance.resetToken().whenComplete(() {
-                            context.pushAndRemoveUntil(AppRoute.login);
-                          });
+                          await Storage.instance.resetToken();
+                          if (!context.mounted) return;
+                          context.pushAndRemoveUntil(AppRoute.login);
                         },
                         child: TranslateText(
                           "Ok",

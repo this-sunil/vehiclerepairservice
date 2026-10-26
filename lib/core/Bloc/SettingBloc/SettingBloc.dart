@@ -17,17 +17,27 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     on<FetchSetting>(_fetchSetting);
   }
 
-  Future _fetchSetting(SettingEvent event, Emitter<SettingState> emit) async {
+  Future<void> _fetchSetting(
+    FetchSetting event,
+    Emitter<SettingState> emit,
+  ) async {
+    emit(state.copyWith(status: SettingStatus.loading));
     String? id = await Storage.instance.getUID();
     String? token = await Storage.instance.getToken();
     Map<String, dynamic> body = {'id': id};
     final result = await repository.fetchSetting(
       url: '${dotenv.env['BASE_URL']}${dotenv.env['FETCH_SETTING']}',
+      header: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
       body: body,
     );
-    return result.fold(
-      (l) => state.copyWith(status: l.status, msg: l.msg),
-      (r) => state.copyWith(status: r.status, msg: r.msg, result: r.result),
+    result.fold(
+      (l) => emit(state.copyWith(status: l.status, msg: l.msg)),
+      (r) =>
+          emit(state.copyWith(status: r.status, msg: r.msg, result: r.result)),
     );
   }
 }

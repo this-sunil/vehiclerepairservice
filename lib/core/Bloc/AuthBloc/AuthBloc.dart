@@ -96,7 +96,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(state.copyWith(status: AuthStatus.updateLoading));
-    Future.delayed(Duration(seconds: 5));
     String? id = await Storage.instance.getUID();
     String? token = await Storage.instance.getToken();
 

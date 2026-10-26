@@ -11,7 +11,15 @@ class LocationState extends Equatable{
 
   factory LocationState.initial()=>LocationState(status: LocationStatus.initial);
 
-  LocationState copyWith({LocationStatus? status,String? msg,LocationModel? model}){
-    return LocationState(status: status??status,model: model??model,msg: msg??msg);
+  LocationState copyWith({
+    LocationStatus? status,
+    String? msg,
+    LocationModel? model,
+  }) {
+    return LocationState(
+      status: status ?? this.status,
+      model: model ?? this.model,
+      msg: msg ?? this.msg,
+    );
   }
 }
