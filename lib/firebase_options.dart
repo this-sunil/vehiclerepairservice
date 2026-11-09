@@ -83,5 +83,4 @@ class DefaultFirebaseOptions {
     authDomain: 'vehiclerepairservice.firebaseapp.com',
     storageBucket: 'vehiclerepairservice.firebasestorage.app',
   );
-
 }

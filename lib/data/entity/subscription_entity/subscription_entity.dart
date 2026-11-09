@@ -4,6 +4,8 @@ part 'subscription_entity.freezed.dart';
 
 part 'subscription_entity.g.dart';
 
+enum SubscriptionStatus { initial, loading, completed, error }
+
 @freezed
 abstract class SubscriptionEntity with _$SubscriptionEntity {
   const factory SubscriptionEntity({

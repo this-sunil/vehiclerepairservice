@@ -1,15 +1,12 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'dart:isolate';
+
 import 'package:dio/dio.dart';
+import 'package:either_dart/either.dart';
 import 'package:vehicle_repair_service/data/entity/auth_entity/auth_entity.dart';
 
-import '../../core/Bloc/AuthBloc/AuthBloc.dart';
+import '../../core/Services/ApiUtils.dart';
 import '../../core/Services/DioService.dart';
-
-import 'package:either_dart/either.dart';
-
 import '../../data/entity/Failure.dart';
 import '../../data/entity/Success.dart';
 
@@ -40,20 +37,24 @@ abstract class BaseAuthRepository {
 }
 
 class AuthRepository implements BaseAuthRepository {
+  AuthRepository({Dio? dio}) : _dio = dio ?? DioService.dio;
+
+  final Dio _dio;
+
   @override
   Future<Either<Failure, Success>> login({
     required String url,
     Map<String, String>? header,
     Map<String, dynamic>? body,
   }) async {
-    // TODO: implement login
     try {
-      final resp = await DioService.post(
+      final resp = await _dio.post(
         url,
         data: body,
         options: Options(headers: header),
       );
-      final result = await Isolate.run(() => AuthEntity.fromJson(resp.data));
+      final result = AuthEntity.fromJson(asJsonMap(resp.data));
+
       switch (resp.statusCode) {
         case 200:
           if (result.status == true) {
@@ -64,11 +65,7 @@ class AuthRepository implements BaseAuthRepository {
                 result: result,
               ),
             );
-          } else {
-            return Left(Failure(status: AuthStatus.error, msg: result.msg));
           }
-        case 400:
-        case 404:
           return Left(Failure(status: AuthStatus.error, msg: result.msg));
         default:
           return Left(Failure(status: AuthStatus.error, msg: result.msg));
@@ -78,16 +75,16 @@ class AuthRepository implements BaseAuthRepository {
       return Left(Failure(status: AuthStatus.error, msg: 'Format Exception'));
     } on SocketException catch (e) {
       log('Socket Exception=>${e.message}');
-      return Left(Failure(status: AuthStatus.error, msg: 'Format Exception'));
+      return Left(Failure(status: AuthStatus.error, msg: 'Socket Exception'));
     } on DioException catch (e) {
       log(e.message.toString());
       return Left(
-        Failure(status: AuthStatus.error, msg: "Something Went Wrong!!!"),
+        Failure(status: AuthStatus.error, msg: 'Something Went Wrong!!!'),
       );
     } catch (e) {
-      log("Internal Server Error =>$e");
+      log('Internal Server Error =>$e');
       return Left(
-        Failure(status: AuthStatus.error, msg: "Internal Server Error"),
+        Failure(status: AuthStatus.error, msg: 'Internal Server Error'),
       );
     }
   }
@@ -98,15 +95,13 @@ class AuthRepository implements BaseAuthRepository {
     Map<String, String>? header,
     required Map<String, dynamic> body,
   }) async {
-    // TODO: implement register
     try {
-      final resp = await DioService.post(
+      final resp = await _dio.post(
         url,
         data: body,
         options: Options(headers: header),
       );
-      log("Response=>${resp.data}");
-      final result = await Isolate.run(() => AuthEntity.fromJson(resp.data));
+      final result = AuthEntity.fromJson(asJsonMap(resp.data));
 
       switch (resp.statusCode) {
         case 200:
@@ -118,11 +113,7 @@ class AuthRepository implements BaseAuthRepository {
                 result: result,
               ),
             );
-          } else {
-            return Left(Failure(status: AuthStatus.error, msg: result.msg));
           }
-        case 400:
-        case 404:
           return Left(Failure(status: AuthStatus.error, msg: result.msg));
         default:
           return Left(Failure(status: AuthStatus.error, msg: result.msg));
@@ -132,16 +123,16 @@ class AuthRepository implements BaseAuthRepository {
       return Left(Failure(status: AuthStatus.error, msg: 'Format Exception'));
     } on SocketException catch (e) {
       log('Socket Exception=>${e.message}');
-      return Left(Failure(status: AuthStatus.error, msg: 'Format Exception'));
+      return Left(Failure(status: AuthStatus.error, msg: 'Socket Exception'));
     } on DioException catch (e) {
       log(e.message.toString());
       return Left(
-        Failure(status: AuthStatus.error, msg: "Something Went Wrong!!!"),
+        Failure(status: AuthStatus.error, msg: 'Something Went Wrong!!!'),
       );
     } catch (e) {
-      log("Internal Server Error =>${e.toString()}");
+      log('Internal Server Error =>$e');
       return Left(
-        Failure(status: AuthStatus.error, msg: "Internal Server Error"),
+        Failure(status: AuthStatus.error, msg: 'Internal Server Error'),
       );
     }
   }
@@ -152,17 +143,19 @@ class AuthRepository implements BaseAuthRepository {
     Map<String, String>? header,
     required Map<String, dynamic> body,
   }) async {
-    // TODO: implement register
     try {
-      final resp = await DioService.post(
+      final resp = await _dio.post(
         url,
-        data: jsonEncode(body),
+        data: body,
         options: Options(headers: header),
       );
-      final result = await Isolate.run(() => AuthEntity.fromJson(resp.data));
-      log("Response=>${resp.data}");
+      final result = AuthEntity.fromJson(asJsonMap(resp.data));
+
       switch (resp.statusCode) {
         case 200:
+          if (result.status == false) {
+            return Left(Failure(status: AuthStatus.error, msg: result.msg));
+          }
           return Right(
             Success(
               status: AuthStatus.fetchProfile,
@@ -170,9 +163,6 @@ class AuthRepository implements BaseAuthRepository {
               result: result,
             ),
           );
-        case 400:
-        case 404:
-          return Left(Failure(status: AuthStatus.error, msg: result.msg));
         default:
           return Left(Failure(status: AuthStatus.error, msg: result.msg));
       }
@@ -181,16 +171,16 @@ class AuthRepository implements BaseAuthRepository {
       return Left(Failure(status: AuthStatus.error, msg: 'Format Exception'));
     } on SocketException catch (e) {
       log('Socket Exception=>${e.message}');
-      return Left(Failure(status: AuthStatus.error, msg: 'Format Exception'));
+      return Left(Failure(status: AuthStatus.error, msg: 'Socket Exception'));
     } on DioException catch (e) {
       log(e.message.toString());
       return Left(
-        Failure(status: AuthStatus.error, msg: "Something Went Wrong!!!"),
+        Failure(status: AuthStatus.error, msg: 'Something Went Wrong!!!'),
       );
     } catch (e) {
-      log("Internal Server Error =>$e");
+      log('Internal Server Error =>$e');
       return Left(
-        Failure(status: AuthStatus.error, msg: "Internal Server Error"),
+        Failure(status: AuthStatus.error, msg: 'Internal Server Error'),
       );
     }
   }
@@ -201,23 +191,22 @@ class AuthRepository implements BaseAuthRepository {
     required Map<String, String> header,
     required FormData body,
   }) async {
-    // TODO: implement updateProfile
     try {
-      final resp = await DioService.post(
+      final resp = await _dio.post(
         url,
         options: Options(headers: header),
         data: body,
       );
-      final result = AuthEntity.fromJson(resp.data);
-      log("Update Response Profile=>${resp.data}");
+      final result = AuthEntity.fromJson(asJsonMap(resp.data));
+
       switch (resp.statusCode) {
         case 200:
+          if (result.status == false) {
+            return Left(Failure(status: AuthStatus.error, msg: result.msg));
+          }
           return Right(
             Success(status: AuthStatus.update, msg: result.msg, result: result),
           );
-        case 400:
-        case 404:
-          return Left(Failure(status: AuthStatus.error, msg: result.msg));
         default:
           return Left(Failure(status: AuthStatus.error, msg: result.msg));
       }
@@ -226,16 +215,16 @@ class AuthRepository implements BaseAuthRepository {
       return Left(Failure(status: AuthStatus.error, msg: 'Format Exception'));
     } on SocketException catch (e) {
       log('Socket Exception=>${e.message}');
-      return Left(Failure(status: AuthStatus.error, msg: 'Format Exception'));
+      return Left(Failure(status: AuthStatus.error, msg: 'Socket Exception'));
     } on DioException catch (e) {
       log(e.message.toString());
       return Left(
-        Failure(status: AuthStatus.error, msg: "Something Went Wrong!!!"),
+        Failure(status: AuthStatus.error, msg: 'Something Went Wrong!!!'),
       );
     } catch (e) {
-      log("Internal Server Error =>$e");
+      log('Internal Server Error =>$e');
       return Left(
-        Failure(status: AuthStatus.error, msg: "Internal Server Error !!!"),
+        Failure(status: AuthStatus.error, msg: 'Internal Server Error !!!'),
       );
     }
   }

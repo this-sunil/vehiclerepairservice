@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
+import '../../core/Services/ApiUtils.dart';
 import '../../layer/Widget/CustomImage.dart';
 import '../../layer/Widget/TranslateText.dart';
 
@@ -126,7 +127,7 @@ class HistoryView extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               CustomImage(
-                imgPath: vehiclePhoto,
+                imgPath: imageUrl(vehiclePhoto) ?? '',
                 width: double.infinity,
                 height: 260,
                 fit: BoxFit.cover,

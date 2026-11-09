@@ -1,7 +1,5 @@
 part of 'SubscriptionBloc.dart';
 
-enum SubscriptionStatus { initial, loading, completed, error }
-
 class SubscriptionState extends Equatable {
   final SubscriptionStatus? status;
   final String? msg;

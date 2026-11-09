@@ -1,52 +1,61 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import '../../../domain/Repository/LocationRouteRepo.dart';
+
+import 'package:vehicle_repair_service/data/entity/LocationModel.dart'
+    show LocationRouteStatus;
+
+export 'package:vehicle_repair_service/data/entity/LocationModel.dart'
+    show LocationRouteStatus;
+
 part 'LocationRouteEvent.dart';
 part 'LocationRouteState.dart';
 
-class LocationRouteBloc extends Bloc<LocationRouteEvent,LocationRouteState>{
-  final LocationRouteRepo repository;
-  LocationRouteBloc(this.repository):super(LocationRouteState.initial()){
+class LocationRouteBloc extends Bloc<LocationRouteEvent, LocationRouteState> {
+  final BaseLocationRouteRepo repository;
+
+  LocationRouteBloc(this.repository) : super(LocationRouteState.initial()) {
     on<FetchListEvent>(_fetchLocationRoute);
   }
 
   Future<void> _fetchLocationRoute(
-      FetchListEvent event,
-      Emitter<LocationRouteState> emit,
-      ) async {
-    emit(state.copyWith(
-      status: LocationRouteStatus.loading,
-      address: [],
-    ));
+    FetchListEvent event,
+    Emitter<LocationRouteState> emit,
+  ) async {
+    emit(
+      state.copyWith(status: LocationRouteStatus.loading, address: const []),
+    );
 
     final List<String> addressList = [];
 
-    for (final LatLng p in event.points) {
+    for (final point in event.points) {
       final result = await repository.fetchRouteInfo(
-        lat: p.latitude,
-        long: p.longitude,
+        lat: point.latitude,
+        long: point.longitude,
       );
 
+      String? errorMessage;
       result.fold(
-            (l) {
-          return emit(state.copyWith(
-            status: LocationRouteStatus.error,
-            msg: l.msg,
-          ));
-
-        },
-            (r) {
-          addressList.add(r.result);
-        },
+        (failure) => errorMessage = failure.msg,
+        (success) => addressList.add(success.result.toString()),
       );
+
+      if (errorMessage != null) {
+        emit(
+          state.copyWith(status: LocationRouteStatus.error, msg: errorMessage),
+        );
+        return;
+      }
     }
+
     final uniqueList = addressList.toSet().toList();
-
-    return emit(state.copyWith(
-      status: LocationRouteStatus.completed,
-      address: uniqueList,
-    ));
+    emit(
+      state.copyWith(
+        status: LocationRouteStatus.completed,
+        address: uniqueList,
+      ),
+    );
   }
-
 }

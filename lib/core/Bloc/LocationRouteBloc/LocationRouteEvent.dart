@@ -1,7 +1,8 @@
 part of 'LocationRouteBloc.dart';
-abstract class LocationRouteEvent extends Equatable{}
 
-class FetchListEvent extends LocationRouteEvent{
+abstract class LocationRouteEvent extends Equatable {}
+
+class FetchListEvent extends LocationRouteEvent {
   final List<LatLng> points;
   FetchListEvent({required this.points});
   @override

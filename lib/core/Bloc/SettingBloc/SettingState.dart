@@ -1,7 +1,5 @@
 part of 'SettingBloc.dart';
 
-enum SettingStatus { initial, loading, completed, error }
-
 class SettingState extends Equatable {
   final SettingStatus? status;
   final String? msg;

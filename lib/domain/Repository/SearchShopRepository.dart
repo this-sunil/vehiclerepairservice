@@ -1,13 +1,11 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:vehicle_repair_service/data/entity/shop_entity/shop_entity.dart';
 
-import '../../core/Bloc/ShopBloc/ShopBloc.dart';
+import '../../core/Services/ApiUtils.dart';
 import '../../core/Services/DioService.dart';
 import '../../data/entity/Failure.dart';
 import '../../data/entity/Success.dart';
@@ -21,58 +19,62 @@ abstract class BaseSearchShopRepo {
 }
 
 class SearchShopRepo extends BaseSearchShopRepo {
+  SearchShopRepo({Dio? dio}) : _dio = dio ?? DioService.dio;
+
+  final Dio _dio;
+
   @override
   Future<Either<Failure, Success>> searchByCity({
     required String url,
     Map<String, String>? header,
     required Map<String, dynamic> body,
   }) async {
-    // TODO: implement searchByCity
     try {
-      final resp = await DioService.post(
+      final resp = await _dio.post(
         url,
         options: Options(headers: header),
-        data: jsonEncode(body),
+        data: body,
       );
-      log("Response=>${resp.data}");
-      final result = await Isolate.run(() => ShopEntity.fromJson(resp.data));
+      final result = ShopEntity.fromJson(asJsonMap(resp.data));
+
       switch (resp.statusCode) {
         case 200:
+          if (result.status == false) {
+            return Left(Failure(status: ShopStatus.error, msg: result.msg));
+          }
           return Right(
             Success(
               status: ShopStatus.completed,
               msg: result.msg,
-              result: result.result,
+              result: result.result ?? const [],
             ),
           );
-        case 400 || 404:
-          return Left(Failure(status: ShopStatus.error, msg: result.msg));
         default:
           return Left(Failure(status: ShopStatus.error, msg: result.msg));
       }
     } on FormatException catch (e) {
-      log("Format Exception=>$e");
+      log('Format Exception=>$e');
       return Left(Failure(status: ShopStatus.error, msg: 'Format Exception'));
     } on SocketException catch (e) {
-      log("Socket Exception=>$e");
+      log('Socket Exception=>$e');
       return Left(Failure(status: ShopStatus.error, msg: 'Socket Exception'));
     } on CertificateException catch (e) {
-      log("Certificate Exception=>$e");
+      log('Certificate Exception=>$e');
       return Left(
         Failure(status: ShopStatus.error, msg: 'Invalid Certificate'),
       );
     } on HandshakeException catch (e) {
-      log("Handshake Exception=>$e");
+      log('Handshake Exception=>$e');
       return Left(
         Failure(status: ShopStatus.error, msg: 'Handshake Exception'),
       );
     } on DioException catch (e) {
       log(e.message.toString());
       return Left(
-        Failure(status: ShopStatus.error, msg: "Something Went Wrong!!!"),
+        Failure(status: ShopStatus.error, msg: 'Something Went Wrong!!!'),
       );
     } catch (e, stk) {
-      log("message=>${stk.toString()}");
+      log('message=>${stk.toString()}');
       return Left(
         Failure(status: ShopStatus.error, msg: 'Internal Server Error'),
       );

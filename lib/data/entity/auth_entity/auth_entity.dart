@@ -4,6 +4,17 @@ part 'auth_entity.freezed.dart';
 
 part 'auth_entity.g.dart';
 
+enum AuthStatus {
+  initial,
+  loading,
+  updateLoading,
+  login,
+  register,
+  fetchProfile,
+  update,
+  error,
+}
+
 @freezed
 abstract class AuthEntity with _$AuthEntity {
   const factory AuthEntity({

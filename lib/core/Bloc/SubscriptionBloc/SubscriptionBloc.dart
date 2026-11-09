@@ -5,12 +5,15 @@ import 'package:vehicle_repair_service/data/entity/subscription_entity/subscript
 import '../../../domain/Repository/SubscriptionRepo.dart';
 import '../../../layer/Widget/Storage.dart';
 
+export 'package:vehicle_repair_service/data/entity/subscription_entity/subscription_entity.dart'
+    show SubscriptionStatus;
+
 part 'SubscriptionEvent.dart';
 
 part 'SubscriptionState.dart';
 
 class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
-  final SubscriptionRepo repo;
+  final BaseSubscriptionRepo repo;
 
   SubscriptionBloc(this.repo) : super(SubscriptionState.initial()) {
     on<FetchSubscriptionEvent>(_fetchSubscription);

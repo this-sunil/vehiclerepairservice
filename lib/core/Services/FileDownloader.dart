@@ -7,9 +7,12 @@ import 'package:http/http.dart';
 class FileDownloader {
   StreamSubscription? _subscription;
 
-  Future<void> downloadFile(String url, String savePath,
-      Function(double) onProgress, VoidCallback onComplete) async {
-
+  Future<void> downloadFile(
+    String url,
+    String savePath,
+    Function(double) onProgress,
+    VoidCallback onComplete,
+  ) async {
     final request = Request('GET', Uri.parse(url));
     final response = await request.send().timeout(const Duration(minutes: 30));
 
@@ -21,7 +24,7 @@ class FileDownloader {
       int receivedBytes = 0;
 
       _subscription = response.stream.listen(
-            (List<int> bytes) {
+        (List<int> bytes) {
           receivedBytes += bytes.length;
           sink.add(bytes);
 
@@ -51,4 +54,3 @@ class FileDownloader {
     log("Download stopped and file cleaned up.");
   }
 }
-

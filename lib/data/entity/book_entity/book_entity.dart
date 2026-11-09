@@ -4,6 +4,8 @@ part 'book_entity.freezed.dart';
 
 part 'book_entity.g.dart';
 
+enum BookStatus { initial, loading, completed, error }
+
 @freezed
 abstract class BookEntity with _$BookEntity {
   const factory BookEntity({

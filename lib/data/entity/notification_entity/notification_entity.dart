@@ -4,6 +4,8 @@ part 'notification_entity.freezed.dart';
 
 part 'notification_entity.g.dart';
 
+enum NotificationStatus { initial, loading, completed, error }
+
 @freezed
 abstract class NotificationEntity with _$NotificationEntity {
   const factory NotificationEntity({

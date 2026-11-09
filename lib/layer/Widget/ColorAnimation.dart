@@ -8,10 +8,7 @@ class ColorAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<Color?>(
-      tween: ColorTween(
-        begin: Colors.amber,
-        end: Colors.deepPurple,
-      ),
+      tween: ColorTween(begin: Colors.amber, end: Colors.deepPurple),
       duration: const Duration(seconds: 3),
       curve: Curves.easeInOut,
       onEnd: () {},

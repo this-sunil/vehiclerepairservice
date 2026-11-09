@@ -4,6 +4,8 @@ part 'setting_entity.freezed.dart';
 
 part 'setting_entity.g.dart';
 
+enum SettingStatus { initial, loading, completed, error }
+
 @freezed
 abstract class SettingEntity with _$SettingEntity {
   const factory SettingEntity({

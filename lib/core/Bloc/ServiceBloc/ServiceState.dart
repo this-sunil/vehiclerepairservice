@@ -1,13 +1,13 @@
 part of 'ServiceBloc.dart';
-enum ServiceStatus{initial,loading,completed,error}
-class ServiceState extends Equatable{
+
+class ServiceState extends Equatable {
   final ServiceStatus? status;
   final String? msg;
   final bool? hasMore;
   final List<Result>? result;
-  const ServiceState({this.status,this.msg,this.result,this.hasMore});
+  const ServiceState({this.status, this.msg, this.result, this.hasMore});
 
-  factory ServiceState.initial(){
+  factory ServiceState.initial() {
     return ServiceState(status: ServiceStatus.initial);
   }
 
@@ -27,6 +27,5 @@ class ServiceState extends Equatable{
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status,msg,result];
-
+  List<Object?> get props => [status, msg, result, hasMore];
 }

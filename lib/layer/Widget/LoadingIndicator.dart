@@ -13,12 +13,12 @@ class LoadingIndicator extends StatelessWidget {
         width: 50,
         height: 50,
         child: RippleAnimation(
-            color: Colors.red,
+          color: Colors.red,
 
-            maxRadius: 80,
-            child: RotateAnimation()),
+          maxRadius: 80,
+          child: RotateAnimation(),
+        ),
       ),
-
     );
   }
 }

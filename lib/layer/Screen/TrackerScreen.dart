@@ -36,7 +36,7 @@ class TrackerScreen extends StatefulWidget {
 }
 
 class _TrackerScreenState extends State<TrackerScreen> {
-  late GoogleMapController _mapController;
+  GoogleMapController? _mapController;
   final Set<Marker> _marker = {};
   final Set<Polyline> _polyline = {};
 
@@ -45,9 +45,9 @@ class _TrackerScreenState extends State<TrackerScreen> {
   final Brightness brightness =
       WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
-  Future<String>? loadMapStyle() async {
+  Future<String> loadMapStyle() async {
     if (kDebugMode) {
-      print("Map Style=>${brightness == Brightness.dark}");
+      debugPrint("Map Style=>${brightness == Brightness.dark}");
     }
     mapStyle = await rootBundle.loadString(
       brightness == Brightness.dark
@@ -77,17 +77,17 @@ class _TrackerScreenState extends State<TrackerScreen> {
   String? distanceInKM;
   bool removed = false;
 
-  LatLng destination = LatLng(18.30930595975144, 73.97924340563827);
-
   bool isNavigating = false;
   bool stopNavigate = false;
 
   Future<void> moveCamera(List<LatLng> route) async {
     if (route.isEmpty) return;
+    final controller = _mapController;
+    if (controller == null) return;
     //speak("Start Your Journey");
     const MarkerId sourceMarkerId = MarkerId('source');
 
-    await _mapController.moveCamera(
+    await controller.moveCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(target: route.first, zoom: 18, tilt: 45, bearing: 45),
       ),
@@ -127,13 +127,14 @@ class _TrackerScreenState extends State<TrackerScreen> {
       );
 
       // 3. Update the marker set and trigger UI refresh efficiently
+      if (!mounted) return;
       setState(() {
         // Removing and re-adding ensures the old marker is replaced cleanly
         _marker.removeWhere((m) => m.markerId == sourceMarkerId);
         _marker.add(updatedMarker);
       });
 
-      await _mapController.animateCamera(
+      await controller.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(target: current, zoom: 17, tilt: 45, bearing: bearing),
         ),
@@ -149,10 +150,20 @@ class _TrackerScreenState extends State<TrackerScreen> {
   Future<void> callPhone(String phoneNumber) async {
     final Uri url = Uri(scheme: 'tel', path: '+91$phoneNumber');
 
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Could not launch $phoneNumber';
+    try {
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url);
+      } else if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not launch $phoneNumber')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not launch $phoneNumber')),
+        );
+      }
     }
   }
 
@@ -173,20 +184,25 @@ class _TrackerScreenState extends State<TrackerScreen> {
         '${src.longitude},${src.latitude};'
         '${dst.longitude},${dst.latitude}'
         '?overview=full&geometries=geojson';
-    print("Url=>$url");
+    debugPrint("Url=>$url");
 
     final res = await get(Uri.parse(url));
-
     final cords = RouteEntity.fromJson(jsonDecode(res.body));
     final routes = cords.routes ?? [];
-    final coordinates = routes[0].geometry?.coordinates ?? [];
-    return coordinates.map<LatLng>((c) => LatLng(c[1], c[0])).toList();
+    if (routes.isEmpty) return const [];
+
+    final coordinates = routes.first.geometry?.coordinates ?? [];
+    return coordinates
+        .where((c) => c.length >= 2)
+        .map<LatLng>((c) => LatLng(c[1], c[0]))
+        .toList();
   }
 
   List<LatLng> points = [];
 
   Future<Set<Polyline>> addPolyline(LatLng src, LatLng dst) async {
     points = await getRoute(src, dst);
+    if (points.isEmpty) return _polyline;
 
     _polyline.add(
       Polyline(
@@ -251,21 +267,20 @@ class _TrackerScreenState extends State<TrackerScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    loadMapStyle();
+    loadMapStyle().then((value) {
+      if (mounted) setState(() => mapStyle = value);
+    });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    //flutterTts.clearVoice();
-    //flutterTts.stop();
     _marker.clear();
     _polyline.clear();
 
     points.clear();
-    _mapController.dispose();
+    _mapController?.dispose();
+    _mapController = null;
     stopNavigate = false;
     super.dispose();
   }
@@ -301,21 +316,22 @@ class _TrackerScreenState extends State<TrackerScreen> {
                         tiltGesturesEnabled: true,
                         scrollGesturesEnabled: true,
                         markers: Set.of(_marker),
-                        liteModeEnabled: true,
+                        liteModeEnabled: false,
                         zoomControlsEnabled: true,
                         style: mapStyle,
 
                         polylines: Set.of(_polyline),
 
-                        onMapCreated: (controller) {
+                        onMapCreated: (controller) async {
                           _mapController = controller;
-                          addMarker(initialCameraPosition);
-                          addPolyline(
+                          await addMarker(initialCameraPosition);
+                          await addPolyline(
                             initialCameraPosition.target,
                             widget.destination,
                           );
+                          if (!mounted) return;
 
-                          _mapController.animateCamera(
+                          await controller.animateCamera(
                             CameraUpdate.newCameraPosition(
                               CameraPosition(
                                 target: initialCameraPosition.target,
@@ -331,9 +347,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
                             initialCameraPosition.target,
                             widget.destination,
                           ).toString();
-                          Future.delayed(Duration(seconds: 1), () {
-                            if (mounted) setState(() {});
-                          });
+                          if (mounted) setState(() {});
                         },
                       ),
                     );
@@ -389,7 +403,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         trailing: Text(
-                          '$distanceInKM KM',
+                          '${distanceInKM ?? '--'} KM',
                           style: TextStyle(fontSize: 18, fontWeight: .bold),
                         ),
                       ),
@@ -511,6 +525,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
 
                                     await moveCamera(points);
 
+                                    if (!mounted) return;
                                     setState(() {
                                       isNavigating = false;
                                     });

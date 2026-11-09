@@ -31,7 +31,8 @@ class _SplashScreenState extends State<SplashScreen>
       context.pushAndRemoveUntil(AppRoute.dashboard);
     }
   }
-  final ShorebirdUpdater _updater=ShorebirdUpdater();
+
+  final ShorebirdUpdater _updater = ShorebirdUpdater();
   Patch? _currentPatch;
   bool _updateAvailable = false;
 

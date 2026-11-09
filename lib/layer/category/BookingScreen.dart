@@ -53,14 +53,18 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
       final picker = await imagePicker.pickImage(source: source);
       if (picker == null) {
         log("message=>No Image Found !!!");
+        return null;
       }
+      if (!mounted) return null;
       setState(() {
-        file = XFile(picker!.path);
+        file = XFile(picker.path);
       });
+      return file;
     } catch (e) {
-      throw Exception(e);
+      log("Image picker error=>$e");
+      if (mounted) showMsg('Unable to pick image');
+      return null;
     }
-    return file;
   }
 
   void showMsg(String msg) {
@@ -126,17 +130,17 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
             mainAxisSize: .min,
             children: [
               ListTile(
-                onTap: () {
+                onTap: () async {
                   context.pop();
-                  pickImage(ImageSource.camera);
+                  await pickImage(ImageSource.camera);
                 },
                 leading: HeroIcon(HeroIcons.camera),
                 title: Text("Camera"),
               ),
               ListTile(
-                onTap: () {
+                onTap: () async {
                   context.pop();
-                  pickImage(ImageSource.gallery);
+                  await pickImage(ImageSource.gallery);
                 },
                 leading: HeroIcon(HeroIcons.photo),
                 title: Text("Gallery"),
@@ -230,6 +234,9 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
               _textInputField(
                 controller: vehicleNameController,
                 hint: 'Enter vehicle name',
+                validator: (value) => (value == null || value.trim().isEmpty)
+                    ? 'Enter vehicle name'
+                    : null,
               ),
 
               SizedBox(height: 16),
@@ -239,6 +246,9 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
               _textInputField(
                 controller: plateNumberController,
                 hint: 'Enter Registration number',
+                validator: (value) => (value == null || value.trim().isEmpty)
+                    ? 'Enter registration number'
+                    : null,
               ),
 
               SizedBox(height: 16),
@@ -283,9 +293,9 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
                 unSelectedColor: Colors.white,
                 childAspectRatio: 2,
                 timeSlotInterval: TimeSlotInterval(
-                  start: TimeOfDay.now(),
-                  end: TimeOfDay(hour: 30, minute: 20),
-                  interval: Duration(hours: 1, minutes: 0),
+                  start: const TimeOfDay(hour: 9, minute: 0),
+                  end: const TimeOfDay(hour: 18, minute: 0),
+                  interval: const Duration(hours: 1, minutes: 0),
                 ),
                 onChange: (value) {
                   setState(() {
@@ -322,19 +332,21 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
                       return Center(child: CircularProgressIndicator());
 
                     default:
-                      print("Book=>${state.status}");
+                      log("Book=>${state.status}");
                       return SizedBox(
                         width: double.infinity,
                         height: 55,
                         child: ElevatedButton(
                           onPressed: () {
                             //startTransaction(100);
-                            print(file);
-                            print("Press");
+                            log("file=>$file");
+                            log("Press");
 
                             if (formKey.currentState!.validate()) {
                               if (file == null) {
                                 showMsg("Please Upload Vehicle Photo");
+                              } else if (selectedDate == null) {
+                                showMsg("Please Select Slot Date");
                               } else if (selectTime.isNotEmpty) {
                                 context.read<BookBloc>().add(
                                   BookAppointEvent(
@@ -343,10 +355,10 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
                                     registerNo: plateNumberController.text,
                                     serviceName: serviceController.text,
                                     slotDate: DateFormat(
-                                      'dd/MM/yyyy',
-                                    ).format(selectedDate ?? DateTime.now()),
+                                      'yyyy-MM-dd',
+                                    ).format(selectedDate!),
                                     slotTime: DateFormat(
-                                      'hh:mm a',
+                                      'HH:mm',
                                     ).format(selectTime.first),
                                     vehicleType: vehicleTypeController.text,
                                   ),
@@ -414,10 +426,12 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
     required TextEditingController controller,
     required String hint,
     bool? readOnly,
+    String? Function(String?)? validator,
   }) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       readOnly: readOnly ?? false,
+      validator: validator,
       style: TextStyle(color: Colors.black),
       decoration: InputDecoration(
         filled: true,

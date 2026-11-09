@@ -1,12 +1,12 @@
 import 'dart:developer';
-import 'dart:isolate';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
-import 'package:vehicle_repair_service/core/Services/DioService.dart';
+import 'package:either_dart/either.dart';
 import 'package:vehicle_repair_service/data/entity/service_entity/service_entity.dart';
 
-import '../../core/Bloc/ServiceBloc/ServiceBloc.dart';
-import 'package:either_dart/either.dart';
-
+import '../../core/Services/ApiUtils.dart';
+import '../../core/Services/DioService.dart';
 import '../../data/entity/Failure.dart';
 import '../../data/entity/Success.dart';
 
@@ -25,48 +25,17 @@ abstract class BaseServiceRepo {
 }
 
 class ServiceRepository implements BaseServiceRepo {
+  ServiceRepository({Dio? dio}) : _dio = dio ?? DioService.dio;
+
+  final Dio _dio;
+
   @override
   Future<Either<Failure, Success>> fetchService({
     required String url,
     Map<String, String>? header,
     required FormData body,
   }) async {
-    // TODO: implement fetchService
-    try {
-      final resp = await DioService.post(
-        url,
-        options: Options(headers: header),
-        data: body,
-      );
-      log("Service Status=>${resp.data}");
-      final result = await Isolate.run(() => ServiceEntity.fromJson(resp.data));
-
-      switch (resp.statusCode) {
-        case 200:
-          return result.result!.isEmpty
-              ? Left(Failure(status: ServiceStatus.error, msg: result.msg))
-              : Right(
-                  Success(
-                    status: ServiceStatus.completed,
-                    msg: result.msg,
-                    result: result.result,
-                  ),
-                );
-        case 400:
-          return Left(Failure(status: ServiceStatus.error, msg: result.msg));
-        default:
-          return Left(Failure(status: ServiceStatus.error, msg: result.msg));
-      }
-    } on DioException catch (e) {
-      log(e.message.toString());
-      return Left(
-        Failure(status: ServiceStatus.error, msg: "Something Went Wrong!!!"),
-      );
-    } catch (e) {
-      return Left(
-        Failure(status: ServiceStatus.error, msg: "Internal Server Error"),
-      );
-    }
+    return _fetch(url: url, header: header, body: body);
   }
 
   @override
@@ -75,38 +44,54 @@ class ServiceRepository implements BaseServiceRepo {
     Map<String, String>? header,
     required FormData body,
   }) async {
-    // TODO: implement searchService
+    return _fetch(url: url, header: header, body: body);
+  }
+
+  Future<Either<Failure, Success>> _fetch({
+    required String url,
+    Map<String, String>? header,
+    required FormData body,
+  }) async {
     try {
-      final resp = await DioService.post(
+      final resp = await _dio.post(
         url,
         options: Options(headers: header),
         data: body,
       );
-      final result = await Isolate.run(() => ServiceEntity.fromJson(resp.data));
+      final result = ServiceEntity.fromJson(asJsonMap(resp.data));
+
       switch (resp.statusCode) {
         case 200:
+          final items = result.result ?? const <Result>[];
           return Right(
             Success(
               status: ServiceStatus.completed,
               msg: result.msg,
-              result: result.result,
+              result: items,
             ),
           );
-        case 400:
-        case 404:
-          return Left(Failure(status: ServiceStatus.error, msg: result.msg));
         default:
           return Left(Failure(status: ServiceStatus.error, msg: result.msg));
       }
+    } on FormatException catch (e) {
+      log('Format Exception=>$e');
+      return Left(
+        Failure(status: ServiceStatus.error, msg: 'Format Exception'),
+      );
+    } on SocketException catch (e) {
+      log('Socket Exception=>$e');
+      return Left(
+        Failure(status: ServiceStatus.error, msg: 'Socket Exception'),
+      );
     } on DioException catch (e) {
       log(e.message.toString());
       return Left(
-        Failure(status: ServiceStatus.error, msg: "Something Went Wrong!!!"),
+        Failure(status: ServiceStatus.error, msg: 'Something Went Wrong!!!'),
       );
-    } catch (e, stk) {
-      log("Message=>$stk");
+    } catch (e) {
+      log('Internal Server Error=>$e');
       return Left(
-        Failure(status: ServiceStatus.error, msg: "Internal Server Error"),
+        Failure(status: ServiceStatus.error, msg: 'Internal Server Error'),
       );
     }
   }

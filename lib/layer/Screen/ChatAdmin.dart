@@ -13,35 +13,57 @@ class ChatAdminScreen extends StatefulWidget {
 }
 
 class _ChatAdminScreenState extends State<ChatAdminScreen> {
-  late Socket _socket;
+  Socket? _socket;
   late TextEditingController sender;
-  List<String> chatHistory = [];
+  final List<String> chatHistory = [];
 
   Future<void> connectServer() async {
-    _socket = io(
-      '${dotenv.env['BASE_URL']}/',
+    final baseUrl = dotenv.env['BASE_URL'];
+    if (baseUrl == null || baseUrl.isEmpty) {
+      log('Chat: BASE_URL is not configured');
+      return;
+    }
+
+    final socket = io(
+      '$baseUrl/',
       OptionBuilder().setTransports(['websocket']).enableAutoConnect().build(),
     );
+    _socket = socket;
 
-    _socket.onConnect((_) {
+    socket.onConnect((_) {
       log('System: Connected to server');
-      setState(() {});
+      if (mounted) setState(() {});
     });
 
-    _socket.on('message', (data) {
+    socket.on('message', (data) {
+      if (!mounted) return;
       setState(() {
         chatHistory.add('Server: ${data.toString()}');
       });
     });
 
-    _socket.connect();
+    socket.onConnectError((data) {
+      log('Chat: connection error $data');
+    });
+
+    socket.connect();
   }
 
   void sendMsg(String value) {
-    if (value.trim().isEmpty) return;
-    _socket.emit('message', value);
+    final message = value.trim();
+    if (message.isEmpty) return;
+
+    final socket = _socket;
+    if (socket == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Chat is not connected yet')),
+      );
+      return;
+    }
+
+    socket.emit('message', message);
     setState(() {
-      chatHistory.add('You: $value');
+      chatHistory.add('You: $message');
     });
     sender.clear();
   }
@@ -55,8 +77,10 @@ class _ChatAdminScreenState extends State<ChatAdminScreen> {
 
   @override
   void dispose() {
-    _socket.disconnect();
-    _socket.dispose();
+    final socket = _socket;
+    _socket = null;
+    socket?.disconnect();
+    socket?.dispose();
     sender.dispose();
     super.dispose();
   }

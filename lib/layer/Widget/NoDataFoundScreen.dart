@@ -41,11 +41,8 @@ class NoDataFoundScreen extends StatelessWidget {
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
                     begin: .topRight,
-                   end: .bottomRight,
-                    colors: [
-                      Color(0xff754fe1),
-                      Color(0xFFCF3D44)
-                    ],
+                    end: .bottomRight,
+                    colors: [Color(0xff754fe1), Color(0xFFCF3D44)],
                   ),
                   boxShadow: [
                     BoxShadow(

@@ -4,6 +4,8 @@ part 'cat_entity.freezed.dart';
 
 part 'cat_entity.g.dart';
 
+enum CatStatus { initial, loading, completed, error }
+
 @freezed
 abstract class CatEntity with _$CatEntity {
   const factory CatEntity({

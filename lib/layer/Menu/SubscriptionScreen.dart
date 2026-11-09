@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
 import '../../layer/Widget/TranslateText.dart';
+
 //import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class SubscriptionScreen extends StatefulWidget {
@@ -25,7 +26,6 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     selectItem.add(item);
     setState(() {});
   }
-
 
   // Future<void> startTransaction() async {
   //
@@ -66,19 +66,21 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   //   }
   // }
 
-
-
   // final Razorpay _razorPay=Razorpay();
 
-  Future<void> startTransaction(String title,String planType,String planPrice,String phone) async{
-
+  Future<void> startTransaction(
+    String title,
+    String planType,
+    String planPrice,
+    String phone,
+  ) async {
     await showToast(
       'Payment for $title ($planType) of $planPrice for $phone is not available yet.',
     );
   }
 
-  Future<void> showToast(String val) async{
-    SnackBar snackBar=SnackBar(content: Text(val));
+  Future<void> showToast(String val) async {
+    SnackBar snackBar = SnackBar(content: Text(val));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -115,75 +117,130 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: TranslateText("Subscription Plan",style: TextStyle(color: Colors.white))),
+      appBar: AppBar(
+        title: TranslateText(
+          "Subscription Plan",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
       body: Column(
         crossAxisAlignment: .start,
         children: [
-
-          BlocListener<AuthBloc,AuthState>(listener: (context,state){
-            switch(state.status){
-              case AuthStatus.fetchProfile:
-                phone=state.result?.result?.phone??'';
-                break;
-              default:
-                break;
-            }
-          },child:BlocBuilder<SubscriptionBloc,SubscriptionState>(builder: (context,state){
-            switch(state.status){
-              case SubscriptionStatus.loading:
-                return SizedBox(
-                  height: context.height*.6,
-                  child: LoadingIndicator(),
-                );
-              case SubscriptionStatus.error:
-                return NoDataFoundScreen(message: state.msg.toString(),buttonText: "Retry",onRetry: (){
-                  context.read<SubscriptionBloc>().add(FetchSubscriptionEvent());
-                });
-              case SubscriptionStatus.completed:
-                final model=state.model?.result??[];
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: model.length,
-                  itemBuilder: (context, index) {
-                    final item = model[index];
-                    return GestureDetector(
-                      onTap: () {
-                        selectCard(item.pid.toString());
-                        startTransaction(item.planTitle.toString(),item.planType.toString(),item.planPrice.toString(),phone.toString());
-                      },
-                      child: Card(
-                        color: selectItem.contains(item.pid.toString())?Colors.deepPurple.shade700:Colors.white,
-                        child: ListTile(
-                          leading: selectItem.contains(item.pid.toString())
-                              ? Icon(
-                            Icons.radio_button_checked,
-                            size: 30,
-                            color: selectItem.contains(item.pid.toString())?Colors.white:Colors.black,
-                          )
-                              : Icon(
-                            Icons.circle_outlined,
-                            size: 30,
-                            color: selectItem.contains(item.pid.toString())?Colors.white:Colors.black,
-                          ),
-                          title: TranslateText(item.planTitle.toString(),style: TextStyle(color: selectItem.contains(item.pid.toString())?Colors.white:Colors.black,fontWeight: .bold)),
-                          subtitle: TranslateText(item.planType.toString(),style: TextStyle(color: selectItem.contains(item.pid.toString())?Colors.white:Colors.black,fontWeight: .bold)),
-                          trailing: TranslateText(
-                              '\u{20b9} ${item.planPrice.toString()}',
-                              style: TextStyle(color: selectItem.contains(item.pid.toString())?Colors.white:Colors.black,fontWeight: .bold,fontSize: 18)
-                          ),
-                        ),
-                      ),
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              switch (state.status) {
+                case AuthStatus.fetchProfile:
+                  phone = state.result?.result?.phone ?? '';
+                  break;
+                default:
+                  break;
+              }
+            },
+            child: BlocBuilder<SubscriptionBloc, SubscriptionState>(
+              builder: (context, state) {
+                switch (state.status) {
+                  case SubscriptionStatus.loading:
+                    return SizedBox(
+                      height: context.height * .6,
+                      child: LoadingIndicator(),
                     );
-                  },
-                );
-              default:
-                return SizedBox.shrink();
-            }
-          })),
+                  case SubscriptionStatus.error:
+                    return NoDataFoundScreen(
+                      message: state.msg.toString(),
+                      buttonText: "Retry",
+                      onRetry: () {
+                        context.read<SubscriptionBloc>().add(
+                          FetchSubscriptionEvent(),
+                        );
+                      },
+                    );
+                  case SubscriptionStatus.completed:
+                    final model = state.model?.result ?? [];
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: model.length,
+                      itemBuilder: (context, index) {
+                        final item = model[index];
+                        return GestureDetector(
+                          onTap: () {
+                            selectCard(item.pid.toString());
+                            startTransaction(
+                              item.planTitle.toString(),
+                              item.planType.toString(),
+                              item.planPrice.toString(),
+                              phone.toString(),
+                            );
+                          },
+                          child: Card(
+                            color: selectItem.contains(item.pid.toString())
+                                ? Colors.deepPurple.shade700
+                                : Colors.white,
+                            child: ListTile(
+                              leading: selectItem.contains(item.pid.toString())
+                                  ? Icon(
+                                      Icons.radio_button_checked,
+                                      size: 30,
+                                      color:
+                                          selectItem.contains(
+                                            item.pid.toString(),
+                                          )
+                                          ? Colors.white
+                                          : Colors.black,
+                                    )
+                                  : Icon(
+                                      Icons.circle_outlined,
+                                      size: 30,
+                                      color:
+                                          selectItem.contains(
+                                            item.pid.toString(),
+                                          )
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                              title: TranslateText(
+                                item.planTitle.toString(),
+                                style: TextStyle(
+                                  color:
+                                      selectItem.contains(item.pid.toString())
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontWeight: .bold,
+                                ),
+                              ),
+                              subtitle: TranslateText(
+                                item.planType.toString(),
+                                style: TextStyle(
+                                  color:
+                                      selectItem.contains(item.pid.toString())
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontWeight: .bold,
+                                ),
+                              ),
+                              trailing: TranslateText(
+                                '\u{20b9} ${item.planPrice.toString()}',
+                                style: TextStyle(
+                                  color:
+                                      selectItem.contains(item.pid.toString())
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontWeight: .bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  default:
+                    return SizedBox.shrink();
+                }
+              },
+            ),
+          ),
         ],
       ),
     );
   }
-
 }
-

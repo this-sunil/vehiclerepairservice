@@ -4,6 +4,8 @@ part 'shop_entity.freezed.dart';
 
 part 'shop_entity.g.dart';
 
+enum ShopStatus { initial, loading, completed, error }
+
 @freezed
 abstract class ShopEntity with _$ShopEntity {
   const factory ShopEntity({

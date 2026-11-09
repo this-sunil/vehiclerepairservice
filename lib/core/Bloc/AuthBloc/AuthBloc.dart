@@ -8,12 +8,15 @@ import 'package:vehicle_repair_service/data/entity/auth_entity/auth_entity.dart'
 import '../../../domain/Repository/AuthRepository.dart';
 import '../../../layer/Widget/Storage.dart';
 
+export 'package:vehicle_repair_service/data/entity/auth_entity/auth_entity.dart'
+    show AuthStatus;
+
 part 'AuthEvent.dart';
 
 part 'AuthState.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository repository;
+  final BaseAuthRepository repository;
 
   AuthBloc(this.repository) : super(AuthState.initial()) {
     on<LoginEvent>(_loginApi);

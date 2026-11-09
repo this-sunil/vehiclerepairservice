@@ -9,10 +9,9 @@ class EmergencyScreen extends StatelessWidget {
   Future<void> _callNumber(String number) async {
     log("message=> $number");
     final Uri launchUri = Uri(scheme: 'tel', path: number);
-    if(await canLaunchUrl(launchUri)){
-      await launchUrl(launchUri,mode: LaunchMode.inAppWebView);
-    }
-    else{
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri, mode: LaunchMode.inAppWebView);
+    } else {
       log("Something Went Wrong !!!");
     }
   }
@@ -31,12 +30,14 @@ class EmergencyScreen extends StatelessWidget {
               onTap: () => _callNumber("100"),
             ),
           ),
-         Card(child:ListTile(
-           leading: Icon(Icons.health_and_safety),
-           title: TranslateText("Ambulance"),
-           subtitle: TranslateText("102"),
-           onTap: () => _callNumber("102"),
-         )),
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.health_and_safety),
+              title: TranslateText("Ambulance"),
+              subtitle: TranslateText("102"),
+              onTap: () => _callNumber("102"),
+            ),
+          ),
           Card(
             child: ListTile(
               leading: Icon(Icons.directions_boat_filled),

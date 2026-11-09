@@ -6,11 +6,11 @@ import 'package:vehicle_repair_service/layer/Widget/NoDataFoundScreen.dart';
 import '../../core/Bloc/CategoryBloc/CategoryBloc.dart';
 import '../../core/Bloc/ServiceBloc/ServiceBloc.dart';
 import '../../core/Routes/route.dart';
+import '../../core/Services/ApiUtils.dart';
 import '../../layer/Widget/CustomHelper.dart';
 import '../../layer/Widget/CustomInputText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../layer/Widget/LoadingIndicator.dart';
 import '../../layer/Widget/TranslateText.dart';
 
@@ -36,10 +36,31 @@ class _HomePageState extends State<HomePage>
   void onSearchChanged(String query) {
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 400), () {
-      context.read<ServiceBloc>().add(
-        SearchEvent(searchText: query.toString().toLowerCase(), page: page),
-      );
+      if (!mounted) return;
+      page = 1;
+      final search = query.trim().toLowerCase();
+      if (search.isEmpty) {
+        context.read<ServiceBloc>().add(FetchServiceEvent(page: page));
+      } else {
+        context.read<ServiceBloc>().add(
+          SearchEvent(searchText: search, page: page),
+        );
+      }
     });
+  }
+
+  void _onScroll() {
+    if (!scrollController.hasClients) return;
+    final position = scrollController.position;
+    if (position.pixels < position.maxScrollExtent - 200) return;
+
+    final state = context.read<ServiceBloc>().state;
+    if (state.status != ServiceStatus.completed || state.hasMore != true) {
+      return;
+    }
+
+    page++;
+    context.read<ServiceBloc>().add(FetchServiceEvent(page: page));
   }
 
   @override
@@ -57,22 +78,16 @@ class _HomePageState extends State<HomePage>
     );
     _controller.forward();
     scrollController = ScrollController();
-    scrollController.addListener(() {
-      final state = context.read<ServiceBloc>().state;
-      if (scrollController.position.pixels ==
-              scrollController.position.maxScrollExtent &&
-          state.hasMore == true) {
-        page++;
-        context.read<ServiceBloc>().add(FetchServiceEvent(page: page));
-      }
-    });
+    scrollController.addListener(_onScroll);
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _debounce?.cancel();
+    searchController.dispose();
     _controller.dispose();
+    scrollController.removeListener(_onScroll);
     scrollController.dispose();
     super.dispose();
   }
@@ -81,6 +96,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        controller: scrollController,
         child: Column(
           children: [
             Padding(
@@ -140,11 +156,22 @@ class _HomePageState extends State<HomePage>
                     );
                   case ServiceStatus.completed:
                     final productItem = state.result ?? [];
+                    if (productItem.isEmpty) {
+                      return NoDataFoundScreen(
+                        message: 'No services found',
+                        buttonText: 'Retry',
+                        onRetry: () {
+                          page = 1;
+                          context.read<ServiceBloc>().add(
+                            FetchServiceEvent(page: page),
+                          );
+                        },
+                      );
+                    }
                     return AnimatedBuilder(
                       animation: _animation,
                       builder: (context, child) {
                         return GridView.builder(
-                          controller: scrollController,
                           padding: .zero,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
@@ -156,56 +183,50 @@ class _HomePageState extends State<HomePage>
                           scrollDirection: .vertical,
                           itemBuilder: (context, index) {
                             final items = productItem[index];
-
-                            if (index < productItem.length) {
-                              return GestureDetector(
-                                onTap: () {
-                                  context.push(
-                                    AppRoute.vehicleCategory,
-                                    arguments: {
-                                      "serviceId": items.id.toString(),
-                                      "serviceName": items.title.toString(),
-                                    },
-                                  );
-                                },
-                                child: AnimatedSlide(
-                                  duration: Duration(seconds: index),
-                                  offset: Offset(
-                                    _animation.value.dx,
-                                    _animation.value.dy,
-                                  ),
-                                  child: Card(
-                                    child: Column(
-                                      mainAxisAlignment: .spaceAround,
-                                      crossAxisAlignment: .center,
-                                      children: [
-                                        CircleAvatar(
-                                          maxRadius: 60,
-                                          backgroundColor: Colors.amber,
-                                          backgroundImage: NetworkImage(
-                                            '${dotenv.env['BASE_URL']}/upload/${items.photo.toString()}',
+                            final photoUrl = imageUrl(items.photo);
+                            return GestureDetector(
+                              onTap: () {
+                                context.push(
+                                  AppRoute.vehicleCategory,
+                                  arguments: {
+                                    "serviceId": items.id?.toString() ?? '',
+                                    "serviceName": items.title ?? '',
+                                  },
+                                );
+                              },
+                              child: AnimatedSlide(
+                                duration: Duration(seconds: index),
+                                offset: Offset(
+                                  _animation.value.dx,
+                                  _animation.value.dy,
+                                ),
+                                child: Card(
+                                  child: Column(
+                                    mainAxisAlignment: .spaceAround,
+                                    crossAxisAlignment: .center,
+                                    children: [
+                                      CircleAvatar(
+                                        maxRadius: 60,
+                                        backgroundColor: Colors.amber,
+                                        backgroundImage: photoUrl == null
+                                            ? AssetImage(splashIcon)
+                                            : NetworkImage(photoUrl),
+                                      ),
+                                      Padding(
+                                        padding: .all(8),
+                                        child: TranslateText(
+                                          items.title.toString(),
+                                          textAlign: .center,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: .w900,
                                           ),
                                         ),
-                                        Padding(
-                                          padding: .all(8),
-                                          child: TranslateText(
-                                            items.title.toString(),
-                                            textAlign: .center,
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: .w900,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              );
-                            }
-                            return Padding(
-                              padding: EdgeInsetsGeometry.all(12),
-                              child: LoadingIndicator(),
+                              ),
                             );
                           },
                         );
@@ -216,6 +237,7 @@ class _HomePageState extends State<HomePage>
                       message: '${state.msg}',
                       buttonText: 'Retry',
                       onRetry: () {
+                        page = 1;
                         context.read<ServiceBloc>().add(
                           FetchServiceEvent(page: page),
                         );

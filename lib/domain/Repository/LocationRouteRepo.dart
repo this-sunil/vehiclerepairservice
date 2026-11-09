@@ -1,8 +1,8 @@
 import 'package:either_dart/either.dart';
 import 'package:geocoding/geocoding.dart';
 
-import '../../core/Bloc/LocationRouteBloc/LocationRouteBloc.dart';
 import '../../data/entity/Failure.dart';
+import '../../data/entity/LocationModel.dart';
 import '../../data/entity/Success.dart';
 
 abstract class BaseLocationRouteRepo {
@@ -13,27 +13,29 @@ abstract class BaseLocationRouteRepo {
 }
 
 class LocationRouteRepo implements BaseLocationRouteRepo {
-  Geocoding geocoding = Geocoding();
+  LocationRouteRepo({Geocoding? geocoding})
+    : geocoding = geocoding ?? Geocoding();
+
+  final Geocoding geocoding;
 
   @override
   Future<Either<Failure, Success>> fetchRouteInfo({
     required double lat,
     required double long,
   }) async {
-    // TODO: implement fetchRouteInfo
     try {
       final placeMark = await geocoding.placemarkFromCoordinates(lat, long);
       if (placeMark.isEmpty) {
         return Left(
           Failure(
             status: LocationRouteStatus.error,
-            msg: "Address not found !!!",
+            msg: 'Address not found !!!',
           ),
         );
       }
       final p = placeMark.first;
       final address =
-          "${p.name}, ${p.locality}, ${p.administrativeArea}, ${p.country}";
+          '${p.name}, ${p.locality}, ${p.administrativeArea}, ${p.country}';
       return Right(
         Success(
           status: LocationRouteStatus.completed,

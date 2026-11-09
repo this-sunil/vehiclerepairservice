@@ -1,18 +1,14 @@
 part of 'BookBloc.dart';
 
-enum BookStatus{initial,loading,completed,error}
-
-class BookState extends Equatable{
+class BookState extends Equatable {
   final BookStatus? status;
   final String? msg;
   final List<Result>? model;
   final bool? hasMore;
-  const BookState({this.status,this.msg, this.model,this.hasMore});
+  const BookState({this.status, this.msg, this.model, this.hasMore});
 
-  factory BookState.initial(){
-    return BookState(
-      status: BookStatus.initial
-    );
+  factory BookState.initial() {
+    return BookState(status: BookStatus.initial);
   }
 
   BookState copyWith({
@@ -31,6 +27,5 @@ class BookState extends Equatable{
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status,msg,model];
-
+  List<Object?> get props => [status, msg, model, hasMore];
 }

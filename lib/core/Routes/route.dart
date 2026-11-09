@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../layer/Menu/AboutScreen.dart';
@@ -25,6 +23,34 @@ import 'package:flutter/material.dart';
 
 import '../../layer/feature/ServicePage.dart';
 import '../../layer/Menu/SubscriptionScreen.dart';
+
+/// Safely reads named route arguments, tolerating a missing or mistyped map.
+Map<String, dynamic> _routeArgs(RouteSettings settings) {
+  final arguments = settings.arguments;
+  if (arguments is Map<String, dynamic>) return arguments;
+  if (arguments is Map) return Map<String, dynamic>.from(arguments);
+  return const <String, dynamic>{};
+}
+
+String _routeString(
+  Map<String, dynamic> args,
+  String key, [
+  String fallback = '',
+]) {
+  final value = args[key];
+  if (value == null) return fallback;
+  return value.toString();
+}
+
+int _routeInt(Map<String, dynamic> args, String key, [int fallback = 0]) {
+  final value = args[key];
+  if (value is int) return value;
+  return int.tryParse(value?.toString() ?? '') ?? fallback;
+}
+
+Widget _invalidRoute(String message) {
+  return Scaffold(body: Center(child: Text(message)));
+}
 
 class AppRoute {
   AppRoute._();
@@ -94,45 +120,38 @@ class AppRoute {
       //   );
 
       case historyViews:
-        final args = setting.arguments as Map<String, dynamic>;
-        final int bookId = args['bookId'];
-        final String vehicleName = args['vehicleName'];
-        final String registrationNo = args['registrationNo'];
-        final String vehiclePhoto = args['vehiclePhoto'];
-        final String vehicleType = args['vehicleType'];
-        final String slotDate = args['slotDate'];
-        final String slotTime = args['slotTime'];
-        final String serviceName = args['serviceName'];
-
+        final args = _routeArgs(setting);
         return PageRouteBuilder(
           transitionsBuilder: transitionsBuilder,
           pageBuilder: (context, animation, secondaryAnimation) => HistoryView(
-            bookId: bookId,
-            vehicleName: vehicleName,
-            registrationNo: registrationNo,
-            vehiclePhoto: vehiclePhoto,
-            vehicleType: vehicleType,
-            slotDate: slotDate,
-            slotTime: slotTime,
-            serviceName: serviceName,
+            bookId: _routeInt(args, 'bookId'),
+            vehicleName: _routeString(args, 'vehicleName'),
+            registrationNo: _routeString(args, 'registrationNo'),
+            vehiclePhoto: _routeString(args, 'vehiclePhoto'),
+            vehicleType: _routeString(args, 'vehicleType'),
+            slotDate: _routeString(args, 'slotDate'),
+            slotTime: _routeString(args, 'slotTime'),
+            serviceName: _routeString(args, 'serviceName'),
           ),
         );
       case trackerScreen:
-        final args = setting.arguments as Map<String, dynamic>;
-        final String title = args['title'];
-        final String phone = args['phone'];
-        final String city = args['city'];
-        final String shopTime = args['shopTime'];
-        final LatLng destination = args['destination'];
-        log("message=>$destination");
+        final args = _routeArgs(setting);
+        final destination = args['destination'];
+        if (destination is! LatLng) {
+          return PageRouteBuilder(
+            transitionsBuilder: transitionsBuilder,
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                _invalidRoute('Missing destination for tracker'),
+          );
+        }
         return PageRouteBuilder(
           transitionsBuilder: transitionsBuilder,
           pageBuilder: (context, animation, secondaryAnimation) =>
               TrackerScreen(
-                title: title,
-                phone: phone,
-                city: city,
-                shopTime: shopTime,
+                title: _routeString(args, 'title'),
+                phone: _routeString(args, 'phone'),
+                city: _routeString(args, 'city'),
+                shopTime: _routeString(args, 'shopTime'),
                 destination: destination,
               ),
         );
@@ -217,26 +236,24 @@ class AppRoute {
         );
 
       case vehicleCategory:
-        final args = setting.arguments as Map<String, dynamic>;
-        final String serviceId = args['serviceId'];
-        final String serviceName = args['serviceName'];
+        final args = _routeArgs(setting);
         return PageRouteBuilder(
           transitionsBuilder: transitionsBuilder,
           pageBuilder: (context, animation, secondaryAnimation) =>
-              VehicleCategory(serviceId: serviceId, serviceName: serviceName),
+              VehicleCategory(
+                serviceId: _routeString(args, 'serviceId'),
+                serviceName: _routeString(args, 'serviceName'),
+              ),
         );
       case booking:
-        final args = setting.arguments as Map<String, dynamic>;
-        final String serviceId = args['serviceId'];
-        final String serviceName = args['serviceName'];
-        final String type = args['type'] ?? '';
+        final args = _routeArgs(setting);
         return PageRouteBuilder(
           transitionsBuilder: transitionsBuilder,
           pageBuilder: (context, animation, secondaryAnimation) =>
               BookingScreen(
-                type: type,
-                serviceId: serviceId,
-                serviceName: serviceName,
+                type: _routeString(args, 'type'),
+                serviceId: _routeString(args, 'serviceId'),
+                serviceName: _routeString(args, 'serviceName'),
               ),
         );
       case updateProfile:
@@ -261,11 +278,20 @@ extension NavigationExtension on BuildContext {
   }
 
   Future<void> pushAndRemoveUntil(String routeName, {Object? arguments}) {
-    return Navigator.pushNamedAndRemoveUntil(this, routeName, (route) => false);
+    return Navigator.pushNamedAndRemoveUntil(
+      this,
+      routeName,
+      (route) => false,
+      arguments: arguments,
+    );
   }
 
   Future<void> pushReplace(String routeName, {Object? arguments}) {
-    return Navigator.pushReplacementNamed(this, routeName);
+    return Navigator.pushReplacementNamed(
+      this,
+      routeName,
+      arguments: arguments,
+    );
   }
 
   void pop() {

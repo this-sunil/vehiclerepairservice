@@ -10,13 +10,20 @@ class ForgotPassBloc extends Bloc<ForgotPassEvent, ForgotPassState> {
     on<SetForgotPassEvent>(_setForgotPass);
   }
 
-  Future<void> _sendOtp(SendOtpEvent event, Emitter<ForgotPassState> emit) async {
+  Future<void> _sendOtp(
+    SendOtpEvent event,
+    Emitter<ForgotPassState> emit,
+  ) async {
     emit(state.copyWith(status: ForgotStatus.send));
   }
 
-  Future<void> _verifyOtp(VerifyOtpEvent event, Emitter<ForgotPassState> emit) async {
+  Future<void> _verifyOtp(
+    VerifyOtpEvent event,
+    Emitter<ForgotPassState> emit,
+  ) async {
     emit(state.copyWith(status: ForgotStatus.loading));
     await Future.delayed(Duration(seconds: 2), () {
+      if (isClosed) return;
       emit(state.copyWith(status: ForgotStatus.verify));
     });
   }

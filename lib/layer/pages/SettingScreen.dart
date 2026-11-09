@@ -1,13 +1,13 @@
 //import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroicons/heroicons.dart';
 
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../core/Bloc/SettingBloc/SettingBloc.dart';
 import '../../core/Bloc/ThemeBloc/ThemeBloc.dart';
 import '../../core/Routes/route.dart';
+import '../../core/Services/ApiUtils.dart';
 import '../Widget/CustomHelper.dart';
 import '../Widget/LoadingIndicator.dart';
 import '../Widget/TranslateText.dart';
@@ -116,6 +116,7 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
                     return SizedBox(height: 150, child: LoadingIndicator());
                   case AuthStatus.fetchProfile:
                     final item = state.result?.result;
+                    final photoUrl = imageUrl(item?.photo);
                     return Column(
                       mainAxisSize: .min,
                       children: [
@@ -129,13 +130,9 @@ class _SettingScreenState extends State<SettingScreen> with CustomHelperMixin {
                               padding: .all(4),
                               child: CircleAvatar(
                                 maxRadius: 80,
-                                backgroundImage:
-                                    item != null &&
-                                        item.photo!.toString().isEmpty
+                                backgroundImage: photoUrl == null
                                     ? AssetImage(splashIcon)
-                                    : NetworkImage(
-                                        '${dotenv.env['STORE_URL']}/upload/${item?.photo}',
-                                      ),
+                                    : NetworkImage(photoUrl),
                               ),
                             ),
                           ),

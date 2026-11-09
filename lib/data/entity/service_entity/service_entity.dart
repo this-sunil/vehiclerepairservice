@@ -4,6 +4,8 @@ part 'service_entity.freezed.dart';
 
 part 'service_entity.g.dart';
 
+enum ServiceStatus { initial, loading, completed, error }
+
 @freezed
 abstract class ServiceEntity with _$ServiceEntity {
   const factory ServiceEntity({

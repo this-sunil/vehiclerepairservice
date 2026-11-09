@@ -292,9 +292,10 @@ class _SignUpScreenState extends State<SignUpScreen>
           }
         },
         icon: RotationTransition(
-          turns: Tween<double>(begin: 0, end: 0.5).animate(
-            _passwordIconAnimation,
-          ),
+          turns: Tween<double>(
+            begin: 0,
+            end: 0.5,
+          ).animate(_passwordIconAnimation),
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 220),
             transitionBuilder: (child, animation) {

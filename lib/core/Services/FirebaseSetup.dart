@@ -1,4 +1,5 @@
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' hide log;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -25,7 +26,7 @@ class FirebaseSetup {
     // await messaging.subscribeToTopic("all");
 
     FirebaseMessaging.onMessage.listen((message) {
-      print(
+      log(
         "Message=>${message.notification?.title} ${message.notification?.body}",
       );
       sendNotification(message);

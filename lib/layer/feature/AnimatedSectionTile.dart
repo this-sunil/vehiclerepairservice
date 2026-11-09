@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class AnimatedSectionTile extends StatefulWidget {
   final int index;
   final IconData icon;
@@ -35,22 +36,15 @@ class _AnimatedSectionTileState extends State<AnimatedSectionTile>
     _slide = Tween<Offset>(
       begin: const Offset(0, 0.15),
       end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeOutCubic,
-      ),
-    );
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
 
-    _fade = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
+    _fade = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
-    Future.delayed(
-      Duration(milliseconds: 120 * widget.index),
-          () => _controller.forward(),
-    );
+    Future.delayed(Duration(milliseconds: 120 * widget.index), () {
+      if (mounted) {
+        _controller.forward();
+      }
+    });
   }
 
   @override
@@ -98,20 +92,17 @@ class _AnimatedSectionTileState extends State<AnimatedSectionTile>
               collapsedShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18),
               ),
-              backgroundColor:
-              isDark ? const Color(0xFF1E1E1E) : Colors.white,
-              collapsedBackgroundColor:
-              isDark ? const Color(0xFF1E1E1E) : Colors.white,
+              backgroundColor: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+              collapsedBackgroundColor: isDark
+                  ? const Color(0xFF1E1E1E)
+                  : Colors.white,
               leading: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: brandColor.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  widget.icon,
-                  color: brandColor,
-                ),
+                child: Icon(widget.icon, color: brandColor),
               ),
               title: Text(
                 widget.title,

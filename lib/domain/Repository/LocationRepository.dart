@@ -4,7 +4,6 @@ import 'package:either_dart/either.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import '../../core/Bloc/LocationBloc/LocationBloc.dart';
 import '../../data/entity/Failure.dart';
 import '../../data/entity/LocationModel.dart';
 import '../../data/entity/Success.dart';

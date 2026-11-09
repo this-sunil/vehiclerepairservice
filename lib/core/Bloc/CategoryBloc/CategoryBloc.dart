@@ -6,12 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../../data/entity/cat_entity/cat_entity.dart';
 
+export 'package:vehicle_repair_service/data/entity/cat_entity/cat_entity.dart'
+    show CatStatus;
+
 part 'CategoryEvent.dart';
 
 part 'CategoryState.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
-  final CategoryRepository repository;
+  final BaseCatRepo repository;
 
   CategoryBloc(this.repository) : super(CategoryState.initial()) {
     on<FetchCatEvent>(_fetchCategoryApi);

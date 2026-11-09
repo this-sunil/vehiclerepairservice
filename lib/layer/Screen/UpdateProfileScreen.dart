@@ -35,14 +35,22 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
       final picker = await imagePicker.pickImage(source: source);
       if (picker == null) {
         log("message=>No Image Found !!!");
+        return null;
       }
+      if (!mounted) return null;
       setState(() {
-        file = XFile(picker!.path);
+        file = XFile(picker.path);
       });
+      return file;
     } catch (e) {
-      throw Exception(e);
+      log("Image picker error=>$e");
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Unable to pick image')));
+      }
+      return null;
     }
-    return file;
   }
 
   Future<void> popup(BuildContext context) async {
@@ -64,17 +72,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
             mainAxisSize: .min,
             children: [
               ListTile(
-                onTap: () {
+                onTap: () async {
                   context.pop();
-                  pickImage(ImageSource.camera);
+                  await pickImage(ImageSource.camera);
                 },
                 leading: HeroIcon(HeroIcons.camera),
                 title: Text("Camera"),
               ),
               ListTile(
-                onTap: () {
+                onTap: () async {
                   context.pop();
-                  pickImage(ImageSource.gallery);
+                  await pickImage(ImageSource.gallery);
                 },
                 leading: HeroIcon(HeroIcons.photo),
                 title: Text("Gallery"),

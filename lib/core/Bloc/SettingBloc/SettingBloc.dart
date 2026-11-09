@@ -6,12 +6,15 @@ import 'package:vehicle_repair_service/data/entity/setting_entity/setting_entity
 import '../../../domain/Repository/SettingRepository.dart';
 import '../../../layer/Widget/Storage.dart';
 
+export 'package:vehicle_repair_service/data/entity/setting_entity/setting_entity.dart'
+    show SettingStatus;
+
 part 'SettingEvent.dart';
 
 part 'SettingState.dart';
 
 class SettingBloc extends Bloc<SettingEvent, SettingState> {
-  final SettingRepository repository;
+  final BaseSettingRepo repository;
 
   SettingBloc(this.repository) : super(SettingState.initial()) {
     on<FetchSetting>(_fetchSetting);

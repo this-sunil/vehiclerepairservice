@@ -1,7 +1,5 @@
 part of 'LocationRouteBloc.dart';
 
-enum LocationRouteStatus { initial, loading, completed, error }
-
 class LocationRouteState extends Equatable {
   final LocationRouteStatus? status;
   final String? msg;

@@ -1,12 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:vehicle_repair_service/data/entity/cat_entity/cat_entity.dart';
 
-import '../../core/Bloc/CategoryBloc/CategoryBloc.dart';
+import '../../core/Services/ApiUtils.dart';
 import '../../core/Services/DioService.dart';
 import '../../data/entity/Failure.dart';
 import '../../data/entity/Success.dart';
@@ -19,47 +18,52 @@ abstract class BaseCatRepo {
 }
 
 class CategoryRepository implements BaseCatRepo {
+  CategoryRepository({Dio? dio}) : _dio = dio ?? DioService.dio;
+
+  final Dio _dio;
+
   @override
   Future<Either<Failure, Success>> fetchCat({
     required String url,
     Map<String, String>? header,
   }) async {
-    // TODO: implement fetchCat
     try {
-      final resp = await DioService.get(url, options: Options(headers: header));
-      //log("Category message=>${resp.data}");
-      final result = await Isolate.run(() => CatEntity.fromJson(resp.data));
+      final resp = await _dio.get(url, options: Options(headers: header));
+      final result = CatEntity.fromJson(asJsonMap(resp.data));
 
       switch (resp.statusCode) {
         case 200:
+          if (result.status == false) {
+            return Left(Failure(status: CatStatus.error, msg: result.msg));
+          }
           return Right(
             Success(
               status: CatStatus.completed,
               msg: result.msg,
-              result: result.result,
+              result: result.result ?? const [],
             ),
           );
-        case 400:
-          return Left(Failure(status: CatStatus.error, msg: result.msg));
         default:
           return Left(Failure(status: CatStatus.error, msg: result.msg));
       }
     } on FormatException catch (e) {
-      log("Format Exception=>${e.message}");
-      return Left(Failure(status: CatStatus.error, msg: e.message));
+      log('Format Exception=>${e.message}');
+      return Left(Failure(status: CatStatus.error, msg: 'Format Exception'));
     } on SocketException catch (e) {
-      log("Socket Exception=>${e.message}");
-      return Left(Failure(status: CatStatus.error, msg: e.message));
+      log('Socket Exception=>${e.message}');
+      return Left(Failure(status: CatStatus.error, msg: 'Socket Exception'));
     } on CertificateException catch (e) {
-      log("Certificate Exception=>${e.message}");
-      return Left(Failure(status: CatStatus.error, msg: e.message));
+      log('Certificate Exception=>${e.message}');
+      return Left(
+        Failure(status: CatStatus.error, msg: 'Certificate Exception'),
+      );
     } on DioException catch (e) {
       log(e.message.toString());
       return Left(
-        Failure(status: CatStatus.error, msg: "Something Went Wrong!!!"),
+        Failure(status: CatStatus.error, msg: 'Something Went Wrong!!!'),
       );
     } catch (e) {
-      log("Internal Server Error=>${e.toString()}");
+      log('Internal Server Error=>${e.toString()}');
       return Left(
         Failure(status: CatStatus.error, msg: 'Internal Server Error'),
       );

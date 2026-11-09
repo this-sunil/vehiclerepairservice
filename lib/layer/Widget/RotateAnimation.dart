@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../layer/Widget/CustomHelper.dart';
+
 class RotateAnimation extends StatefulWidget {
   const RotateAnimation({super.key});
 
@@ -9,8 +10,7 @@ class RotateAnimation extends StatefulWidget {
 }
 
 class _RotateAnimationState extends State<RotateAnimation>
-    with SingleTickerProviderStateMixin,CustomHelperMixin {
-
+    with SingleTickerProviderStateMixin, CustomHelperMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   @override
@@ -20,7 +20,7 @@ class _RotateAnimationState extends State<RotateAnimation>
       vsync: this,
       duration: const Duration(seconds: 3),
     )..repeat(reverse: true);
-    _animation=Tween<double>(begin: 0,end: 2*pi).animate(_controller);
+    _animation = Tween<double>(begin: 0, end: 2 * pi).animate(_controller);
   }
 
   @override
@@ -38,7 +38,7 @@ class _RotateAnimationState extends State<RotateAnimation>
         height: 80,
         decoration: BoxDecoration(
           shape: .circle,
-          image: DecorationImage(image: AssetImage(logoIcon))
+          image: DecorationImage(image: AssetImage(logoIcon)),
         ),
       ),
     );

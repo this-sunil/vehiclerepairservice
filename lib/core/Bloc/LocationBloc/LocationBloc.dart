@@ -3,12 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/entity/LocationModel.dart';
 import '../../../domain/Repository/LocationRepository.dart';
 
+export 'package:vehicle_repair_service/data/entity/LocationModel.dart'
+    show LocationStatus;
+
 part 'LocationEvent.dart';
 
 part 'LocationState.dart';
 
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
-  final LocationRepository repository;
+  final BaseLocationRepository repository;
 
   LocationBloc(this.repository) : super(LocationState.initial()) {
     on<FetchLocationEvent>(_fetchLocation);

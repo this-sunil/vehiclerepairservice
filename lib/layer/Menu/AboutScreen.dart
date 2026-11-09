@@ -22,21 +22,21 @@ class AboutUsScreen extends StatelessWidget {
           icon: Icons.groups,
           title: 'Who We Are',
           content:
-          'We are dedicated to building high-quality digital solutions that improve user experience and reliability.',
+              'We are dedicated to building high-quality digital solutions that improve user experience and reliability.',
         ),
         const AnimatedSectionTile(
           index: 1,
           icon: Icons.flag,
           title: 'Our Mission',
           content:
-          'To deliver secure, reliable, and user-friendly applications that add real value to users.',
+              'To deliver secure, reliable, and user-friendly applications that add real value to users.',
         ),
         const AnimatedSectionTile(
           index: 2,
           icon: Icons.support_agent,
           title: 'Contact Us',
           content:
-          'Email: support@vehiclerepair.com \n Website: www.vehicle-repair-service.com',
+              'Email: support@vehiclerepair.com \n Website: www.vehicle-repair-service.com',
         ),
       ],
     );
