@@ -31,6 +31,7 @@ Future<void> main() async {
     (element) => element.name == appFlavor,
     orElse: () => Flavor.development, // fallback
   );
+  print("Base Url=>${dotenv.env["BASE_URL"]}");
 
   runApp(
     SensitiveContent(
