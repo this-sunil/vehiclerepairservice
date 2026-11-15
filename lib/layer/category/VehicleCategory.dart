@@ -64,10 +64,7 @@ class _VehicleCategoryState extends State<VehicleCategory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TranslateText(
-          "Choose Vehicle",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: TranslateText("Choose Vehicle"),
       ),
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {

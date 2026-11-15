@@ -37,9 +37,7 @@ abstract class BaseAuthRepository {
 }
 
 class AuthRepository implements BaseAuthRepository {
-  AuthRepository({Dio? dio}) : _dio = dio ?? DioService.dio;
-
-  final Dio _dio;
+  AuthRepository();
 
   @override
   Future<Either<Failure, Success>> login({
@@ -48,7 +46,7 @@ class AuthRepository implements BaseAuthRepository {
     Map<String, dynamic>? body,
   }) async {
     try {
-      final resp = await _dio.post(
+      final resp = await DioService.post(
         url,
         data: body,
         options: Options(headers: header),
@@ -96,7 +94,7 @@ class AuthRepository implements BaseAuthRepository {
     required Map<String, dynamic> body,
   }) async {
     try {
-      final resp = await _dio.post(
+      final resp = await DioService.post(
         url,
         data: body,
         options: Options(headers: header),
@@ -124,13 +122,8 @@ class AuthRepository implements BaseAuthRepository {
     } on SocketException catch (e) {
       log('Socket Exception=>${e.message}');
       return Left(Failure(status: AuthStatus.error, msg: 'Socket Exception'));
-    } on DioException catch (e) {
-      log(e.message.toString());
-      return Left(
-        Failure(status: AuthStatus.error, msg: 'Something Went Wrong!!!'),
-      );
-    } catch (e) {
-      log('Internal Server Error =>$e');
+    } catch (e, stk) {
+      log('Internal Server Error =>${e}');
       return Left(
         Failure(status: AuthStatus.error, msg: 'Internal Server Error'),
       );
@@ -144,7 +137,7 @@ class AuthRepository implements BaseAuthRepository {
     required Map<String, dynamic> body,
   }) async {
     try {
-      final resp = await _dio.post(
+      final resp = await DioService.post(
         url,
         data: body,
         options: Options(headers: header),
@@ -192,7 +185,7 @@ class AuthRepository implements BaseAuthRepository {
     required FormData body,
   }) async {
     try {
-      final resp = await _dio.post(
+      final resp = await DioService.post(
         url,
         options: Options(headers: header),
         data: body,

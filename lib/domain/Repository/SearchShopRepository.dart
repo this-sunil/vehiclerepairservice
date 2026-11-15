@@ -19,9 +19,7 @@ abstract class BaseSearchShopRepo {
 }
 
 class SearchShopRepo extends BaseSearchShopRepo {
-  SearchShopRepo({Dio? dio}) : _dio = dio ?? DioService.dio;
-
-  final Dio _dio;
+  SearchShopRepo();
 
   @override
   Future<Either<Failure, Success>> searchByCity({
@@ -30,7 +28,7 @@ class SearchShopRepo extends BaseSearchShopRepo {
     required Map<String, dynamic> body,
   }) async {
     try {
-      final resp = await _dio.post(
+      final resp = await DioService.post(
         url,
         options: Options(headers: header),
         data: body,

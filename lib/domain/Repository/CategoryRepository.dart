@@ -18,9 +18,7 @@ abstract class BaseCatRepo {
 }
 
 class CategoryRepository implements BaseCatRepo {
-  CategoryRepository({Dio? dio}) : _dio = dio ?? DioService.dio;
-
-  final Dio _dio;
+  CategoryRepository();
 
   @override
   Future<Either<Failure, Success>> fetchCat({
@@ -28,7 +26,7 @@ class CategoryRepository implements BaseCatRepo {
     Map<String, String>? header,
   }) async {
     try {
-      final resp = await _dio.get(url, options: Options(headers: header));
+      final resp = await DioService.get(url, options: Options(headers: header));
       final result = CatEntity.fromJson(asJsonMap(resp.data));
 
       switch (resp.statusCode) {

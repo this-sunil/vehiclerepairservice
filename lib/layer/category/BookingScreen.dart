@@ -187,11 +187,7 @@ class _BookingScreenState extends State<BookingScreen> with CustomHelperMixin {
       key: scaffoldKey,
 
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
-        title: TranslateText(
-          'Vehicle Repair Booking',
-          style: TextStyle(color: Colors.white),
-        ),
+        title: TranslateText('Vehicle Repair Booking'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

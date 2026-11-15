@@ -1,80 +1,52 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:vehicle_repair_service/layer/Widget/Storage.dart';
 
-/// Central HTTP client used by every repository.
-///
-/// The client is created lazily so repositories can be constructed before
-/// `dotenv` has been loaded (tests, background isolates). A [Dio] instance can
-/// be injected through [dio] for hermetic tests.
+import '../../layer/Widget/Storage.dart';
+
 class DioService {
-  DioService._();
+  static final FlutterSecureStorage storage = const FlutterSecureStorage();
 
-  static const String _retriedKey = 'dio_token_retried';
+  static final Dio _dio = Dio(
+    BaseOptions(
+      baseUrl: dotenv.env['BASE_URL'] ?? '',
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
+      sendTimeout: const Duration(seconds: 60),
+      validateStatus: (status) {
+        return status != null && status >= 200 && status < 300;
+      },
+    ),
+  );
 
-  static Dio? _dio;
-  static bool _interceptorInstalled = false;
-  static Future<String?>? _refreshInFlight;
-
-  static Dio get dio => _dio ??= _createDio();
-
-  /// Replaces the underlying client. Intended for tests.
-  static set dio(Dio value) {
-    _dio = value;
-    _interceptorInstalled = false;
-  }
-
-  static Dio _createDio() {
-    return Dio(
-      BaseOptions(
-        baseUrl: dotenv.env['BASE_URL'] ?? '',
-        connectTimeout: const Duration(seconds: 60),
-        receiveTimeout: const Duration(seconds: 60),
-        sendTimeout: const Duration(seconds: 60),
-        // Non-401 statuses are returned to repositories so they can map the
-        // error message from the response body.
-        validateStatus: (status) => status != 401,
-      ),
-    );
-  }
-
-  /// Installs the auth interceptor. Safe to call more than once.
   static Future<void> init() async {
-    if (_interceptorInstalled) return;
-    _interceptorInstalled = true;
-
-    final client = dio;
-    client.interceptors.add(
+    _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final token = await Storage.instance.getToken();
-          if (token != null && token.isNotEmpty) {
-            options.headers['Authorization'] = 'Bearer $token';
+          final token = await storage.read(key: "token");
+          if (token != null) {
+            _dio.options.headers["Authorization"] = "Bearer $token";
           }
+
+          _dio.options.headers["Content-Type"] = "application/json";
+          _dio.options.headers['Accept'] = "application/json";
+
           handler.next(options);
         },
+
         onError: (error, handler) async {
-          final statusCode = error.response?.statusCode;
-          final requestOptions = error.requestOptions;
-          final alreadyRetried = requestOptions.extra[_retriedKey] == true;
-          final isRefreshRequest = _isRefreshRequest(requestOptions);
+          /// Token expired
+          print("Status Code: ${error.response?.data}");
+          if (error.response?.statusCode == 500) {
+            final token = await refreshToken();
 
-          if (statusCode == 401 && !alreadyRetried && !isRefreshRequest) {
-            try {
-              final newToken = await _refreshTokenOnce();
-              if (newToken == null || newToken.isEmpty) {
-                return handler.next(error);
-              }
-
-              requestOptions.extra[_retriedKey] = true;
-              requestOptions.headers['Authorization'] = 'Bearer $newToken';
-              final retry = await client.fetch(requestOptions);
-              return handler.resolve(retry);
-            } catch (e) {
-              log('Token refresh failed => $e');
-              return handler.next(error);
+            if (token != null) {
+              final request = error.requestOptions;
+              request.headers["Authorization"] = "Bearer $token";
+              final response = await _dio.fetch(request);
+              return handler.resolve(response);
             }
           }
 
@@ -84,59 +56,30 @@ class DioService {
     );
   }
 
-  static bool _isRefreshRequest(RequestOptions options) {
-    final refreshPath = dotenv.env['REFRESH_URL'];
-    if (refreshPath == null || refreshPath.isEmpty) return false;
-    return options.path.endsWith(refreshPath) ||
-        options.uri.toString().endsWith(refreshPath);
-  }
+  static Future<String?> refreshToken() async {
+    try {
+      final refreshId = await Storage.instance.getUID();
 
-  /// Refreshes the access token, coalescing concurrent 401 retries into a
-  /// single request.
-  static Future<String?> refreshToken() => _refreshTokenOnce();
+      if (refreshId == null) return null;
 
-  static Future<String?> _refreshTokenOnce() {
-    final existing = _refreshInFlight;
-    if (existing != null) return existing;
+      final response = await DioService.post(
+        "${dotenv.env["BASE_URL"]}/auth/token",
+        data: {"id": refreshId},
+      );
 
-    final future = _performRefresh();
-    _refreshInFlight = future;
-    return future.whenComplete(() {
-      if (identical(_refreshInFlight, future)) _refreshInFlight = null;
-    });
-  }
+      if (response.statusCode == 200) {
+        final token = response.data["token"];
 
-  static Future<String?> _performRefresh() async {
-    final uid = await Storage.instance.getUID();
-    if (uid == null || uid.isEmpty) return null;
+        await storage.write(key: "token", value: token);
 
-    final baseUrl = dotenv.env['BASE_URL'] ?? '';
-    final refreshPath = dotenv.env['REFRESH_URL'] ?? '';
-    if (baseUrl.isEmpty || refreshPath.isEmpty) return null;
+        return token;
+      }
 
-    // Use a bare client so a failing refresh cannot trigger the interceptor
-    // again (which previously caused an infinite 401 retry loop).
-    final refreshClient = Dio(
-      BaseOptions(
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
-        sendTimeout: const Duration(seconds: 30),
-        validateStatus: (status) => status != null && status < 500,
-      ),
-    );
-
-    final response = await refreshClient.post(
-      '$baseUrl$refreshPath',
-      data: {'id': uid},
-    );
-
-    if (response.statusCode != 200) return null;
-    final data = response.data;
-    final token = data is Map ? data['token'] : null;
-    if (token is! String || token.isEmpty) return null;
-
-    await Storage.instance.setToken(token);
-    return token;
+      return null;
+    } catch (e) {
+      log("Refresh Token Error : $e");
+      return null;
+    }
   }
 
   static Future<Response> get(
@@ -144,7 +87,7 @@ class DioService {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
-    return dio.get(path, queryParameters: queryParameters, options: options);
+    return _dio.get(path, queryParameters: queryParameters, options: options);
   }
 
   static Future<Response> post(
@@ -153,7 +96,7 @@ class DioService {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
-    return dio.post(
+    return _dio.post(
       path,
       data: data,
       queryParameters: queryParameters,
@@ -167,7 +110,7 @@ class DioService {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
-    return dio.put(
+    return _dio.put(
       path,
       data: data,
       queryParameters: queryParameters,
@@ -181,7 +124,7 @@ class DioService {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
-    return dio.patch(
+    return _dio.patch(
       path,
       data: data,
       queryParameters: queryParameters,
@@ -195,7 +138,7 @@ class DioService {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
-    return dio.delete(
+    return _dio.delete(
       path,
       data: data,
       queryParameters: queryParameters,

@@ -116,10 +116,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TranslateText(
-          "Update Profile",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: TranslateText("Update Profile"),
       ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {

@@ -20,9 +20,7 @@ abstract class BaseSettingRepo {
 }
 
 class SettingRepository implements BaseSettingRepo {
-  SettingRepository({Dio? dio}) : _dio = dio ?? DioService.dio;
-
-  final Dio _dio;
+  SettingRepository();
 
   @override
   Future<Either<Failure, Success>> fetchSetting({
@@ -31,7 +29,7 @@ class SettingRepository implements BaseSettingRepo {
     required Map<String, dynamic> body,
   }) async {
     try {
-      final resp = await _dio.post(
+      final resp = await DioService.post(
         url,
         data: body,
         options: Options(headers: header),

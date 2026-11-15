@@ -1,0 +1,11 @@
+name: vehicle_repair_mcp
+description: MCP server exposing Vehicle Repair Service REST APIs as tools for an AI assistant.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  mcp_dart: ^2.4.3
+  http: ^1.2.0

@@ -334,20 +334,15 @@ class _SignUpScreenState extends State<SignUpScreen>
   Widget _buildRegisterButton() {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) async {
-        if (state.status == AuthStatus.register) {
-          final token = state.result?.token;
-          final userId = state.result?.result?.id;
-
-          if (token == null || userId == null) {
-            return;
-          }
-
-          await Storage.instance.setUId(userId.toString());
-          await Storage.instance.setToken(token.toString());
-
-          if (!context.mounted) return;
-
-          context.pushAndRemoveUntil(AppRoute.dashboard);
+        switch (state.status) {
+          case AuthStatus.register:
+            Storage.instance.setUId('${state.result?.result?.id}');
+            Storage.instance.setToken('${state.result?.token}');
+            context.pushAndRemoveUntil(AppRoute.dashboard);
+            break;
+          case AuthStatus.error:
+          default:
+            break;
         }
       },
       builder: (context, state) {

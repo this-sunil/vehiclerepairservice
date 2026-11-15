@@ -89,10 +89,7 @@ class _ChatAdminScreenState extends State<ChatAdminScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TranslateText(
-          "Chat With Admin",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: TranslateText("Chat With Admin"),
       ),
       body: Column(
         children: [

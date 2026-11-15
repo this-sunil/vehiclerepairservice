@@ -3,11 +3,13 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:vehicle_repair_service/core/Services/DioService.dart';
 import 'package:vehicle_repair_service/core/Services/FirebaseSetup.dart';
 import 'package:vehicle_repair_service/firebase_options.dart';
 import 'package:vehicle_repair_service/layer/MyApp.dart';
+import 'core/Services/AppBlocObserver.dart';
 import 'flavors.dart';
 import "package:intl/date_symbol_data_local.dart";
 
@@ -32,6 +34,7 @@ Future<void> main() async {
     orElse: () => Flavor.development, // fallback
   );
   log("Base Url=>${dotenv.env["BASE_URL"]}");
+  Bloc.observer = AppBlocObserver();
 
   runApp(
     SensitiveContent(

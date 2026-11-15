@@ -11,7 +11,7 @@ class InfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TranslateText(title, style: TextStyle(color: Colors.white)),
+        title: TranslateText(title),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

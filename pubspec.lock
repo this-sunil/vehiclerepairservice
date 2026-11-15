@@ -265,6 +265,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.15"
+  decimal:
+    dependency: transitive
+    description:
+      name: decimal
+      sha256: "2c3c8b74f2948066d3f42585477aec9cfc48fefd7a723a4d4274a6c71a5c0df7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.6"
   dio:
     dependency: "direct main"
     description:
@@ -281,6 +289,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.2"
+  dotprompt:
+    dependency: transitive
+    description:
+      name: dotprompt
+      sha256: d588959f509a67062874c4378085f982a7ed4d10ae521c9504cd9c3331f13304
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   either_dart:
     dependency: "direct main"
     description:
@@ -289,6 +305,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  email_validator:
+    dependency: transitive
+    description:
+      name: email_validator
+      sha256: b19aa5d92fdd76fbc65112060c94d45ba855105a28bb6e462de7ff03b12fa1fb
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   equatable:
     dependency: "direct main"
     description:
@@ -597,6 +621,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  genkit:
+    dependency: "direct main"
+    description:
+      name: genkit
+      sha256: "6148f5511b6a620ceeefb89b470603f662f54c326369c94de1b0a2d7672fea4c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   geoclue:
     dependency: transitive
     description:
@@ -777,18 +809,18 @@ packages:
     dependency: transitive
     description:
       name: google_mlkit_commons
-      sha256: ed1e143c24b43acce8c4af8c5f0b06eb47fd4ccdc2b92aff5dffadadd7028a78
+      sha256: "58b969da65027b6242afb38b944f5a0d3f6b90305b29d70b0cca3048a50b4263"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.3"
   google_mlkit_translation:
     dependency: "direct main"
     description:
       name: google_mlkit_translation
-      sha256: a709a01d5f9e095c8a1b27a29023ff7312de49849a61150869292731c10cfa6b
+      sha256: fafe02e4df45ba6e35c9ad5c1b109e4a4b0b7ae65818593f92a6319cca256567
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.3"
   graphs:
     dependency: transitive
     description:
@@ -805,6 +837,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.8"
+  handlebars_dart:
+    dependency: transitive
+    description:
+      name: handlebars_dart
+      sha256: "267f946bae6b46be5f80150a4572740098a460866ee2b6cb7ac39cd463eb7562"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   heroicons:
     dependency: "direct main"
     description:
@@ -981,6 +1021,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.12.0"
+  json_schema_builder:
+    dependency: transitive
+    description:
+      name: json_schema_builder
+      sha256: "657db3229ba10305c48e8686e8b3aca16e12e639c3a7b96687a6eeb7836b6e1b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.7"
   json_serializable:
     dependency: "direct main"
     description:
@@ -1021,6 +1069,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  listen:
+    dependency: transitive
+    description:
+      name: listen
+      sha256: "47501a08016a43fcad79252439d723f50f14f88fa7bfd8a177e0a417e5c9e1f2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   logging:
     dependency: transitive
     description:
@@ -1285,6 +1341,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.6.0"
+  rational:
+    dependency: transitive
+    description:
+      name: rational
+      sha256: cb808fb6f1a839e6fc5f7d8cb3b0a10e1db48b3be102de73938c627f0b636336
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.3"
   record_use:
     dependency: transitive
     description:
@@ -1309,6 +1373,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  schemantic:
+    dependency: transitive
+    description:
+      name: schemantic
+      sha256: f56f27cfc1db2466f3102b4d2814e184128df43aee92e093a880273dd1bccb75
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   shelf:
     dependency: transitive
     description:
@@ -1494,10 +1566,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "2a122cbe059f8b610d3a5415f42e255b6c17b1f21eee1d960f31080237fb4f11"
+      sha256: "0a10344e901e5b2e63819567951cb6a06673ed6b84f40462188ff5a0c41f371f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.12"
+    version: "0.7.14"
   time_slot:
     dependency: "direct main"
     description:

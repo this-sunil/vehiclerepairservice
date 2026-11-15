@@ -7,6 +7,7 @@ import '../../layer/Menu/LanguageScreen.dart';
 import '../../layer/Menu/PrivacyScreen.dart';
 import '../../layer/Menu/TermsScreen.dart';
 import '../../layer/OverViewScreen.dart';
+import '../../layer/Screen/AiAssistantScreen.dart';
 import '../../layer/Screen/ChatAdmin.dart';
 import '../../layer/Screen/DashboardScreen.dart';
 import '../../layer/Screen/ForgotPassScreen.dart';
@@ -82,6 +83,7 @@ class AppRoute {
   static const String verifyOtp = '/verifyOtp';
   static const String generatePdf = "/generatePdf";
   static const String chatAdmin = "/chatAdmin";
+  static const String aiAssistant = "/ai-assistant";
   static const String player = '/player';
 
   static RouteTransitionsBuilder transitionsBuilder =
@@ -167,6 +169,12 @@ class AppRoute {
           transitionsBuilder: transitionsBuilder,
           pageBuilder: (context, animation, secondaryAnimation) =>
               ChatAdminScreen(),
+        );
+      case aiAssistant:
+        return PageRouteBuilder(
+          transitionsBuilder: transitionsBuilder,
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const AiAssistantScreen(),
         );
       case servicePage:
         return PageRouteBuilder(

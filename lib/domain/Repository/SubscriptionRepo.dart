@@ -20,9 +20,7 @@ abstract class BaseSubscriptionRepo {
 }
 
 class SubscriptionRepo extends BaseSubscriptionRepo {
-  SubscriptionRepo({Dio? dio}) : _dio = dio ?? DioService.dio;
-
-  final Dio _dio;
+  SubscriptionRepo();
 
   @override
   Future<Either<Failure, Success>> fetchSubscription({
@@ -31,7 +29,7 @@ class SubscriptionRepo extends BaseSubscriptionRepo {
     Map<String, String>? header,
   }) async {
     try {
-      final resp = await _dio.post(
+      final resp = await DioService.post(
         url,
         data: body,
         options: Options(headers: header),

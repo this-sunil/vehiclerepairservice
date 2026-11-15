@@ -68,11 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                   : currentIndex == 2
                   ? "Slot Book History"
                   : "My Account",
-              style: TextStyle(
-                fontWeight: .w600,
-                fontSize: 18,
-                color: Colors.white,
-              ),
+              style: TextStyle(fontWeight: .w600, fontSize: 18),
             ),
             BlocBuilder<LocationBloc, LocationState>(
               builder: (context, state) {
@@ -85,7 +81,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                 }
                 return TranslateText(
                   locality,
-                  style: const TextStyle(fontSize: 12, color: Colors.white),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 );
               },
             ),
@@ -93,6 +92,13 @@ class _DashboardScreenState extends State<DashboardScreen>
         ),
 
         actions: [
+          IconButton(
+            tooltip: 'AI Assistant',
+            onPressed: () {
+              context.push(AppRoute.aiAssistant);
+            },
+            icon: const Icon(Icons.auto_awesome),
+          ),
           IconButton(
             onPressed: () {
               context.push(AppRoute.notification);

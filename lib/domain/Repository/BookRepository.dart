@@ -26,9 +26,7 @@ abstract class BaseBookRepo {
 }
 
 class BookRepository implements BaseBookRepo {
-  BookRepository({Dio? dio}) : _dio = dio ?? DioService.dio;
-
-  final Dio _dio;
+  BookRepository();
 
   @override
   Future<Either<Failure, Success>> bookAppointment({
@@ -37,7 +35,7 @@ class BookRepository implements BaseBookRepo {
     required FormData body,
   }) async {
     try {
-      final resp = await _dio.post(
+      final resp = await DioService.post(
         url,
         options: Options(headers: header),
         data: body,
@@ -90,7 +88,7 @@ class BookRepository implements BaseBookRepo {
     required FormData body,
   }) async {
     try {
-      final resp = await _dio.post(
+      final resp = await DioService.post(
         url,
         data: body,
         options: Options(headers: header),

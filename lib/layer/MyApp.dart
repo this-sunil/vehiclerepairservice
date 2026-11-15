@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vehicle_repair_service/Player.dart';
 
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../core/Bloc/BookBloc/BookBloc.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             initialRoute: AppRoute.initialRoute,
             theme: state.themeData,
+
             onGenerateRoute: AppRoute.generateRoute,
             builder: (context, child) {
               final ms = MediaQuery.of(context);
@@ -83,7 +85,7 @@ class MyApp extends StatelessWidget {
               color: F.appFlavor == Flavor.development
                   ? Colors.red
                   : Colors.orange,
-              child: SplashScreen(),
+              child: CricketHomePage(),
             ),
           );
         },

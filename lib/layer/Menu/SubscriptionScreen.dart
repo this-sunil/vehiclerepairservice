@@ -118,10 +118,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TranslateText(
-          "Subscription Plan",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: TranslateText("Subscription Plan"),
       ),
       body: Column(
         crossAxisAlignment: .start,
