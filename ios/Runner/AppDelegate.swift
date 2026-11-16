@@ -1,7 +1,8 @@
 import Flutter
 import UIKit
 import GoogleMaps
-
+import CoreFoundation
+import google_mlkit_translation
 @main
 @objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
   override func application(

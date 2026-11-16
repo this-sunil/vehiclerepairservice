@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vehicle_repair_service/Player.dart';
+import 'package:vehicle_repair_service/layer/SplashScreen.dart';
 
 import '../../core/Bloc/AuthBloc/AuthBloc.dart';
 import '../../core/Bloc/BookBloc/BookBloc.dart';
@@ -15,7 +16,6 @@ import '../../core/Bloc/ShopBloc/ShopBloc.dart';
 import '../../core/Bloc/SubscriptionBloc/SubscriptionBloc.dart';
 import '../../core/Bloc/ThemeBloc/ThemeBloc.dart';
 import '../../core/Routes/route.dart';
-import '../../layer/SplashScreen.dart';
 import '../domain/Repository/AuthRepository.dart';
 import '../domain/Repository/BookRepository.dart';
 import '../domain/Repository/CategoryRepository.dart';
@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
               color: F.appFlavor == Flavor.development
                   ? Colors.red
                   : Colors.orange,
-              child: CricketHomePage(),
+              child: SplashScreen(),
             ),
           );
         },

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:vehicle_repair_service/layer/Widget/TranslateText.dart';
 
 class InfoScreen extends StatelessWidget {

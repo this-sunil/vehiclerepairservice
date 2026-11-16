@@ -6,7 +6,7 @@ import 'package:shorebird_code_push/shorebird_code_push.dart';
 import '../core/Routes/route.dart';
 import '../layer/Widget/CustomHelper.dart';
 import '../layer/Widget/Storage.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

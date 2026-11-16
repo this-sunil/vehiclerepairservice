@@ -122,8 +122,8 @@ class AuthRepository implements BaseAuthRepository {
     } on SocketException catch (e) {
       log('Socket Exception=>${e.message}');
       return Left(Failure(status: AuthStatus.error, msg: 'Socket Exception'));
-    } catch (e, stk) {
-      log('Internal Server Error =>${e}');
+    } catch (e) {
+      log('Internal Server Error =>$e');
       return Left(
         Failure(status: AuthStatus.error, msg: 'Internal Server Error'),
       );
