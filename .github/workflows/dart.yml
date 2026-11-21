@@ -5,6 +5,16 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
+  workflow_dispatch:
+    inputs:
+      run_live_api_tests:
+        description: 'Also run the live backend smoke tests (requires a reachable API)'
+        type: boolean
+        default: false
+
+# NOTE: .env is deliberately not committed. The repository smoke tests call a
+# real backend and are skipped by default via RUN_LIVE_API_TESTS. CI therefore
+# runs only hermetic tests unless you explicitly enable live tests above.
 
 env:
   FLUTTER_VERSION: "3.47.8"
@@ -20,6 +30,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Create default .env for CI
+        run: cp .env.example .env
 
       - uses: subosito/flutter-action@v2
         with:
@@ -44,6 +57,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Create default .env for CI
+        run: cp .env.example .env
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
@@ -54,7 +70,7 @@ jobs:
         run: flutter pub get
 
       - name: Run tests with coverage
-        run: flutter test --coverage
+        run: flutter test --coverage --dart-define=RUN_LIVE_API_TESTS=${{ inputs.run_live_api_tests || false }}
 
 
       - name: Upload coverage report
@@ -72,6 +88,9 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v4
+
+      - name: Create default .env for CI
+        run: cp .env.example .env
 
       - uses: subosito/flutter-action@v2
         with:
@@ -131,6 +150,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Create default .env for CI
+        run: cp .env.example .env
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
@@ -159,6 +181,9 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
+
+      - name: Create default .env for CI
+        run: cp .env.example .env
       - name: Download Android artifact
         uses: actions/download-artifact@v4
         with:

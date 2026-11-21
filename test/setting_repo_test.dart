@@ -5,7 +5,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vehicle_repair_service/domain/Repository/SettingRepository.dart';
 import 'package:vehicle_repair_service/layer/Widget/Storage.dart';
 
+import 'helpers/live_api_gate.dart';
+
 void main() {
+  if (!runLiveApiTests) {
+    test('live API tests are disabled', () {},
+        skip: 'Set --dart-define=RUN_LIVE_API_TESTS=true to enable');
+    return;
+  }
+
   late SettingRepository repository;
   late String baseUrl;
   setUpAll(() async {
